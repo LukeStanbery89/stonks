@@ -3,7 +3,7 @@ services:
   web-server:
     container_name: web-server
     build: .
-    image: node-boilerplate:v1
+    image: stonks:v1
     ports:
       - "3000:3000"
     volumes:

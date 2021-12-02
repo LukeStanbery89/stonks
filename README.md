@@ -1,5 +1,5 @@
-[![CodeQL](https://github.com/LukeStanbery89/node-boilerplate/actions/workflows/codeql-analysis.yml/badge.svg?branch=master)](https://github.com/LukeStanbery89/node-boilerplate/actions/workflows/codeql-analysis.yml)
-[![Node.js CI](https://github.com/LukeStanbery89/node-boilerplate/actions/workflows/node.js.yml/badge.svg?branch=master)](https://github.com/LukeStanbery89/node-boilerplate/actions/workflows/node.js.yml)
+[![CodeQL](https://github.com/LukeStanbery89/stonks/actions/workflows/codeql-analysis.yml/badge.svg?branch=master)](https://github.com/LukeStanbery89/stonks/actions/workflows/codeql-analysis.yml)
+[![Unit Tests CI](https://github.com/LukeStanbery89/stonks/actions/workflows/unit-tests.yml/badge.svg?branch=master)](https://github.com/LukeStanbery89/stonks/actions/workflows/unit-tests.yml)
 
 # Node Boilerplate
 

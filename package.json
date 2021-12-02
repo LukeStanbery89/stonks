@@ -1,5 +1,5 @@
 {
-    "name": "node-boilerplate",
+    "name": "stonks",
     "version": "1.0.0",
     "description": "A Node.js boilerplate app",
     "private": true,
@@ -8,9 +8,9 @@
         "build-profile": "webpack --profile --json > stats.json",
         "build-server": "webpack --config-name server",
         "dev": "ENV=development npm run start-server && npm run watch",
-        "docker-build": "docker build -t node-boilerplate:v1 .",
+        "docker-build": "docker build -t stonks:v1 .",
         "docker-compose": "docker compose up",
-        "docker-run": "docker run --rm -d --name node-boilerplate -p 3000:3000 -v \"$(pwd)\":/app node-boilerplate:v1",
+        "docker-run": "docker run --rm -d --name stonks -p 3000:3000 -v \"$(pwd)\":/app stonks:v1",
         "first-time": "git config core.hooksPath .githooks",
         "start": "node ./dist/server.bundle.js",
         "test-unit": "jest --collectCoverage ./test/unit",
