@@ -1,0 +1,35 @@
+{
+    "name": "node-boilerplate",
+    "version": "1.0.0",
+    "description": "A Node.js boilerplate app",
+    "private": true,
+    "scripts": {
+        "build": "webpack",
+        "build-profile": "webpack --profile --json > stats.json",
+        "build-server": "webpack --config-name server",
+        "dev": "ENV=development npm run start-server && npm run watch",
+        "docker-build": "docker build -t node-boilerplate:v1 .",
+        "docker-compose": "docker compose up",
+        "docker-run": "docker run --rm -d --name node-boilerplate -p 3000:3000 -v \"$(pwd)\":/app node-boilerplate:v1",
+        "first-time": "git config core.hooksPath .githooks",
+        "start": "node ./dist/server.bundle.js",
+        "test-unit": "jest --collectCoverage ./test/unit",
+        "watch": "ENV=development webpack --watch"
+    },
+    "author": "Luke Stanbery",
+    "license": "ISC",
+    "dependencies": {
+        "express": "^4.17.1"
+    },
+    "devDependencies": {
+        "@types/jest": "^27.0.3",
+        "jest": "^27.3.1",
+        "ts-jest": "^27.0.7",
+        "ts-loader": "^9.2.6",
+        "ts-node": "^10.4.0",
+        "typescript": "^4.5.2",
+        "webpack": "^5.64.4",
+        "webpack-cli": "^4.9.1",
+        "webpack-node-externals": "^3.0.0"
+    }
+}
