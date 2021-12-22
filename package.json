@@ -11,6 +11,7 @@
         "docker-compose": "docker compose up",
         "docker-run": "docker run --rm -d --name stonks -p 3000:3000 -v \"$(pwd)\":/app stonks:v1",
         "first-time": "git config core.hooksPath .githooks",
+        "scrape": "node dist/scraper.bundle.js",
         "start": "node ./dist/server.bundle.js",
         "test-unit": "jest --collectCoverage ./test/unit --verbose",
         "watch": "ENV=development webpack --watch"
@@ -18,7 +19,10 @@
     "author": "Luke Stanbery",
     "license": "ISC",
     "dependencies": {
-        "express": "^4.17.1"
+        "axios": "^0.24.0",
+        "express": "^4.17.1",
+        "got": "^11.8.3",
+        "jsdom": "^19.0.0"
     },
     "devDependencies": {
         "@types/jest": "^27.0.3",

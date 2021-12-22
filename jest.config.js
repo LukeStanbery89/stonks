@@ -4,6 +4,6 @@ module.exports = {
     testEnvironment: 'node',
     notify: true,
     moduleNameMapper: {
-        'trade-config.json': '<rootDir>/test/unit/server/__mocks__/trade-config.json',
+        'trade.config.json': '<rootDir>/test/unit/server/trade/__mocks__/trade.config.json',
     },
 };

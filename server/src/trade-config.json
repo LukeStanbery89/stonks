@@ -1,8 +1,0 @@
-{
-    "WHITELIST": [],
-    "BLACKLIST": [
-        "PYPL"
-    ],
-    "TRADE_AMOUNT": 1.00,
-    "MAX_SYMBOLS_PER_JOB": 10
-}

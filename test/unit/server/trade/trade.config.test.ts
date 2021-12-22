@@ -1,4 +1,4 @@
-const tradeConfig = require('../../../server/src/trade-config.json');
+const tradeConfig = require('../../../../server/src/trade/trade.config.json');
 
 describe('Trade Config', () => {
     it('Stocks whitelist entries quantity should never surpass max symbols per job', () => {
@@ -8,7 +8,9 @@ describe('Trade Config', () => {
     it('Stocks whitelist and blacklist should have no shared entries', () => {
         const whitelist = tradeConfig.WHITELIST;
         const blacklist = tradeConfig.BLACKLIST;
-        const sharedEntries = whitelist.filter(symbol => blacklist.includes(symbol));
+        const sharedEntries = whitelist.filter((symbol: string) => blacklist.includes(symbol));
         expect(sharedEntries.length).toEqual(0);
     });
 });
+
+export { };
