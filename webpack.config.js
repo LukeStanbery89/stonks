@@ -8,6 +8,7 @@ module.exports = [
         mode: process.env.ENV || 'production',
         entry: {
             server: './server/server.ts',
+            scraper: './server/src/scrape/scraper-script.ts',
         },
         devtool: 'inline-source-map',
         module: {
