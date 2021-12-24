@@ -1,3 +1,5 @@
+'use strict';
+
 const webScraper = require('./web-scraper');
 const scraperConfig = require('./scraper.config.json');
 

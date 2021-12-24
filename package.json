@@ -5,6 +5,7 @@
     "private": true,
     "scripts": {
         "build": "webpack",
+        "build-dev": "ENV=development webpack",
         "build-profile": "webpack --profile --json > stats.json",
         "build-server": "webpack --config-name server",
         "docker-build": "docker build -t stonks:v1 .",

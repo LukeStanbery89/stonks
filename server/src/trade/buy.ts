@@ -1,3 +1,5 @@
+'use strict';
+
 import { BuyResult } from "../types";
 
 const buySymbols = (): BuyResult[] => {
