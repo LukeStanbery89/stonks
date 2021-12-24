@@ -1,3 +1,5 @@
+'use strict';
+
 import { Position, SellResult } from "../types";
 const sellConditions = require('./sell.config.json');
 

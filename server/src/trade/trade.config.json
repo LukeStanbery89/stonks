@@ -1,15 +1,26 @@
 {
+    "BROKER": "ALPACA",
+    "BROKER_PROVIDERS": {
+        "ALPACA": "AlpacaProvider"
+    },
     "WHITELIST": [],
     "BLACKLIST": [
         "PYPL"
     ],
     "TRADE_AMOUNT": 1.00,
     "MAX_SYMBOLS_PER_JOB": 10,
+    "TRADE_UNITS": "DOLLARS",
     "TRADE_UNIT_TYPES": {
         "DOLLARS": "DOLLARS",
         "SHARES": "SHARES"
     },
-    "TRADE_UNITS": "DOLLARS",
+    "COMMANDS": {
+        "BUY": "buy",
+        "SELL": "sell",
+        "GET_POSITIONS": "getPositions",
+        "GET_POSITION": "getPosition",
+        "GET_ACCOUNT_INFO": "getAccountInfo"
+    },
     "API": {
         "ALPACA": {
             "TEST_API_BASE_URL": "https://paper-api.alpaca.markets",
