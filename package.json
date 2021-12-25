@@ -4,7 +4,7 @@
     "description": "A Node.js boilerplate app",
     "private": true,
     "scripts": {
-        "build": "webpack",
+        "build": "ENV=production webpack",
         "build-dev": "ENV=development webpack",
         "build-profile": "webpack --profile --json > stats.json",
         "build-server": "webpack --config-name server",
@@ -21,6 +21,7 @@
     "license": "ISC",
     "dependencies": {
         "axios": "^0.24.0",
+        "dotenv": "^10.0.0",
         "express": "^4.17.1",
         "got": "^11.8.3",
         "jsdom": "^19.0.0"

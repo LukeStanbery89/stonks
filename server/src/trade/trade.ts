@@ -69,8 +69,8 @@ function getBuyList(): string[] {
 function getAlpacaHeaders() {
     // FIXME: DO NOT COMMIT THESE VALUES
     return {
-        "APCA-API-KEY-ID": "",
-        "APCA-API-SECRET-KEY": "",
+        "APCA-API-KEY-ID": process.env.ALPACA_API_KEY || "",
+        "APCA-API-SECRET-KEY": process.env.ALPACA_API_SECRET || "",
     };
 }
 
