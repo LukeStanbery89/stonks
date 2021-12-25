@@ -14,6 +14,6 @@ assignees: LukeStanbery89
 [List any issues that should be addressed first]
 
 **Merge Strategy**
-[x] Squash (default)
-[ ] Merge
-[ ] Rebase
+- [x] Squash (default)
+- [ ] Merge
+- [ ] Rebase
