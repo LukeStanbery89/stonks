@@ -31,7 +31,11 @@ class Broker {
         !this.broker ? await this.assignBrokerProvider(BROKER) : '';
 
         // TODO: Can we make this work somehow?
-        // return await this.broker[command].apply(null, args);
+        // if (this.broker[command]) {
+        //     return await this.broker[command].apply(null, args);
+        // } else {
+        //     throw new Error(`Invalid command: ${command}`);
+        // }
 
         switch (command) {
             case COMMANDS.BUY:
@@ -44,8 +48,6 @@ class Broker {
                 return await this.broker.getPosition.apply(null, args);
             case COMMANDS.GET_ACCOUNT_INFO:
                 return await this.broker.getAccountInfo.apply(null, args);
-            default:
-                throw new Error(`Invalid command: ${command}`);
         }
     }
 
