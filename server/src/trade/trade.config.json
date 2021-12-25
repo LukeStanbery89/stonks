@@ -1,7 +1,7 @@
 {
     "BROKER": "ALPACA",
     "BROKER_PROVIDERS": {
-        "ALPACA": "AlpacaProvider"
+        "ALPACA": "alpaca"
     },
     "WHITELIST": [],
     "BLACKLIST": [
@@ -9,7 +9,7 @@
     ],
     "TRADE_AMOUNT": 1.00,
     "MAX_SYMBOLS_PER_JOB": 10,
-    "TRADE_UNITS": "DOLLARS",
+    "TRADE_UNIT": "DOLLARS",
     "TRADE_UNIT_TYPES": {
         "DOLLARS": "DOLLARS",
         "SHARES": "SHARES"
