@@ -11,7 +11,7 @@ assignees: LukeStanbery89
 [Share more information about your feature request]
 
 **Dependent On**
-[List any issues that should be addressed first]
+- [List any issues that should be addressed first]
 
 **Merge Strategy**
 - [x] Squash (default)
