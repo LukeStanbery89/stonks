@@ -12,6 +12,3 @@ assignees: LukeStanbery89
 
 ### Dependent On
 - [List any issues that should be addressed first]
-
-### Merge Strategy
-[Squash (default) | Merge | Rebase]
