@@ -7,13 +7,8 @@ assignees: LukeStanbery89
 
 ---
 
-**Description**
+### Description
 [Share more information about your feature request]
 
-**Dependent On**
+### Dependent On
 - [List any issues that should be addressed first]
-
-**Merge Strategy**
-- [x] Squash (default)
-- [ ] Merge
-- [ ] Rebase
