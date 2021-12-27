@@ -8,61 +8,13 @@
         "PYPL"
     ],
     "TRADE_AMOUNT": 1.00,
+    "TRADE_QTY": 1,
     "MAX_SYMBOLS_PER_JOB": 10,
-    "TRADE_UNIT": "DOLLARS",
+    "TRADE_UNIT": "SHARES",
     "TRADE_UNIT_TYPES": {
         "DOLLARS": "DOLLARS",
         "SHARES": "SHARES"
     },
-    "COMMANDS": {
-        "BUY": "buy",
-        "SELL": "sell",
-        "GET_POSITIONS": "getPositions",
-        "GET_POSITION": "getPosition",
-        "GET_ACCOUNT_INFO": "getAccountInfo"
-    },
-    "API": {
-        "ALPACA": {
-            "TEST_API_BASE_URL": "https://paper-api.alpaca.markets",
-            "LIVE_API_BASE_URL": "https://api.alpaca.markets",
-            "ENDPOINTS": {
-                "ACCOUNT": {
-                    "URL": "/v2/account",
-                    "METHOD": "GET"
-                },
-                "POSITIONS": {
-                    "URL": "/v2/positions",
-                    "METHOD": "GET"
-                },
-                "POSITION_FOR_SYMBOL": {
-                    "URL": "/v2/positions/{SYMBOL}",
-                    "METHOD": "GET"
-                },
-                "CANCEL_ALL_ORDERS": {
-                    "URL": "/v2/orders",
-                    "METHOD": "DELETE"
-                },
-                "CANCEL_ORDER": {
-                    "URL": "/v2/orders/{ORDER_ID}",
-                    "METHOD": "DELETE"
-                },
-                "GET_ORDER_LIST": {
-                    "URL": "/v2/orders",
-                    "METHOD": "GET"
-                },
-                "GET_ORDER": {
-                    "URL": "/v2/orders/{ORDER_ID}",
-                    "METHOD": "GET"
-                },
-                "NEW_ORDER": {
-                    "URL": "/v2/orders",
-                    "METHOD": "POST"
-                },
-                "REPLACE_ORDER": {
-                    "URL": "/v2/orders/{ORDER_ID}",
-                    "METHOD": "POST"
-                }
-            }
-        }
-    }
+    "ORDER_TYPE": "market",
+    "TIME_IN_FORCE": "gtc"
 }

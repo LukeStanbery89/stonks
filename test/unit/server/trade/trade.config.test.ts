@@ -1,5 +1,6 @@
-const tradeConfig: any = require('../../../../server/src/trade/trade.config.json');
-import { BrokerProvider } from '../../../../server/src/types';
+'use strict';
+
+const tradeConfig = require('../../../../server/src/trade/trade.config.json');
 
 describe('Trade Config', () => {
     describe('Type Checking', () => {
@@ -37,11 +38,6 @@ describe('Trade Config', () => {
         it('TRADE_UNIT_TYPES is an object consisting entirely of strings', () => {
             expect(tradeConfig.TRADE_UNIT_TYPES.constructor.name).toBe('Object');
             expect(Object.values(tradeConfig.TRADE_UNIT_TYPES).filter(el => typeof el !== 'string').length).toBe(0);
-        });
-
-        it('COMMANDS is an object consisting entirely of strings', () => {
-            expect(tradeConfig.COMMANDS.constructor.name).toBe('Object');
-            expect(Object.values(tradeConfig.COMMANDS).filter(el => typeof el !== 'string').length).toBe(0);
         });
     });
 
