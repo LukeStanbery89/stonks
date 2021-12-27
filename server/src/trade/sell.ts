@@ -1,9 +1,11 @@
 'use strict';
 
 import { Position, SellResult } from "../types";
+import Broker from "./broker/Broker";
+const broker = new Broker();
 const sellConditions = require('./sell.config.json');
 
-const sellPositions = (): Position[] => {
+const sellPositions = (): Promise<SellResult>[] => {
     const positions = getPositions();
     const positionsToSell = positions.filter(isPositionSellable);
     return positionsToSell.map(sellPosition);
@@ -22,9 +24,9 @@ const isPositionSellable = (position: Position): boolean => {
     return sellConditionsNotMet.length > 0;
 };
 
-const sellPosition = (position: Position): SellResult => {
-    // TODO
-    return {};
+const sellPosition = async (position: Position): Promise<SellResult> => {
+    const { symbol, qty } = position;
+    return await broker.sell({ symbol, qty });
 };
 
 module.exports = {

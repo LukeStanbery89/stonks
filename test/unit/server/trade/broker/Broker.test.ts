@@ -1,3 +1,5 @@
+'use strict';
+
 // 1. Import the real trade.config.json
 const tradeConfig = require('../../../../../server/src/trade/trade.config.json');
 
@@ -18,88 +20,125 @@ const mockTradeConfig = {
 jest.doMock('../../../../../server/src/trade/trade.config.json', () => mockTradeConfig);
 
 // 3. Mock the fake provider
-const mockBuy = jest.fn();
-const mockSell = jest.fn();
-const mockGetPositions = jest.fn();
-const mockGetPosition = jest.fn();
-const mockGetAccountInfo = jest.fn();
-jest.doMock('../../../../../server/src/trade/broker/providers/fake-provider', () => {
-    return {
-        buy: mockBuy,
-        sell: mockSell,
-        getPositions: mockGetPositions,
-        getPosition: mockGetPosition,
-        getAccountInfo: mockGetAccountInfo,
-    };
-}, { virtual: true });
+const mockBuy = jest.fn(() => 'mock return');
+const mockSell = jest.fn(() => 'mock return');
+const mockGetPositions = jest.fn(() => 'mock return');
+const mockGetPosition = jest.fn(() => 'mock return');
+const mockGetAccountInfo = jest.fn(() => 'mock return');
 
-// 4. Import and initialize Broker
-import Broker from '../../../../../server/src/trade/broker/Broker';
-const broker = new Broker();
+let Broker;
+let broker: any;
 
 describe('Broker interface', () => {
-    beforeEach(() => {
-        jest.clearAllMocks();
-    });
+    describe('', () => {
+        beforeAll(async () => {
+            // 3 cont.
+            jest.doMock('../../../../../server/src/trade/broker/providers/fake-provider/fake-provider', () => {
+                return {
+                    buy: mockBuy,
+                    sell: mockSell,
+                    getPositions: mockGetPositions,
+                    getPosition: mockGetPosition,
+                    getAccountInfo: mockGetAccountInfo,
+                };
+            }, { virtual: true });
 
-    it('but() command invokes a buy order', async () => {
-        await broker.buy({
-            symbol: 'AAPL',
-            qty: 1,
+            // 4. Import and initialize Broker
+            Broker = await require('../../../../../server/src/trade/broker/Broker').default;
+            broker = new Broker();
         });
-        expect(mockBuy).toHaveBeenCalled();
-    });
 
-    it('sell() command invokes a buy order', async () => {
-        await broker.sell({
-            symbol: 'AAPL',
-            qty: 1,
+        beforeEach(() => {
+            jest.clearAllMocks();
         });
-        expect(mockSell).toHaveBeenCalled();
-    });
 
-    it('getPositions() command fetches owned symbols', async () => {
-        await broker.getPositions();
-        expect(mockGetPositions).toHaveBeenCalled();
-    });
-
-    it('getPosition() command fetches owned symbols', async () => {
-        await broker.getPosition('AAPL');
-        expect(mockGetPosition).toHaveBeenCalled();
-    });
-
-    it('getAccountInfo() command fetches brokerage account information', async () => {
-        await broker.getAccountInfo();
-        expect(mockGetAccountInfo).toHaveBeenCalled();
-    });
-
-    it('invoke() calls the provided function from the provider', async () => {
-        await broker.invoke('buy', {
-            symbol: 'AAPL',
-            qty: 1,
+        it('buy() command calls the provider implementation', async () => {
+            await broker.buy({
+                symbol: 'AAPL',
+                qty: 1,
+            });
+            expect(mockBuy).toHaveBeenCalled();
         });
-        expect(mockBuy).toHaveBeenCalled();
 
-        await broker.invoke('sell', {
-            symbol: 'AAPL',
-            qty: 1,
+        it('sell() command calls the provider implementation', async () => {
+            await broker.sell({
+                symbol: 'AAPL',
+                qty: 1,
+            });
+            expect(mockSell).toHaveBeenCalled();
         });
-        expect(mockSell).toHaveBeenCalled();
 
-        await broker.invoke('getPositions');
-        expect(mockGetPositions).toHaveBeenCalled();
+        it('getPositions() command calls the provider implementation', async () => {
+            await broker.getPositions();
+            expect(mockGetPositions).toHaveBeenCalled();
+        });
 
-        await broker.invoke('getPosition');
-        expect(mockGetPosition).toHaveBeenCalled();
+        it('getPosition() command calls the provider implementation', async () => {
+            await broker.getPosition('AAPL');
+            expect(mockGetPosition).toHaveBeenCalled();
+        });
 
-        await broker.invoke('getAccountInfo');
-        expect(mockGetAccountInfo).toHaveBeenCalled();
+        it('getAccountInfo() command fetches brokerage account information', async () => {
+            await broker.getAccountInfo();
+            expect(mockGetAccountInfo).toHaveBeenCalled();
+        });
+
+        it('invoke() calls the provided function from the provider', async () => {
+            await broker.invoke('buy', {
+                symbol: 'AAPL',
+                qty: 1,
+            });
+            expect(mockBuy).toHaveBeenCalled();
+
+            await broker.invoke('sell', {
+                symbol: 'AAPL',
+                qty: 1,
+            });
+            expect(mockSell).toHaveBeenCalled();
+
+            await broker.invoke('getPositions');
+            expect(mockGetPositions).toHaveBeenCalled();
+
+            await broker.invoke('getPosition');
+            expect(mockGetPosition).toHaveBeenCalled();
+
+            await broker.invoke('getAccountInfo');
+            expect(mockGetAccountInfo).toHaveBeenCalled();
+        });
+
+        it('assignBrokerProvider() throws an error on invalid broker provider', () => {
+            expect(async () => {
+                await broker.assignBrokerProvider('NOT_REAL');
+            }).rejects.toThrow('Cannot find module');
+        });
     });
 
-    it('assignBrokerProvider() throws an error on invalid broker provider', () => {
-        expect(async () => {
-            await broker.assignBrokerProvider('NOT_REAL');
-        }).rejects.toThrow('Cannot find module');
+    describe('', () => {
+        beforeAll(async () => {
+            // Clear the previous mock of fake-provider
+            jest.resetModules();
+
+            // 3 cont.
+            jest.doMock('../../../../../server/src/trade/broker/providers/fake-provider/fake-provider', () => {
+                return {
+                    buy: mockBuy,
+                };
+            }, { virtual: true });
+
+            // 4. Import and initialize Broker
+            Broker = await require('../../../../../server/src/trade/broker/Broker').default;
+            broker = new Broker();
+        });
+
+        it('invoke() should throw an error when given an invalid broker command', () => {
+            return expect(async () => {
+                const result = await broker.invoke('sell', {
+                    symbol: 'AAPL',
+                    qty: 1,
+                });
+                console.debug('result: ', result);
+            }).rejects.toThrow('Invalid broker command');
+        });
     });
 });
 

@@ -1,0 +1,4 @@
+{
+    "LIVE_API_BASE_URL": "https://api.alpaca.markets",
+    "TEST_API_BASE_URL": "https://paper-api.alpaca.markets"
+}

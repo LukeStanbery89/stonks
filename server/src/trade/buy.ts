@@ -1,10 +1,12 @@
 'use strict';
 
 import { BuyResult } from "../types";
+import Broker from "./broker/Broker";
+const broker = new Broker();
+const { TRADE_QTY } = require('./trade.config.json');
 
-const buySymbols = (): BuyResult[] => {
-    const symbolsToBuy = getBuyableSymbols();
-    return symbolsToBuy.map(buy);
+const buySymbols = (): Promise<BuyResult>[] => {
+    return getBuyableSymbols().map(buy);
 };
 
 const getBuyableSymbols = (): string[] => {
@@ -12,9 +14,11 @@ const getBuyableSymbols = (): string[] => {
     return [];
 };
 
-const buy = (symbol: string): BuyResult => {
-    // TODO
-    return {};
+const buy = async (symbol: string): Promise<BuyResult> => {
+    return await broker.buy({
+        symbol,
+        qty: TRADE_QTY,
+    });
 };
 
 module.exports = {
