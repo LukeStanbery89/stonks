@@ -30,7 +30,7 @@ class Broker {
         return await this.invoke(COMMANDS.GET_ACCOUNT_INFO);
     }
 
-    async invoke(command: keyof BrokerProvider, ...args: any): Promise<any> {
+    private async invoke(command: keyof BrokerProvider, ...args: any): Promise<any> {
         !this.broker ? await this.assignBrokerProvider(BROKER) : '';
 
         if (this.broker[command]) {
@@ -40,7 +40,7 @@ class Broker {
         }
     }
 
-    assignBrokerProvider(providerName: string): Promise<BrokerProvider> {
+    private assignBrokerProvider(providerName: string): Promise<BrokerProvider> {
         return new Promise((resolve, reject) => {
             import(`./providers/${BROKER_PROVIDERS[providerName]}/${BROKER_PROVIDERS[providerName]}`).then(module => {
                 this.broker = module.default;
