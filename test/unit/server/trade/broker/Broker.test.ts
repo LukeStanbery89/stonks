@@ -52,7 +52,7 @@ describe('Broker interface', () => {
             jest.clearAllMocks();
         });
 
-        it('buy() command calls the provider implementation', async () => {
+        test('buy() command calls the provider implementation', async () => {
             await broker.buy({
                 symbol: 'AAPL',
                 qty: 1,
@@ -60,7 +60,7 @@ describe('Broker interface', () => {
             expect(mockBuy).toHaveBeenCalled();
         });
 
-        it('sell() command calls the provider implementation', async () => {
+        test('sell() command calls the provider implementation', async () => {
             await broker.sell({
                 symbol: 'AAPL',
                 qty: 1,
@@ -68,22 +68,22 @@ describe('Broker interface', () => {
             expect(mockSell).toHaveBeenCalled();
         });
 
-        it('getPositions() command calls the provider implementation', async () => {
+        test('getPositions() command calls the provider implementation', async () => {
             await broker.getPositions();
             expect(mockGetPositions).toHaveBeenCalled();
         });
 
-        it('getPosition() command calls the provider implementation', async () => {
+        test('getPosition() command calls the provider implementation', async () => {
             await broker.getPosition('AAPL');
             expect(mockGetPosition).toHaveBeenCalled();
         });
 
-        it('getAccountInfo() command fetches brokerage account information', async () => {
+        test('getAccountInfo() command fetches brokerage account information', async () => {
             await broker.getAccountInfo();
             expect(mockGetAccountInfo).toHaveBeenCalled();
         });
 
-        it('invoke() calls the provided function from the provider', async () => {
+        test('invoke() calls the provided function from the provider', async () => {
             await broker.invoke('buy', {
                 symbol: 'AAPL',
                 qty: 1,
@@ -106,7 +106,7 @@ describe('Broker interface', () => {
             expect(mockGetAccountInfo).toHaveBeenCalled();
         });
 
-        it('assignBrokerProvider() throws an error on invalid broker provider', () => {
+        test('assignBrokerProvider() throws an error on invalid broker provider', () => {
             expect(async () => {
                 await broker.assignBrokerProvider('NOT_REAL');
             }).rejects.toThrow('Cannot find module');
@@ -130,7 +130,7 @@ describe('Broker interface', () => {
             broker = new Broker();
         });
 
-        it('invoke() should throw an error when given an invalid broker command', () => {
+        test('invoke() should throw an error when given an invalid broker command', () => {
             return expect(async () => {
                 const result = await broker.invoke('sell', {
                     symbol: 'AAPL',

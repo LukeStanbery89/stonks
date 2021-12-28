@@ -2,7 +2,7 @@ const { sellPositions, getPositions, isPositionSellable, sellPosition } = requir
 
 describe('Sell module', () => {
     describe('sellPositions()', () => {
-        it('DUMMY TEST', () => {
+        test('DUMMY TEST', () => {
             // FIXME
             expect(true).toBeTruthy();
         });
