@@ -1,4 +1,4 @@
-const { sellPositions, getPositions, isPositionSellable, sellPosition } = require('../../../../server/src/trade/sell/sell.ts');
+const { sellPositions, getPositions, isPositionSellable, sellPosition } = require('../../../../../server/src/trade/sell/sell.ts');
 
 describe('Sell module', () => {
     describe('sellPositions()', () => {

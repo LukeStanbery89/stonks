@@ -1,4 +1,4 @@
-const { buySymbols, getBuyableSymbols, buy } = require('../../../../server/src/trade/buy/buy.ts');
+const { buySymbols, getBuyableSymbols, buy } = require('../../../../../server/src/trade/buy/buy.ts');
 
 describe('Buy module', () => {
     describe('buySymbols()', () => {

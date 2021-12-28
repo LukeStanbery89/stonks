@@ -8,3 +8,5 @@ describe('Broker Config', () => {
         expect(Object.values(brokerConfig.COMMANDS).filter(el => typeof el !== 'string').length).toBe(0);
     });
 });
+
+export { };
