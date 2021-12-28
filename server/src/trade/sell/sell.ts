@@ -1,9 +1,9 @@
 'use strict';
 
-import Broker from "./broker/Broker";
-import { Position, SellResult } from "./types";
+import Broker from "../broker/Broker";
+import { Position, SellResult } from "../types";
 const broker = new Broker();
-const sellConditions = require('./sell.config.json');
+const sellConfig = require('./sell.config.json');
 
 const sellPositions = (): Promise<SellResult>[] => {
     const positions = getPositions();
@@ -17,7 +17,7 @@ const getPositions = (): Position[] => {
 };
 
 const isPositionSellable = (position: Position): boolean => {
-    const sellConditionsNotMet = sellConditions.conditions.filter((condition: object) => {
+    const sellConditionsNotMet = sellConfig.conditions.filter((condition: object) => {
         // TODO
         return true || false;
     });

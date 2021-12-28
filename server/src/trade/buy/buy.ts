@@ -1,9 +1,9 @@
 'use strict';
 
-import Broker from "./broker/Broker";
-import { BuyResult } from "./types";
+import Broker from "../broker/Broker";
+import { BuyResult } from "../types";
 const broker = new Broker();
-const { TRADE_QTY } = require('./trade.config.json');
+const { TRADE_QTY } = require('../trade.config.json');
 
 const buySymbols = (): Promise<BuyResult>[] => {
     return getBuyableSymbols().map(buy);
