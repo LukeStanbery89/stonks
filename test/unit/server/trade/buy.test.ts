@@ -1,3 +1,5 @@
+const { buySymbols, getBuyableSymbols, buy } = require('../../../../server/src/trade/buy');
+
 describe('Buy module', () => {
     describe('buySymbols()', () => {
         it('DUMMY TEST', () => {

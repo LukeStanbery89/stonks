@@ -188,7 +188,7 @@ const getAlpacaBaseUrl = () => {
     }
 };
 
-const exports: BrokerProvider = {
+const exp: BrokerProvider = {
     buy,
     sell,
     getAccountInfo,
@@ -196,4 +196,4 @@ const exports: BrokerProvider = {
     getPosition,
 };
 
-export default exports;
+export default exp;
