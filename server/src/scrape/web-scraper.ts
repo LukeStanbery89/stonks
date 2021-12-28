@@ -1,7 +1,7 @@
 const got = require('got');
 const { JSDOM } = require('jsdom');
 
-import { Source } from '../types';
+import { Source } from "./types";
 
 const scrape = async (sourceConfig: Source): Promise<any> => {
     const response = await got(sourceConfig.url);
