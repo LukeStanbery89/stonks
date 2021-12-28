@@ -174,8 +174,8 @@ const getAccountInfo = async (): Promise<AlpacaAccountInfo> => {
 
 const getAlpacaHeaders = () => {
     return {
-        "APCA-API-KEY-ID": process.env.ALPACA_API_KEY || "",
-        "APCA-API-SECRET-KEY": process.env.ALPACA_API_SECRET || "",
+        "APCA-API-KEY-ID": process.env.ALPACA_API_KEY,
+        "APCA-API-SECRET-KEY": process.env.ALPACA_API_SECRET,
     };
 };
 
