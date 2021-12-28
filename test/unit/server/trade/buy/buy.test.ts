@@ -2,7 +2,7 @@ const { buySymbols, getBuyableSymbols, buy } = require('../../../../../server/sr
 
 describe('Buy module', () => {
     describe('buySymbols()', () => {
-        it('DUMMY TEST', () => {
+        test('DUMMY TEST', () => {
             // FIXME
             expect(true).toBeTruthy();
         });

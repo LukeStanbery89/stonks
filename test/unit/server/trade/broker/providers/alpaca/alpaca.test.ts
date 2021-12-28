@@ -1,7 +1,7 @@
 import buy from '../../../../../../../server/src/trade/broker/providers/alpaca/alpaca';
 
 describe('Alpaca Provider', () => {
-    it('DUMMY TEST', () => {
+    test('DUMMY TEST', () => {
         // FIXME
         expect(true).toBeTruthy();
         expect(buy).not.toBeNull();
