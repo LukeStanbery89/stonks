@@ -4,19 +4,12 @@ const axios = require('axios');
 const { BROKER, ORDER_TYPE, TIME_IN_FORCE } = require('../../../trade.config.json');
 const { LIVE_API_BASE_URL, TEST_API_BASE_URL } = require('./config.json');
 
-import {
-    AxiosResponse,
-    BrokerProvider,
-    BuyOrder,
-    BuyResult,
-    JSObject,
-    Position,
-    SellOrder,
-    SellResult
-} from "../../../../types";
-import { AlpacaAccountInfo } from "./types";
+import { AxiosResponse, JSObject } from "../../../../types";
+import { BuyOrder, SellOrder } from "../../../types";
+import { BrokerProvider } from "../../types";
+import { AlpacaAccountInfo, AlpacaBuyResult, AlpacaPosition, AlpacaSellResult } from "./types";
 
-const buy = async (buyOrder: BuyOrder): Promise<BuyResult> => {
+const buy = async (buyOrder: BuyOrder): Promise<AlpacaBuyResult> => {
     return new Promise((resolve, reject) => {
         console.log('ALPACA buyOrder: ', buyOrder);
         axios({
@@ -55,7 +48,7 @@ const buy = async (buyOrder: BuyOrder): Promise<BuyResult> => {
     });
 };
 
-const sell = async (sellOrder: SellOrder): Promise<SellResult> => {
+const sell = async (sellOrder: SellOrder): Promise<AlpacaSellResult> => {
     return new Promise((resolve, reject) => {
         console.log('ALPACA buyOrder: ', sellOrder);
         axios({
@@ -77,7 +70,6 @@ const sell = async (sellOrder: SellOrder): Promise<SellResult> => {
                 return resolve({
                     request_id: response.data.id,
                     symbol: response.data.symbol,
-                    // notional: parseFloat(response.data.notional),
                     qty: parseFloat(response.data.qty),
                     security_price: 0.00, // TODO Figure out where to get this from
                     broker: BROKER,
@@ -94,7 +86,7 @@ const sell = async (sellOrder: SellOrder): Promise<SellResult> => {
     });
 };
 
-const getPositions = async (): Promise<Position[]> => {
+const getPositions = async (): Promise<AlpacaPosition[]> => {
     return new Promise((resolve, reject) => {
         console.log('ALPACA positions');
         axios({
@@ -105,7 +97,7 @@ const getPositions = async (): Promise<Position[]> => {
         }).then((response: AxiosResponse) => {
             console.log('response: ', response);
             if (response.status === 200) {
-                return resolve(response.data.map((position: JSObject): Position => {
+                return resolve(response.data.map((position: JSObject): AlpacaPosition => {
                     return {
                         id: position.asset_id,
                         symbol: position.symbol,
@@ -125,7 +117,7 @@ const getPositions = async (): Promise<Position[]> => {
     });
 };
 
-const getPosition = async (symbol: string): Promise<Position> => {
+const getPosition = async (symbol: string): Promise<AlpacaPosition> => {
     return new Promise((resolve, reject) => {
         console.log('ALPACA positions');
         axios({
