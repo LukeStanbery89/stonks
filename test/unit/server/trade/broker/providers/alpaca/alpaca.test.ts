@@ -1,6 +1,6 @@
 let alpaca: any;
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
-import { AlpacaAccountInfo, AlpacaBuyResult, AlpacaPosition, AlpacaSellResult } from '../../../../../../../server/src/trade/broker/providers/alpaca/types';
+import { AlpacaAccountInfo, AlpacaBuyResult, AlpacaPosition, AlpacaSellResult } from '../../../../../../../server/src/trade/broker/providers/alpaca/alpaca.types';
 
 process.env.ALPACA_API_KEY = 'fake-api-key';
 process.env.ALPACA_API_SECRET = 'fake-api-secret';
@@ -8,7 +8,7 @@ const oldEnv = process.env;
 
 describe('Alpaca Provider', () => {
     beforeAll(() => {
-        jest.doMock('../../../../../../../server/src/trade/broker/providers/alpaca/config.json', () => {
+        jest.doMock('../../../../../../../server/src/trade/broker/providers/alpaca/alpaca.config.json', () => {
             return {
                 LIVE_API_BASE_URL: 'https://live.example.com',
                 TEST_API_BASE_URL: 'https://test.example.com',

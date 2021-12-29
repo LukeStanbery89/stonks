@@ -1,4 +1,4 @@
-import { AccountInfo, BuyResult, Position, SellResult } from "../../../../trade/types";
+import { AccountInfo, BuyResult, Position, SellResult } from "../../../trade.types";
 
 export interface AlpacaAccountInfo extends AccountInfo {
     broker: 'ALPACA',

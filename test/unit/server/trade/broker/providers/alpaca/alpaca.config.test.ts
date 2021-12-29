@@ -1,6 +1,6 @@
 'use strict';
 
-const alpacaConfig = require('../../../../../../../server/src/trade/broker/providers/alpaca/config.json');
+const alpacaConfig = require('../../../../../../../server/src/trade/broker/providers/alpaca/alpaca.config.json');
 
 describe("Alpaca Provider Config", () => {
     test("Live API endpoint domain is valid URL", () => {
