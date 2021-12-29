@@ -8,3 +8,5 @@ describe('Buy Module Config', () => {
         });
     });
 });
+
+export { };

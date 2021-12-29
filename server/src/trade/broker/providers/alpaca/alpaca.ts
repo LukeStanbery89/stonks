@@ -1,17 +1,19 @@
 'use strict';
 
 const axios = require('axios');
-const { BROKER, ORDER_TYPE, TIME_IN_FORCE } = require('../../../trade.config.json');
+const { ORDER_TYPE, TIME_IN_FORCE } = require('../../../trade.config.json');
 const { LIVE_API_BASE_URL, TEST_API_BASE_URL } = require('./config.json');
+const BROKER = 'ALPACA';
 
-import { AxiosResponse, JSObject } from "../../../../types";
+import { AxiosResponse } from "axios";
+import { JSObject } from "../../../../types";
 import { BuyOrder, SellOrder } from "../../../types";
 import { BrokerProvider } from "../../types";
 import { AlpacaAccountInfo, AlpacaBuyResult, AlpacaPosition, AlpacaSellResult } from "./types";
 
 const buy = async (buyOrder: BuyOrder): Promise<AlpacaBuyResult> => {
     return new Promise((resolve, reject) => {
-        console.log('ALPACA buyOrder: ', buyOrder);
+        // console.log('ALPACA buyOrder: ', buyOrder);
         axios({
             method: 'POST',
             baseURL: getAlpacaBaseUrl(),
@@ -26,9 +28,9 @@ const buy = async (buyOrder: BuyOrder): Promise<AlpacaBuyResult> => {
                 time_in_force: TIME_IN_FORCE,
             },
         }).then((response: AxiosResponse) => {
-            console.log('response: ', response);
+            // console.log('response: ', response);
             if (response.status === 200) {
-                return resolve({
+                const result: AlpacaBuyResult = {
                     request_id: response.data.id,
                     symbol: response.data.symbol,
                     notional: parseFloat(response.data.notional),
@@ -37,9 +39,10 @@ const buy = async (buyOrder: BuyOrder): Promise<AlpacaBuyResult> => {
                     broker: BROKER,
                     statusCode: response.status,
                     statusText: response.data.status,
-                    timestamp: response.data.filled_at,
-                    response: response.data,
-                });
+                    timestamp: response.data.submitted_at,
+                    response,
+                };
+                return resolve(result);
             }
             throw new Error(`Buy order failed with error: ${response.status} - ${response.statusText}`);
         }).catch((error: Error) => {
@@ -50,7 +53,7 @@ const buy = async (buyOrder: BuyOrder): Promise<AlpacaBuyResult> => {
 
 const sell = async (sellOrder: SellOrder): Promise<AlpacaSellResult> => {
     return new Promise((resolve, reject) => {
-        console.log('ALPACA buyOrder: ', sellOrder);
+        // console.log('ALPACA sellOrder: ', sellOrder);
         axios({
             method: 'POST',
             baseURL: getAlpacaBaseUrl(),
@@ -65,7 +68,7 @@ const sell = async (sellOrder: SellOrder): Promise<AlpacaSellResult> => {
                 time_in_force: TIME_IN_FORCE,
             },
         }).then((response: AxiosResponse) => {
-            console.log('response: ', response);
+            // console.log('response: ', response);
             if (response.status === 200) {
                 return resolve({
                     request_id: response.data.id,
@@ -76,7 +79,7 @@ const sell = async (sellOrder: SellOrder): Promise<AlpacaSellResult> => {
                     statusCode: response.status,
                     statusText: response.data.status,
                     timestamp: response.data.filled_at,
-                    response: response.data,
+                    response,
                 });
             }
             throw new Error(`Sell order failed with error: ${response.status} - ${response.statusText}`);
@@ -88,14 +91,14 @@ const sell = async (sellOrder: SellOrder): Promise<AlpacaSellResult> => {
 
 const getPositions = async (): Promise<AlpacaPosition[]> => {
     return new Promise((resolve, reject) => {
-        console.log('ALPACA positions');
+        // console.log('ALPACA positions');
         axios({
             method: 'GET',
             baseURL: getAlpacaBaseUrl(),
             url: '/v2/positions',
             headers: getAlpacaHeaders(),
         }).then((response: AxiosResponse) => {
-            console.log('response: ', response);
+            // console.log('response: ', response);
             if (response.status === 200) {
                 return resolve(response.data.map((position: JSObject): AlpacaPosition => {
                     return {
@@ -106,7 +109,7 @@ const getPositions = async (): Promise<AlpacaPosition[]> => {
                         current_price: position.current_price,
                         lastday_price: position.lastday_price,
                         broker: BROKER,
-                        response: position,
+                        response,
                     };
                 }));
             }
@@ -119,14 +122,14 @@ const getPositions = async (): Promise<AlpacaPosition[]> => {
 
 const getPosition = async (symbol: string): Promise<AlpacaPosition> => {
     return new Promise((resolve, reject) => {
-        console.log('ALPACA positions');
+        // console.log('ALPACA positions');
         axios({
             method: 'GET',
             baseURL: getAlpacaBaseUrl(),
             url: `/v2/positions/${symbol}`,
             headers: getAlpacaHeaders(),
         }).then((response: AxiosResponse) => {
-            console.log('response: ', response);
+            // console.log('response: ', response);
             if (response.status === 200) {
                 return resolve({
                     id: response.data.asset_id,
@@ -136,7 +139,7 @@ const getPosition = async (symbol: string): Promise<AlpacaPosition> => {
                     current_price: response.data.current_price,
                     lastday_price: response.data.lastday_price,
                     broker: BROKER,
-                    response: response.data,
+                    response,
                 });
             }
             throw new Error(`Buy order failed with error: ${response.status} - ${response.statusText}`);
@@ -148,21 +151,21 @@ const getPosition = async (symbol: string): Promise<AlpacaPosition> => {
 
 const getAccountInfo = async (): Promise<AlpacaAccountInfo> => {
     return new Promise((resolve, reject) => {
-        console.log('ALPACA positions');
+        // console.log('ALPACA positions');
         axios({
             method: 'GET',
             baseURL: getAlpacaBaseUrl(),
             url: '/v2/account',
             headers: getAlpacaHeaders(),
         }).then((response: AxiosResponse) => {
-            console.log('response: ', response);
+            // console.log('response: ', response);
             if (response.status === 200) {
                 return resolve({
                     account_number: response.data.account_number,
                     broker: BROKER,
                     funds: response.data.equity, // TODO: Make sure we're using the correct value here
                     pattern_day_trader: response.data.pattern_day_trader,
-                    response: response.data,
+                    response,
                 });
             }
             throw new Error(`Buy order failed with error: ${response.status} - ${response.statusText}`);
@@ -174,8 +177,8 @@ const getAccountInfo = async (): Promise<AlpacaAccountInfo> => {
 
 const getAlpacaHeaders = () => {
     return {
-        "APCA-API-KEY-ID": process.env.ALPACA_API_KEY,
-        "APCA-API-SECRET-KEY": process.env.ALPACA_API_SECRET,
+        'APCA-API-KEY-ID': process.env.ALPACA_API_KEY,
+        'APCA-API-SECRET-KEY': process.env.ALPACA_API_SECRET,
     };
 };
 

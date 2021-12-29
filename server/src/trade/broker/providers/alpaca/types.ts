@@ -7,6 +7,7 @@ export interface AlpacaAccountInfo extends AccountInfo {
 
 export interface AlpacaBuyResult extends BuyResult {
     broker: 'ALPACA',
+    statusText: AlpacaOrderStatus,
 }
 
 export interface AlpacaSellResult extends SellResult {
@@ -16,3 +17,6 @@ export interface AlpacaSellResult extends SellResult {
 export interface AlpacaPosition extends Position {
     broker: 'ALPACA',
 }
+
+export type AlpacaOrderStatus = 'new' | 'partially_filled' | 'filled' | 'done_for_day' |
+    'canceled' | 'expired' | 'replaced' | 'pending_cancel' | 'pending_replace';

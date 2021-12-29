@@ -1,3 +1,4 @@
+import { AxiosResponse } from "axios";
 import { HttpStatusCode, JSObject } from "../types";
 
 export type BuyOrder = {
@@ -19,14 +20,14 @@ export type Position = {
     lastday_price?: number,
     change_today?: number,
     broker: string,
-    response: JSObject,
+    response: AxiosResponse,
 };
 
 export type AccountInfo = {
     account_number: string,
     broker: string,
     funds: number,
-    response: JSObject,
+    response: AxiosResponse,
 };
 
 export type BuyResult = {
@@ -40,7 +41,7 @@ export type BuyResult = {
     statusText: string,
     errors?: string[],
     timestamp?: string,
-    response: any,
+    response: AxiosResponse,
 };
 
 export type SellResult = {
@@ -54,5 +55,5 @@ export type SellResult = {
     statusText: string,
     errors?: string[],
     timestamp?: string,
-    response: any,
+    response: AxiosResponse,
 };
