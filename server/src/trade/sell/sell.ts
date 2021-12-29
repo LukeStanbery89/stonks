@@ -1,7 +1,7 @@
 'use strict';
 
 import Broker from "../broker/Broker";
-import { Position, SellResult } from "../types";
+import { Position, SellResult } from "../trade.types";
 const broker = new Broker();
 const sellConfig = require('./sell.config.json');
 

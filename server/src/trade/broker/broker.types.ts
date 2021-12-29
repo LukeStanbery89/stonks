@@ -1,4 +1,4 @@
-import { AccountInfo, BuyOrder, BuyResult, Position, SellOrder, SellResult } from "../types";
+import { AccountInfo, BuyOrder, BuyResult, Position, SellOrder, SellResult } from "../trade.types";
 
 export type BuyFunction = (buyOrder: BuyOrder) => Promise<BuyResult>;
 export type SellFunction = (sellOrder: SellOrder) => Promise<SellResult>;

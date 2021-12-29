@@ -2,14 +2,14 @@
 
 const axios = require('axios');
 const { ORDER_TYPE, TIME_IN_FORCE } = require('../../../trade.config.json');
-const { LIVE_API_BASE_URL, TEST_API_BASE_URL } = require('./config.json');
+const { LIVE_API_BASE_URL, TEST_API_BASE_URL } = require('./alpaca.config.json');
 const BROKER = 'ALPACA';
 
 import { AxiosResponse } from "axios";
 import { JSObject } from "../../../../types";
-import { BuyOrder, SellOrder } from "../../../types";
-import { BrokerProvider } from "../../types";
-import { AlpacaAccountInfo, AlpacaBuyResult, AlpacaPosition, AlpacaSellResult } from "./types";
+import { BuyOrder, SellOrder } from "../../../trade.types";
+import { BrokerProvider } from "../../broker.types";
+import { AlpacaAccountInfo, AlpacaBuyResult, AlpacaPosition, AlpacaSellResult } from "./alpaca.types";
 
 const buy = async (buyOrder: BuyOrder): Promise<AlpacaBuyResult> => {
     return new Promise((resolve, reject) => {

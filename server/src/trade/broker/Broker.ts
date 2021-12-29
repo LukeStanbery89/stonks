@@ -1,7 +1,7 @@
 'use strict';
 
-import { BuyOrder, BuyResult, SellOrder, SellResult, Position, AccountInfo } from "../types";
-import { BrokerProvider } from "./types";
+import { BuyOrder, BuyResult, SellOrder, SellResult, Position, AccountInfo } from "../trade.types";
+import { BrokerProvider } from "./broker.types";
 
 
 const { BROKER, BROKER_PROVIDERS } = require('../trade.config.json');
