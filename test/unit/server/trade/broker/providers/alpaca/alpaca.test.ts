@@ -10,8 +10,8 @@ describe('Alpaca Provider', () => {
     beforeAll(() => {
         jest.doMock('../../../../../../../server/src/trade/broker/providers/alpaca/alpaca.config.json', () => {
             return {
-                LIVE_API_BASE_URL: 'https://live.example.com',
-                TEST_API_BASE_URL: 'https://test.example.com',
+                liveApiBaseUrl: 'https://live.example.com',
+                testApiBaseUrl: 'https://test.example.com',
             };
         });
     });

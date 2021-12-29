@@ -1,5 +1,5 @@
 {
-    "COMMANDS": {
+    "commands": {
         "BUY": "buy",
         "SELL": "sell",
         "GET_POSITIONS": "getPositions",

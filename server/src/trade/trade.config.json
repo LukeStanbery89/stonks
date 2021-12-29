@@ -1,20 +1,20 @@
 {
-    "BROKER": "ALPACA",
-    "BROKER_PROVIDERS": {
+    "broker": "ALPACA",
+    "brokerProviders": {
         "ALPACA": "alpaca"
     },
-    "WHITELIST": [],
-    "BLACKLIST": [
+    "whitelist": [],
+    "blacklist": [
         "PYPL"
     ],
-    "TRADE_AMOUNT": 1.00,
-    "TRADE_QTY": 1,
-    "MAX_SYMBOLS_PER_JOB": 10,
-    "TRADE_UNIT": "SHARES",
-    "TRADE_UNIT_TYPES": {
+    "tradeAmount": 1.00,
+    "tradeQty": 1,
+    "maxSymbolsPerJob": 10,
+    "tradeUnit": "SHARES",
+    "tradeUnitTypes": {
         "DOLLARS": "DOLLARS",
         "SHARES": "SHARES"
     },
-    "ORDER_TYPE": "market",
-    "TIME_IN_FORCE": "gtc"
+    "orderType": "market",
+    "timeInForce": "gtc"
 }
