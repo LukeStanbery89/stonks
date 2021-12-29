@@ -12,12 +12,3 @@ export type HttpStatusCode = 100 | 101 | 102 | 200 | 201 | 202 | 203 | 204 |
 export type JSObject = {
     [key: string]: any,
 };
-
-export type AxiosResponse = {
-    data: JSObject,
-    status: HttpStatusCode,
-    statusText: string,
-    headers: JSObject,
-    config: JSObject,
-    request: JSObject,
-};
