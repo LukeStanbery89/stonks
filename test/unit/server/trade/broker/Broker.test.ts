@@ -5,11 +5,11 @@ const tradeConfig = require('../../../../../server/src/trade/trade.config.json')
 
 // 2. Mock trade.config.json
 const mockTradeConfig = {
-    "BROKER": "FAKE_BROKER",
-    "BROKER_PROVIDERS": {
+    "broker": "FAKE_BROKER",
+    "brokerProviders": {
         "FAKE_BROKER": "fake-provider",
     },
-    "COMMANDS": {
+    "commands": {
         "BUY": "buy",
         "SELL": "sell",
         "GET_POSITIONS": "getPositions",

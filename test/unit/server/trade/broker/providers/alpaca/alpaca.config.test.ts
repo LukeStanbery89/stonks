@@ -4,11 +4,11 @@ const alpacaConfig = require('../../../../../../../server/src/trade/broker/provi
 
 describe("Alpaca Provider Config", () => {
     test("Live API endpoint domain is valid URL", () => {
-        expect(isValidHttpUrl(alpacaConfig.LIVE_API_BASE_URL)).toBe(true);
+        expect(isValidHttpUrl(alpacaConfig.liveApiBaseUrl)).toBe(true);
     });
 
     test("Test API endpoint domain is valid URL", () => {
-        expect(isValidHttpUrl(alpacaConfig.TEST_API_BASE_URL)).toBe(true);
+        expect(isValidHttpUrl(alpacaConfig.testApiBaseUrl)).toBe(true);
     });
 });
 

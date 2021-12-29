@@ -1,8 +1,8 @@
 'use strict';
 
 const axios = require('axios');
-const { ORDER_TYPE, TIME_IN_FORCE } = require('../../../trade.config.json');
-const { LIVE_API_BASE_URL, TEST_API_BASE_URL } = require('./alpaca.config.json');
+const { orderType, timeInForce } = require('../../../trade.config.json');
+const { liveApiBaseUrl, testApiBaseUrl } = require('./alpaca.config.json');
 const BROKER = 'ALPACA';
 
 import { AxiosResponse } from "axios";
@@ -24,8 +24,8 @@ const buy = async (buyOrder: BuyOrder): Promise<AlpacaBuyResult> => {
                 qty: buyOrder.qty,
                 // notional: buyOrder.notional, // TODO: Implement full share/fractional share toggle
                 side: 'buy',
-                type: ORDER_TYPE,
-                time_in_force: TIME_IN_FORCE,
+                type: orderType,
+                time_in_force: timeInForce,
             },
         }).then((response: AxiosResponse) => {
             // console.log('response: ', response);
@@ -64,8 +64,8 @@ const sell = async (sellOrder: SellOrder): Promise<AlpacaSellResult> => {
                 qty: sellOrder.qty, // TODO: Implement full share/fractional share toggle
                 // notional: sellOrder.notional,
                 side: 'sell',
-                type: ORDER_TYPE,
-                time_in_force: TIME_IN_FORCE,
+                type: orderType,
+                time_in_force: timeInForce,
             },
         }).then((response: AxiosResponse) => {
             // console.log('response: ', response);
@@ -185,9 +185,9 @@ const getAlpacaHeaders = () => {
 const getAlpacaBaseUrl = () => {
     switch (process.env.ENV) {
         case 'production':
-            return LIVE_API_BASE_URL;
+            return liveApiBaseUrl;
         default:
-            return TEST_API_BASE_URL;
+            return testApiBaseUrl;
     }
 };
 

@@ -3,7 +3,7 @@
 import Broker from "../broker/Broker";
 import { BuyResult } from "../trade.types";
 const broker = new Broker();
-const { TRADE_QTY } = require('../trade.config.json');
+const { tradeQty } = require('../trade.config.json');
 
 const buySymbols = (): Promise<BuyResult>[] => {
     return getBuyableSymbols().map(buy);
@@ -17,7 +17,7 @@ const getBuyableSymbols = (): string[] => {
 const buy = async (symbol: string): Promise<BuyResult> => {
     return await broker.buy({
         symbol,
-        qty: TRADE_QTY,
+        qty: tradeQty,
     });
 };
 

@@ -4,34 +4,34 @@ import { BuyOrder, BuyResult, SellOrder, SellResult, Position, AccountInfo } fro
 import { BrokerProvider } from "./broker.types";
 
 
-const { BROKER, BROKER_PROVIDERS } = require('../trade.config.json');
-const { COMMANDS } = require('./broker.config.json');
+const { broker, brokerProviders } = require('../trade.config.json');
+const { commands } = require('./broker.config.json');
 
 class Broker {
     private broker!: BrokerProvider;
 
     async buy(buyOrder: BuyOrder): Promise<BuyResult> {
-        return this.invoke(COMMANDS.BUY, buyOrder);
+        return this.invoke(commands.BUY, buyOrder);
     }
 
     async sell(sellOrder: SellOrder): Promise<SellResult> {
-        return await this.invoke(COMMANDS.SELL, sellOrder);
+        return await this.invoke(commands.SELL, sellOrder);
     }
 
     async getPositions(): Promise<Position[]> {
-        return await this.invoke(COMMANDS.GET_POSITIONS);
+        return await this.invoke(commands.GET_POSITIONS);
     }
 
     async getPosition(symbol: string): Promise<Position[]> {
-        return await this.invoke(COMMANDS.GET_POSITION, symbol);
+        return await this.invoke(commands.GET_POSITION, symbol);
     }
 
     async getAccountInfo(): Promise<AccountInfo> {
-        return await this.invoke(COMMANDS.GET_ACCOUNT_INFO);
+        return await this.invoke(commands.GET_ACCOUNT_INFO);
     }
 
     private async invoke(command: keyof BrokerProvider, ...args: any): Promise<any> {
-        !this.broker ? await this.assignBrokerProvider(BROKER) : '';
+        !this.broker ? await this.assignBrokerProvider(broker) : '';
 
         if (this.broker[command]) {
             return await this.broker[command](args);
@@ -42,7 +42,7 @@ class Broker {
 
     private assignBrokerProvider(providerName: string): Promise<BrokerProvider> {
         return new Promise((resolve, reject) => {
-            import(`./providers/${BROKER_PROVIDERS[providerName]}/${BROKER_PROVIDERS[providerName]}`).then(module => {
+            import(`./providers/${brokerProviders[providerName]}/${brokerProviders[providerName]}`).then(module => {
                 this.broker = module.default;
                 resolve(this.broker);
             }).catch(e => reject(e));
