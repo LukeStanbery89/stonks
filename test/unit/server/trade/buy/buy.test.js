@@ -1,4 +1,4 @@
-const { buySymbols, getBuyableSymbols, buy } = require('../../../../../server/src/trade/buy/buy.ts');
+import { buySymbols } from '../../../../../server/src/trade/buy/buy';
 
 describe('Buy module', () => {
     describe('buySymbols()', () => {

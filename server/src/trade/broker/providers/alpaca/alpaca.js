@@ -1,16 +1,11 @@
 'use strict';
 
-const axios = require('axios');
-const { orderType, timeInForce } = require('../../../trade.config.json');
-const { liveApiBaseUrl, testApiBaseUrl } = require('./alpaca.config.json');
+import axios from 'axios';
+import tradeConfig from '../../../trade.config.json';
+import alpacaConfig from './alpaca.config.json';
 const BROKER = 'ALPACA';
 
-import { AxiosResponse } from "axios";
-import { JSObject } from "../../../../types";
-import { BuyOrder, SellOrder } from "../../../trade.types";
-import { AlpacaAccountInfo, AlpacaAsset, AlpacaBuyResult, AlpacaPosition, AlpacaProvider, AlpacaSellResult } from "./alpaca.types";
-
-const buy = async (buyOrder: BuyOrder): Promise<AlpacaBuyResult> => {
+const buy = async (buyOrder) => {
     return new Promise((resolve, reject) => {
         axios({
             method: 'POST',
@@ -22,12 +17,12 @@ const buy = async (buyOrder: BuyOrder): Promise<AlpacaBuyResult> => {
                 qty: buyOrder.qty,
                 // notional: buyOrder.notional, // TODO: Implement full share/fractional share toggle
                 side: 'buy',
-                type: orderType,
-                time_in_force: timeInForce,
+                type: tradeConfig.orderType,
+                time_in_force: tradeConfig.timeInForce,
             },
-        }).then((response: AxiosResponse) => {
+        }).then((response) => {
             if (response.status === 200) {
-                const result: AlpacaBuyResult = {
+                const result = {
                     request_id: response.data.id,
                     symbol: response.data.symbol,
                     notional: parseFloat(response.data.notional),
@@ -42,13 +37,13 @@ const buy = async (buyOrder: BuyOrder): Promise<AlpacaBuyResult> => {
                 return resolve(result);
             }
             throw new Error(`Buy order failed with error: ${response.status} - ${response.statusText}`);
-        }).catch((error: Error) => {
+        }).catch((error) => {
             return reject(error);
         });
     });
 };
 
-const sell = async (sellOrder: SellOrder): Promise<AlpacaSellResult> => {
+const sell = async (sellOrder) => {
     return new Promise((resolve, reject) => {
         axios({
             method: 'POST',
@@ -60,10 +55,10 @@ const sell = async (sellOrder: SellOrder): Promise<AlpacaSellResult> => {
                 qty: sellOrder.qty, // TODO: Implement full share/fractional share toggle
                 // notional: sellOrder.notional,
                 side: 'sell',
-                type: orderType,
-                time_in_force: timeInForce,
+                type: tradeConfig.orderType,
+                time_in_force: tradeConfig.timeInForce,
             },
-        }).then((response: AxiosResponse) => {
+        }).then((response) => {
             if (response.status === 200) {
                 return resolve({
                     request_id: response.data.id,
@@ -78,22 +73,22 @@ const sell = async (sellOrder: SellOrder): Promise<AlpacaSellResult> => {
                 });
             }
             throw new Error(`Sell order failed with error: ${response.status} - ${response.statusText}`);
-        }).catch((error: Error) => {
+        }).catch((error) => {
             return reject(error);
         });
     });
 };
 
-const getPositions = async (): Promise<AlpacaPosition[]> => {
+const getPositions = async () => {
     return new Promise((resolve, reject) => {
         axios({
             method: 'GET',
             baseURL: getAlpacaBaseUrl(),
             url: '/v2/positions',
             headers: getAlpacaHeaders(),
-        }).then((response: AxiosResponse) => {
+        }).then((response) => {
             if (response.status === 200) {
-                return resolve(response.data.map((position: JSObject): AlpacaPosition => {
+                return resolve(response.data.map((position) => {
                     return {
                         id: position.asset_id,
                         symbol: position.symbol,
@@ -107,20 +102,20 @@ const getPositions = async (): Promise<AlpacaPosition[]> => {
                 }));
             }
             throw new Error(`Buy order failed with error: ${response.status} - ${response.statusText}`);
-        }).catch((error: Error) => {
+        }).catch((error) => {
             return reject(error);
         });
     });
 };
 
-const getPosition = async (symbol: string): Promise<AlpacaPosition> => {
+const getPosition = async (symbol) => {
     return new Promise((resolve, reject) => {
         axios({
             method: 'GET',
             baseURL: getAlpacaBaseUrl(),
             url: `/v2/positions/${symbol}`,
             headers: getAlpacaHeaders(),
-        }).then((response: AxiosResponse) => {
+        }).then((response) => {
             if (response.status === 200) {
                 return resolve({
                     id: response.data.asset_id,
@@ -134,20 +129,20 @@ const getPosition = async (symbol: string): Promise<AlpacaPosition> => {
                 });
             }
             throw new Error(`Buy order failed with error: ${response.status} - ${response.statusText}`);
-        }).catch((error: Error) => {
+        }).catch((error) => {
             return reject(error);
         });
     });
 };
 
-const getAccountInfo = async (): Promise<AlpacaAccountInfo> => {
+const getAccountInfo = async () => {
     return new Promise((resolve, reject) => {
         axios({
             method: 'GET',
             baseURL: getAlpacaBaseUrl(),
             url: '/v2/account',
             headers: getAlpacaHeaders(),
-        }).then((response: AxiosResponse) => {
+        }).then((response) => {
             if (response.status === 200) {
                 return resolve({
                     account_number: response.data.account_number,
@@ -158,25 +153,25 @@ const getAccountInfo = async (): Promise<AlpacaAccountInfo> => {
                 });
             }
             throw new Error(`Buy order failed with error: ${response.status} - ${response.statusText}`);
-        }).catch((error: Error) => {
+        }).catch((error) => {
             return reject(error);
         });
     });
 };
 
-const getSecurities = (): Promise<AlpacaAsset[]> => {
+const getSecurities = () => {
     return new Promise((resolve, reject) => {
         axios({
             method: 'GET',
             baseURL: getAlpacaBaseUrl(),
             url: '/v2/assets?status=active', // Only get active securities
             headers: getAlpacaHeaders(),
-        }).then((response: AxiosResponse) => {
+        }).then((response) => {
             if (response.status === 200) {
                 return resolve(response.data);
             }
             throw new Error(`Buy order failed with error: ${response.status} - ${response.statusText}`);
-        }).catch((error: Error) => {
+        }).catch((error) => {
             return reject(error);
         });
     });
@@ -192,13 +187,13 @@ const getAlpacaHeaders = () => {
 const getAlpacaBaseUrl = () => {
     switch (process.env.ENV) {
         case 'production':
-            return liveApiBaseUrl;
+            return alpacaConfig.liveApiBaseUrl;
         default:
-            return testApiBaseUrl;
+            return alpacaConfig.testApiBaseUrl;
     }
 };
 
-const exp: AlpacaProvider = {
+export {
     buy,
     sell,
     getAccountInfo,
@@ -206,5 +201,3 @@ const exp: AlpacaProvider = {
     getPosition,
     getSecurities,
 };
-
-export default exp;

@@ -1,6 +1,6 @@
 'use strict';
 
-const tradeConfig = require('../../../../server/src/trade/trade.config.json');
+import tradeConfig from '../../../../server/src/trade/trade.config';
 
 describe('Trade Config', () => {
     describe('Type Checking', () => {
@@ -15,12 +15,12 @@ describe('Trade Config', () => {
 
         test('whitelist is an array of strings', () => {
             expect(Array.isArray(tradeConfig.whitelist)).toBeTruthy();
-            expect(tradeConfig.whitelist.filter((el: string) => typeof el !== 'string').length).toBe(0);
+            expect(tradeConfig.whitelist.filter((el) => typeof el !== 'string').length).toBe(0);
         });
 
         test('blacklist is an array of strings', () => {
             expect(Array.isArray(tradeConfig.blacklist)).toBeTruthy();
-            expect(tradeConfig.blacklist.filter((el: string) => typeof el !== 'string').length).toBe(0);
+            expect(tradeConfig.blacklist.filter((el) => typeof el !== 'string').length).toBe(0);
         });
 
         test('tradeAmount is a number', () => {
@@ -57,7 +57,7 @@ describe('Trade Config', () => {
         test('whitelist and blacklist have no shared entries', () => {
             const whitelist = tradeConfig.whitelist;
             const blacklist = tradeConfig.blacklist;
-            const sharedEntries = whitelist.filter((symbol: string) => blacklist.includes(symbol));
+            const sharedEntries = whitelist.filter((symbol) => blacklist.includes(symbol));
             expect(sharedEntries.length).toEqual(0);
         });
     });

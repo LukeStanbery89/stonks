@@ -1,4 +1,4 @@
-const sellConfig = require('../../../../../server/src/trade/sell/sell.config.json');
+import sellConfig from '../../../../../server/src/trade/sell/sell.config.json';
 
 describe('Buy Module Config', () => {
     describe('Type Checking', () => {

@@ -1,4 +1,4 @@
-const buyConfig = require('../../../../../server/src/trade/buy/buy.config.json');
+import buyConfig from '../../../../../server/src/trade/buy/buy.config.json';
 
 describe('Buy Module Config', () => {
     describe('Type Checking', () => {

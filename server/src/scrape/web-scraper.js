@@ -1,9 +1,7 @@
-const got = require('got');
-const { JSDOM } = require('jsdom');
+import got from 'got';
+import { JSDOM } from 'jsdom';
 
-import { Source } from "./types";
-
-const scrape = async (sourceConfig: Source): Promise<any> => {
+const scrape = async (sourceConfig) => {
     const response = await got(sourceConfig.url);
     const dom = new JSDOM(response.body);
     const nodeList = [...dom.window.document.querySelectorAll(sourceConfig.selectors.row)];
