@@ -7,14 +7,14 @@ module.exports = [
         target: 'node',
         mode: process.env.ENV || 'production',
         entry: {
-            server: './server/server.ts',
+            server: './server/server.js',
         },
         devtool: 'inline-source-map',
         module: {
             rules: [
                 {
-                    test: /\.tsx?$/,
-                    use: 'ts-loader',
+                    test: /\.jsx?$/,
+                    // use: 'ts-loader',
                     exclude: [
                         /node_modules/,
                         path.resolve(__dirname, '/test'),
@@ -23,7 +23,7 @@ module.exports = [
             ],
         },
         resolve: {
-            extensions: ['.tsx', '.ts', '.js'],
+            extensions: ['.jsx', '.js'],
         },
         output: {
             filename: '[name].bundle.js',
@@ -31,5 +31,5 @@ module.exports = [
             clean: true,
         },
         externals: [nodeExternals()], // in order to ignore all modules in node_modules folder
-    }
+    },
 ];

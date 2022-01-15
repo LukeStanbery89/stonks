@@ -1,6 +1,6 @@
-import { JSObject } from "../../../../../server/src/types";
+'use strict';
 
-const brokerConfig: JSObject = require('../../../../../server/src/trade/broker/broker.config.json');
+import brokerConfig from '../../../../../server/src/trade/broker/broker.config.json';
 
 describe('Broker Config', () => {
     test('commands is an object consisting entirely of strings', () => {

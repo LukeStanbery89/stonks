@@ -3,6 +3,7 @@
     "version": "1.0.0",
     "description": "A Node.js boilerplate app",
     "private": true,
+    "type": "module",
     "scripts": {
         "build": "ENV=production webpack",
         "build-dev": "ENV=development webpack",
@@ -14,7 +15,7 @@
         "first-time": "git config core.hooksPath .githooks",
         "scrape": "node dist/scraper.bundle.js",
         "start": "node ./dist/server.bundle.js",
-        "test-unit": "jest --collectCoverage ./test/unit --verbose",
+        "test-unit": "node --experimental-vm-modules ./node_modules/.bin/jest --collectCoverage ./test/unit --verbose",
         "watch": "ENV=development webpack --watch"
     },
     "author": "Luke Stanbery",
@@ -28,15 +29,9 @@
         "mysql": "^2.18.1"
     },
     "devDependencies": {
-        "@types/jest": "^27.0.3",
-        "@types/jsdom": "^16.2.14",
-        "@types/mysql": "^2.15.20",
+        "@jest/types": "^27.4.2",
         "jest": "^27.3.1",
         "node-notifier": "^10.0.0",
-        "ts-jest": "^27.0.7",
-        "ts-loader": "^9.2.6",
-        "ts-node": "^10.4.0",
-        "typescript": "^4.5.2",
         "webpack": "^5.64.4",
         "webpack-cli": "^4.9.1",
         "webpack-node-externals": "^3.0.0"
