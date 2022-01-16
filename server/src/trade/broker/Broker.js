@@ -1,9 +1,9 @@
 'use strict';
 
-import tradeConfig from '../trade.config';
+import tradeConfig from '../trade.config.json';
 import brokerConfig from './broker.config.json';
 
-class Broker {
+export default class Broker {
     constructor() {
         this._broker;
     }
@@ -40,12 +40,10 @@ class Broker {
 
     _assignBrokerProvider(providerName) {
         return new Promise((resolve, reject) => {
-            import(`./providers/${tradeConfig.brokerProviders[providerName]}/${tradeConfig.brokerProviders[providerName]}`).then(module => {
+            import("./providers/" + tradeConfig.brokerProviders[providerName] + "/" + tradeConfig.brokerProviders[providerName]).then(module => {
                 this._broker = module;
-                resolve();
+                return resolve();
             }).catch(e => reject(e));
         });
     }
 }
-
-export default Broker;

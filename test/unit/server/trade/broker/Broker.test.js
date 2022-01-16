@@ -2,10 +2,6 @@
 
 import { jest } from '@jest/globals';
 
-// 1. Import the real trade.config.json
-import tradeConfig from '../../../../../server/src/trade/trade.config';
-
-// 2. Mock trade.config.json
 const mockTradeConfig = {
     "broker": "FAKE_BROKER",
     "brokerProviders": {
@@ -21,15 +17,6 @@ const mockTradeConfig = {
 };
 jest.doMock('../../../../../server/src/trade/trade.config.json', () => mockTradeConfig);
 
-// 3. Mock the fake provider
-// const mockBuy = jest.fn(() => 'mock return');
-// const mockSell = jest.fn(() => 'mock return');
-// const mockGetPositions = jest.fn(() => 'mock return');
-// const mockGetPosition = jest.fn(() => 'mock return');
-// const mockGetAccountInfo = jest.fn(() => 'mock return');
-
-// import Broker from '../../../../../server/src/trade/broker/Broker';
-// const broker = new Broker();
 let Broker;
 let broker;
 
@@ -43,19 +30,7 @@ import {
 
 describe('Broker interface', () => {
     beforeAll(async () => {
-        // 3 cont.
-        // jest.doMock('../../../../../server/src/trade/broker/providers/fake-provider/fake-provider.js', () => {
-        //     return {
-        //         buy: mockBuy,
-        //         sell: mockSell,
-        //         getPositions: mockGetPositions,
-        //         getPosition: mockGetPosition,
-        //         getAccountInfo: mockGetAccountInfo,
-        //     };
-        // }, { virtual: true });
-
-        // // 4. Import and initialize Broker
-        Broker = (await import('../../../../../server/src/trade/broker/Broker')).default;
+        Broker = (await import('../../../../../server/src/trade/broker/Broker.js')).default.default;
         broker = new Broker();
     });
 

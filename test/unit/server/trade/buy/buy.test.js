@@ -2,9 +2,10 @@ import { buySymbols } from '../../../../../server/src/trade/buy/buy';
 
 describe('Buy module', () => {
     describe('buySymbols()', () => {
-        test('DUMMY TEST', () => {
+        test('DUMMY TEST', async () => {
             // FIXME
             expect(true).toBeTruthy();
+            // await buySymbols();
         });
     });
 
