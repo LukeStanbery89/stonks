@@ -2,9 +2,8 @@ import buyConfig from '../../../../../server/src/trade/buy/buy.config.json';
 
 describe('Buy Module Config', () => {
     describe('Type Checking', () => {
-        test('strategies should be an array of objects', () => {
-            expect(buyConfig.strategies.constructor.name).toBe('Array');
-            expect(Object.values(buyConfig.strategies).filter(el => typeof el !== 'string').length).toBe(0);
+        test('strategy should be a string', () => {
+            expect(typeof buyConfig.strategy).toBe('string');
         });
     });
 });

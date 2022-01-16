@@ -29,7 +29,11 @@ module.exports = [
             filename: '[name].bundle.js',
             path: path.resolve(__dirname, 'dist'),
             clean: true,
+            chunkFormat: 'module',
         },
         externals: [nodeExternals()], // in order to ignore all modules in node_modules folder
+        experiments: {
+            outputModule: true,
+        },
     },
 ];

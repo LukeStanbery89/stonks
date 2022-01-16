@@ -3,7 +3,6 @@
     "version": "1.0.0",
     "description": "A Node.js boilerplate app",
     "private": true,
-    "type": "module",
     "scripts": {
         "build": "ENV=production webpack",
         "build-dev": "ENV=development webpack",
@@ -26,9 +25,11 @@
         "express": "^4.17.1",
         "got": "^11.8.3",
         "jsdom": "^19.0.0",
-        "mysql": "^2.18.1"
+        "mysql": "^2.18.1",
+        "q": "^1.5.1"
     },
     "devDependencies": {
+        "@babel/preset-env": "^7.16.8",
         "@jest/types": "^27.4.2",
         "jest": "^27.3.1",
         "node-notifier": "^10.0.0",

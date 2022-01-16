@@ -1,6 +1,6 @@
 'use strict';
 
-import tradeConfig from '../../../../server/src/trade/trade.config';
+import tradeConfig from '../../../../server/src/trade/trade.config.json';
 
 describe('Trade Config', () => {
     describe('Type Checking', () => {
