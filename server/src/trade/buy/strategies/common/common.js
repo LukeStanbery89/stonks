@@ -1,4 +1,5 @@
 import tradeConfig from '../../../trade.config.json';
+import CONSTANTS from '../../../../constants.json';
 
 export function userHasAvailableBalance(securityData) {
     return new Promise(resolve => {
@@ -19,7 +20,7 @@ export function omitBlacklistedSecurities(securityData) {
 export function marketCapMega(securityData) {
     return new Promise(resolve => {
         console.log('marketCapMega: ', securityData.symbol);
-        return resolve(securityData.marketCapSize === tradeConfig.marketCapSizes.MEGA);
+        return resolve(securityData.marketCapSize === CONSTANTS.MARKET_CAP_SIZES.MEGA);
     });
 }
 
@@ -27,7 +28,7 @@ export function marketCapMega(securityData) {
 export function marketCapLarge(securityData) {
     return new Promise(resolve => {
         console.log('marketCapLarge: ', securityData.symbol);
-        return resolve(securityData.marketCapSize === tradeConfig.marketCapSizes.LARGE);
+        return resolve(securityData.marketCapSize === CONSTANTS.MARKET_CAP_SIZES.LARGE);
     });
 }
 
@@ -35,7 +36,7 @@ export function marketCapLarge(securityData) {
 export function marketCapMid(securityData) {
     return new Promise(resolve => {
         console.log('marketCapMid: ', securityData.symbol);
-        return resolve(securityData.marketCapSize === tradeConfig.marketCapSizes.MID);
+        return resolve(securityData.marketCapSize === CONSTANTS.MARKET_CAP_SIZES.MID);
     });
 }
 
@@ -43,7 +44,7 @@ export function marketCapMid(securityData) {
 export function marketCapSmall(securityData) {
     return new Promise(resolve => {
         console.log('marketCapSmall: ', securityData.symbol);
-        return resolve(securityData.marketCapSize === tradeConfig.marketCapSizes.SMALL);
+        return resolve(securityData.marketCapSize === CONSTANTS.MARKET_CAP_SIZES.SMALL);
     });
 }
 
@@ -51,7 +52,7 @@ export function marketCapSmall(securityData) {
 export function marketCapMicro(securityData) {
     return new Promise(resolve => {
         console.log('marketCapMicro: ', securityData.symbol);
-        return resolve(securityData.marketCapSize === tradeConfig.marketCapSizes.MICRO);
+        return resolve(securityData.marketCapSize === CONSTANTS.MARKET_CAP_SIZES.MICRO);
     });
 }
 
@@ -59,6 +60,6 @@ export function marketCapMicro(securityData) {
 export function marketCapNano(securityData) {
     return new Promise(resolve => {
         console.log('marketCapNano: ', securityData.symbol);
-        return resolve(securityData.marketCapSize === tradeConfig.marketCapSizes.NANO);
+        return resolve(securityData.marketCapSize === CONSTANTS.MARKET_CAP_SIZES.NANO);
     });
 }
