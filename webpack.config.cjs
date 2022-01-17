@@ -14,7 +14,6 @@ module.exports = [
             rules: [
                 {
                     test: /\.jsx?$/,
-                    // use: 'ts-loader',
                     exclude: [
                         /node_modules/,
                         path.resolve(__dirname, '/test'),
@@ -31,7 +30,9 @@ module.exports = [
             clean: true,
             chunkFormat: 'module',
         },
-        externals: [nodeExternals()], // in order to ignore all modules in node_modules folder
+        externals: [
+            nodeExternals(), // in order to ignore all modules in node_modules folder
+        ],
         experiments: {
             outputModule: true,
         },

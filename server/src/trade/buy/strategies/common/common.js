@@ -1,4 +1,4 @@
-import tradeConfig from '../trade.config.json';
+import tradeConfig from '../../../trade.config.json';
 
 export function userHasAvailableBalance(securityData) {
     return new Promise(resolve => {
