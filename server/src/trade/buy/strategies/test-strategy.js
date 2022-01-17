@@ -1,16 +1,32 @@
 'use strict';
-const str = 'TEST STRATEGY';
+
+import { marketCapMega } from "../common-evals";
+
+export const first = function (securityData) {
+    return new Promise(resolve => {
+        console.log('firstPass: ', securityData.symbol);
+        return resolve(true);
+    });
+};
+
+export const omitMicrosoft = function (securityData) {
+    return new Promise(resolve => {
+        console.log('secondFail: ', securityData.symbol);
+        return resolve(securityData.symbol !== 'MSFT');
+    });
+};
+
+export const third = function (securityData) {
+    return new Promise(resolve => {
+        console.log('secondFail: ', securityData.symbol);
+        return resolve(true);
+    });
+};
+
+// NOTE: Do not alphabetize!!! Functions will be executed in this order.
 export default [
-    (symbol) => new Promise((resolve, reject) => {
-        console.log('first anon (resolve)');
-        return resolve(symbol);
-    }),
-    (symbol) => new Promise((resolve, reject) => {
-        console.log('second anon (reject)');
-        return reject(symbol);
-    }),
-    (symbol) => new Promise((resolve, reject) => {
-        console.log('third anon (resolve)');
-        return resolve(symbol);
-    }),
+    first,
+    omitMicrosoft,
+    third,
+    marketCapMega,
 ];
