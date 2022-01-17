@@ -1,6 +1,7 @@
 'use strict';
 
 import tradeConfig from '../../../../server/src/trade/trade.config.json';
+import CONSTANTS from '../../../../server/src/constants.json';
 
 describe('Trade Config', () => {
     describe('Type Checking', () => {
@@ -34,11 +35,6 @@ describe('Trade Config', () => {
         test('tradeUnit is a string', () => {
             expect(typeof tradeConfig.tradeUnit).toBe('string');
         });
-
-        test('tradeUnitTypes is an object consisting entirely of strings', () => {
-            expect(tradeConfig.tradeUnitTypes.constructor.name).toBe('Object');
-            expect(Object.values(tradeConfig.tradeUnitTypes).filter(el => typeof el !== 'string').length).toBe(0);
-        });
     });
 
     describe('Data Integrity', () => {
@@ -46,8 +42,8 @@ describe('Trade Config', () => {
             expect(tradeConfig.brokerProviders[tradeConfig.broker]).not.toBeUndefined();
         });
 
-        test('tradeUnit exists in the broker tradeUnitTypes', () => {
-            expect(tradeConfig.tradeUnitTypes[tradeConfig.tradeUnit]).not.toBeUndefined();
+        test('tradeUnit exists in CONSTANTS.TRADE_UNIT_TYPES', () => {
+            expect(CONSTANTS.TRADE_UNIT_TYPES[tradeConfig.tradeUnit]).not.toBeUndefined();
         });
 
         test('whitelist entries quantity do not surpass max symbols per job', () => {

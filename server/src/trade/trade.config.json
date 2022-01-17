@@ -11,18 +11,6 @@
     "tradeQty": 1,
     "maxSymbolsPerJob": 10,
     "tradeUnit": "SHARES",
-    "tradeUnitTypes": {
-        "DOLLARS": "DOLLARS",
-        "SHARES": "SHARES"
-    },
     "orderType": "market",
-    "timeInForce": "gtc",
-    "marketCapSizes": {
-        "MEGA": "MEGA",
-        "LARGE": "LARGE",
-        "MID": "MID",
-        "SMALL": "SMALL",
-        "MICRO": "MICRO",
-        "NANO": "NANO"
-    }
+    "timeInForce": "gtc"
 }
