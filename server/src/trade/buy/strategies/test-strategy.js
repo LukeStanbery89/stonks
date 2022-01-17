@@ -1,6 +1,6 @@
 'use strict';
 
-import { marketCapMega } from "../common-evals";
+import { marketCapMega } from "./common/common";
 
 export const first = function (securityData) {
     return new Promise(resolve => {
@@ -11,7 +11,7 @@ export const first = function (securityData) {
 
 export const omitMicrosoft = function (securityData) {
     return new Promise(resolve => {
-        console.log('secondFail: ', securityData.symbol);
+        console.log('omitMicrosoft: ', securityData.symbol);
         return resolve(securityData.symbol !== 'MSFT');
     });
 };

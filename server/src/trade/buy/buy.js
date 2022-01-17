@@ -6,11 +6,10 @@ import Broker from "../broker/Broker.js";
 const broker = new Broker();
 import tradeConfig from '../trade.config.json';
 import buyConfig from './buy.config.json';
-import { omitBlacklistedSecurities, userHasAvailableBalance } from './common-evals.js';
+import { omitBlacklistedSecurities, userHasAvailableBalance } from './strategies/common/common';
 
 async function run() {
-    const buyableSymbols = await getBuyableSymbols();
-    console.log('buyableSymbols: ', buyableSymbols);
+    const buyList = await getBuyableSymbols();
     // FIXME: This isn't working
     // return buyableSymbols.map(buy);
 };
@@ -18,15 +17,14 @@ async function run() {
 async function getBuyableSymbols() {
     const buyStrategy = (await import("./strategies/" + buyConfig.strategy + ".js")).default;
     const buyCandidateSymbols = await getBuyCandidates();
-    console.log('buyCandidateSymbols: ', buyCandidateSymbols);
     return await filterSeries(buyCandidateSymbols, async (symbol) => {
         const securityData = await getSecurityData(symbol);
-        const filterFunctions = [
+        const evalFunctions = [
             omitBlacklistedSecurities,
-            userHasAvailableBalance,
+            userHasAvailableBalance, // TODO: Rethink this. This will need to be re-run between each buy order.
             ...buyStrategy,
         ];
-        const failures = await detectSeries(filterFunctions, async (f) => {
+        const failures = await detectSeries(evalFunctions, async (f) => {
             const result = await f(securityData);
             return result === false;
         });
@@ -59,7 +57,6 @@ async function getSecurityData(symbol) {
 }
 
 async function buy(symbol) {
-    console.log('symbol: ', symbol);
     return await broker.buy({
         symbol,
         qty: tradeConfig.tradeQty,

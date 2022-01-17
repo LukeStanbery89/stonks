@@ -1,4 +1,4 @@
-const getConfig = () => {
+const getDBConfig = () => {
     return {
         host: "localhost",
         database: "stonks",
@@ -7,4 +7,4 @@ const getConfig = () => {
     };
 };
 
-export default getConfig;
+export default getDBConfig;
