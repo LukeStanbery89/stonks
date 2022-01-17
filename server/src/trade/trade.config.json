@@ -16,5 +16,13 @@
         "SHARES": "SHARES"
     },
     "orderType": "market",
-    "timeInForce": "gtc"
+    "timeInForce": "gtc",
+    "marketCapSizes": {
+        "MEGA": "MEGA",
+        "LARGE": "LARGE",
+        "MID": "MID",
+        "SMALL": "SMALL",
+        "MICRO": "MICRO",
+        "NANO": "NANO"
+    }
 }
