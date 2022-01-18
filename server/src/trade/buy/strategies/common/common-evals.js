@@ -1,13 +1,6 @@
 import tradeConfig from '../../../trade.config.json';
 import CONSTANTS from '../../../../constants.json';
 
-export function userHasAvailableBalance(securityData) {
-    return new Promise(resolve => {
-        // TODO
-        return resolve(true);
-    });
-}
-
 export function omitBlacklistedSecurities(securityData) {
     return new Promise(resolve => {
         return resolve(!tradeConfig.blacklist.includes(securityData.symbol));
