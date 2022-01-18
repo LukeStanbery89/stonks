@@ -6,7 +6,7 @@ import Broker from "../broker/Broker.js";
 const broker = new Broker();
 import tradeConfig from '../trade.config.json';
 import buyConfig from './buy.config.json';
-import { omitBlacklistedSecurities, userHasAvailableBalance } from './strategies/common/common-evals.js';
+import { omitBlacklistedSecurities } from './strategies/common/common-evals.js';
 
 async function run() {
     const buyList = await getBuyableSymbols();
@@ -22,7 +22,6 @@ async function getBuyableSymbols() {
         const securityData = await getSecurityData(symbol);
         const evalFunctions = [
             omitBlacklistedSecurities,
-            userHasAvailableBalance, // TODO: Rethink this. This will need to be re-run between each buy order.
             ...buyStrategy,
         ];
         const failures = await detectSeries(evalFunctions, async (evalFunc) => {
