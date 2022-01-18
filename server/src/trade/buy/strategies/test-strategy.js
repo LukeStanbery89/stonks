@@ -1,6 +1,6 @@
 'use strict';
 
-import { marketCapSmallOrLarger } from "./common/common";
+import { marketCapSmallOrLarger } from "./common/common-evals.js";
 
 export const first = function (securityData) {
     return new Promise(resolve => {
