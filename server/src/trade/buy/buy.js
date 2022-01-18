@@ -17,6 +17,7 @@ async function run() {
 async function getBuyableSymbols() {
     const buyStrategy = (await import("./strategies/" + buyConfig.strategy + ".js")).default;
     const buyCandidateSymbols = await getBuyCandidates();
+    console.log('========== Begin Buy Candidate Evaluation ==========');
     return await filterSeries(buyCandidateSymbols, async (symbol) => {
         const securityData = await getSecurityData(symbol);
         const evalFunctions = [
@@ -24,8 +25,9 @@ async function getBuyableSymbols() {
             userHasAvailableBalance, // TODO: Rethink this. This will need to be re-run between each buy order.
             ...buyStrategy,
         ];
-        const failures = await detectSeries(evalFunctions, async (f) => {
-            const result = await f(securityData);
+        const failures = await detectSeries(evalFunctions, async (evalFunc) => {
+            const result = await evalFunc(securityData);
+            console.log(`${securityData.symbol} - ${evalFunc.name} evaluated as ${result}`);
             return result === false;
         });
         return failures ? failures.length === 0 : true;
