@@ -130,6 +130,9 @@ const getPosition = async (symbol) => {
             }
             throw new Error(`Buy order failed with error: ${response.status} - ${response.statusText}`);
         }).catch((error) => {
+            if (error.response && error.response.status === 404) {
+                return resolve(null);
+            }
             return reject(error);
         });
     });

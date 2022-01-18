@@ -207,6 +207,26 @@ describe('Alpaca Provider', () => {
         expect(result).not.toBeNull();
     });
 
+    test('getPosition() resolves the promise and returns null on 404, meaning no matching position found', async () => {
+        const axiosError = {
+            response: {
+                data: {},
+                status: 404,
+                statusText: 'Not Found',
+                headers: {},
+                config: {},
+            }
+        };
+        jest.doMock('axios', () => {
+            return () => new Promise((resolve, reject) => reject(axiosError));
+        });
+        alpaca = (await import('../../../../../../../server/src/trade/broker/providers/alpaca/alpaca'));
+        return expect(async () => {
+            const result = await alpaca.getPosition('AAPL');
+            expect(result).toBeNull();
+        }).not.toThrow();
+    });
+
     test('getPosition() rejects the promise on error', async () => {
         const axiosResponse = {
             data: {},
@@ -220,7 +240,7 @@ describe('Alpaca Provider', () => {
         });
         alpaca = (await import('../../../../../../../server/src/trade/broker/providers/alpaca/alpaca'));
         return expect(async () => {
-            const result = await alpaca.getPosition();
+            const result = await alpaca.getPosition('AAPL');
             expect(result).not.toBeNull();
         }).rejects.toThrow('Bad Input');
     });
