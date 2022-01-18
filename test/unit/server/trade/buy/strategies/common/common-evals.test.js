@@ -28,7 +28,7 @@ let marketCapNano;
 
 describe('Common Evaluator Functions', () => {
     beforeAll(async () => {
-        const commonEvalsModule = (await import('../../../../../../../server/src/trade/buy/strategies/common/common.js')).default;
+        const commonEvalsModule = (await import('../../../../../../../server/src/trade/buy/strategies/common/common-evals.js')).default;
         omitBlacklistedSecurities = commonEvalsModule.omitBlacklistedSecurities;
         marketCapMega = commonEvalsModule.marketCapMega;
         marketCapLarge = commonEvalsModule.marketCapLarge;
