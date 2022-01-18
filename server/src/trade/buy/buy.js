@@ -6,7 +6,7 @@ import Broker from "../broker/Broker.js";
 const broker = new Broker();
 import tradeConfig from '../trade.config.json';
 import buyConfig from './buy.config.json';
-import { omitBlacklistedSecurities, userHasAvailableBalance } from './strategies/common/common';
+import { omitBlacklistedSecurities, userHasAvailableBalance } from './strategies/common/common-evals.js';
 
 async function run() {
     const buyList = await getBuyableSymbols();
