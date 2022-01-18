@@ -7,6 +7,20 @@ export function omitBlacklistedSecurities(securityData) {
     });
 }
 
+export function securityIsNotAlreadyOwned(securityData) {
+    return new Promise(resolve => {
+        import('../../../broker/Broker.js').then(async module => {
+            const Broker = module.default;
+            const broker = new Broker();
+            const position = await broker.getPosition(securityData.symbol);
+            return resolve(!(!!position));
+        }).catch(err => {
+            console.error(err);
+            return resolve(false);
+        });
+    });
+}
+
 // MEGA = >$200 billion
 export function marketCapMega(securityData) {
     return new Promise(resolve => {

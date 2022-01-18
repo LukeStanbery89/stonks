@@ -2,28 +2,14 @@
 
 import { marketCapSmallOrLarger } from "./common/common-evals.js";
 
-export const first = function (securityData) {
+export const omitApple = function (securityData) {
     return new Promise(resolve => {
-        return resolve(true);
-    });
-};
-
-export const omitMicrosoft = function (securityData) {
-    return new Promise(resolve => {
-        return resolve(securityData.symbol !== 'MSFT');
-    });
-};
-
-export const third = function (securityData) {
-    return new Promise(resolve => {
-        return resolve(true);
+        return resolve(securityData.symbol !== 'AAPL');
     });
 };
 
 // NOTE: Do not alphabetize!!! Functions will be executed in this order.
 export default [
-    first,
-    omitMicrosoft,
-    third,
+    omitApple,
     marketCapSmallOrLarger,
 ];
