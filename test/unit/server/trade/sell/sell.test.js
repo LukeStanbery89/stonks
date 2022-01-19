@@ -1,4 +1,4 @@
-import { sellPositions } from '../../../../../server/src/trade/sell/sell';
+import { run } from '../../../../../server/src/trade/sell/sell';
 
 describe('Sell module', () => {
     describe('sellPositions()', () => {

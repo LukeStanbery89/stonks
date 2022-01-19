@@ -1,16 +1,8 @@
 'use strict';
 
-import { jest } from '@jest/globals';
 import CONSTANTS from '../../../../../../../server/src/constants.json';
 
-const mockTradeConfig = {
-    blacklist: [
-        'BAD',
-    ],
-};
-jest.doMock('../../../../../../../server/src/trade/trade.config.json', () => mockTradeConfig);
-
-let omitBlacklistedSecurities;
+let buyCommonEvalsModule;
 let marketCapMega;
 let marketCapLarge;
 let marketCapLargeOrLarger;
@@ -28,38 +20,21 @@ let marketCapNano;
 
 describe('Common Evaluator Functions', () => {
     beforeAll(async () => {
-        const commonEvalsModule = (await import('../../../../../../../server/src/trade/buy/strategies/common/common-evals.js')).default;
-        omitBlacklistedSecurities = commonEvalsModule.omitBlacklistedSecurities;
-        marketCapMega = commonEvalsModule.marketCapMega;
-        marketCapLarge = commonEvalsModule.marketCapLarge;
-        marketCapLargeOrLarger = commonEvalsModule.marketCapLargeOrLarger;
-        marketCapLargeOrSmaller = commonEvalsModule.marketCapLargeOrSmaller;
-        marketCapMid = commonEvalsModule.marketCapMid;
-        marketCapMidOrLarger = commonEvalsModule.marketCapMidOrLarger;
-        marketCapMidOrSmaller = commonEvalsModule.marketCapMidOrSmaller;
-        marketCapSmall = commonEvalsModule.marketCapSmall;
-        marketCapSmallOrLarger = commonEvalsModule.marketCapSmallOrLarger;
-        marketCapSmallOrSmaller = commonEvalsModule.marketCapSmallOrSmaller;
-        marketCapMicro = commonEvalsModule.marketCapMicro;
-        marketCapMicroOrLarger = commonEvalsModule.marketCapMicroOrLarger;
-        marketCapMicroOrSmaller = commonEvalsModule.marketCapMicroOrSmaller;
-        marketCapNano = commonEvalsModule.marketCapNano;
-    });
-
-    test('omitBlacklistedSecurities() accepts any non-blacklisted securities', async () => {
-        const securityData = {
-            symbol: 'GOOD',
-        };
-        const result = await omitBlacklistedSecurities(securityData);
-        expect(result).toBe(true);
-    });
-
-    test('omitBlacklistedSecurities() rejects any blacklisted securities', async () => {
-        const securityData = {
-            symbol: 'BAD',
-        };
-        const result = await omitBlacklistedSecurities(securityData);
-        expect(result).toBe(false);
+        buyCommonEvalsModule = (await import('../../../../../../../server/src/trade/strategies/buy/common/common-evals.js')).default;
+        marketCapMega = buyCommonEvalsModule.marketCapMega;
+        marketCapLarge = buyCommonEvalsModule.marketCapLarge;
+        marketCapLargeOrLarger = buyCommonEvalsModule.marketCapLargeOrLarger;
+        marketCapLargeOrSmaller = buyCommonEvalsModule.marketCapLargeOrSmaller;
+        marketCapMid = buyCommonEvalsModule.marketCapMid;
+        marketCapMidOrLarger = buyCommonEvalsModule.marketCapMidOrLarger;
+        marketCapMidOrSmaller = buyCommonEvalsModule.marketCapMidOrSmaller;
+        marketCapSmall = buyCommonEvalsModule.marketCapSmall;
+        marketCapSmallOrLarger = buyCommonEvalsModule.marketCapSmallOrLarger;
+        marketCapSmallOrSmaller = buyCommonEvalsModule.marketCapSmallOrSmaller;
+        marketCapMicro = buyCommonEvalsModule.marketCapMicro;
+        marketCapMicroOrLarger = buyCommonEvalsModule.marketCapMicroOrLarger;
+        marketCapMicroOrSmaller = buyCommonEvalsModule.marketCapMicroOrSmaller;
+        marketCapNano = buyCommonEvalsModule.marketCapNano;
     });
 
     test('marketCapMega() only accepts securities with a MEGA-sized market cap', async () => {
