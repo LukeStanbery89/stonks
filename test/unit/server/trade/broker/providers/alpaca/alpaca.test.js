@@ -50,7 +50,7 @@ describe('Alpaca Provider', () => {
         };
         alpaca = (await import('../../../../../../../server/src/trade/broker/providers/alpaca/alpaca'));
         const result = await alpaca.buy(buyOrder);
-        return expect(result).not.toBeNull();
+        expect(result).not.toBeNull();
     });
 
     test('buy() rejects the promise on error', async () => {
@@ -99,7 +99,7 @@ describe('Alpaca Provider', () => {
         };
         alpaca = (await import('../../../../../../../server/src/trade/broker/providers/alpaca/alpaca'));
         const result = await alpaca.sell(sellOrder);
-        return expect(result).not.toBeNull();
+        expect(result).not.toBeNull();
     });
 
     test('sell() rejects the promise on error', async () => {
@@ -163,7 +163,7 @@ describe('Alpaca Provider', () => {
         alpaca = (await import('../../../../../../../server/src/trade/broker/providers/alpaca/alpaca'));
         const result = await alpaca.getPositions();
         expect(result).not.toBeNull();
-        return expect(result.length).toBe(3);
+        expect(result.length).toBe(3);
     });
 
     test('getPositions() rejects the promise on error', async () => {
@@ -262,7 +262,7 @@ describe('Alpaca Provider', () => {
         });
         alpaca = (await import('../../../../../../../server/src/trade/broker/providers/alpaca/alpaca'));
         const result = await alpaca.getAccountInfo();
-        return expect(result).not.toBeNull();
+        expect(result).not.toBeNull();
     });
 
     test('getAccountInfo() rejects the promise on error', async () => {
@@ -314,7 +314,7 @@ describe('Alpaca Provider', () => {
         };
         alpaca = (await import('../../../../../../../server/src/trade/broker/providers/alpaca/alpaca'));
         const result = await alpaca.buy(buyOrder);
-        return expect(result.response.headers).toEqual({
+        expect(result.response.headers).toEqual({
             "APCA-API-KEY-ID": 'fake-api-key',
             "APCA-API-SECRET-KEY": 'fake-api-secret',
         });
@@ -353,7 +353,7 @@ describe('Alpaca Provider', () => {
         };
         alpaca = (await import('../../../../../../../server/src/trade/broker/providers/alpaca/alpaca'));
         const result = await alpaca.buy(buyOrder);
-        return expect(result.response.config.baseURL).toBe('https://live.example.com');
+        expect(result.response.config.baseURL).toBe('https://live.example.com');
     });
 
     test('getAlpacaBaseUrl() correctly populates the test API base URL', async () => {
@@ -389,7 +389,7 @@ describe('Alpaca Provider', () => {
         };
         alpaca = (await import('../../../../../../../server/src/trade/broker/providers/alpaca/alpaca'));
         const result = await alpaca.buy(buyOrder);
-        return expect(result.response.config.baseURL).toBe('https://test.example.com');
+        expect(result.response.config.baseURL).toBe('https://test.example.com');
     });
 });
 
