@@ -1,5 +1,8 @@
 'use strict';
 
+import wtf from 'wtfnode';
+import whyRunNodelog from 'why-is-node-running';
+
 import CONSTANTS from '../../../../../../../server/src/constants.json';
 
 let buyCommonEvalsModule;
@@ -35,6 +38,12 @@ describe('Common Evaluator Functions', () => {
         marketCapMicroOrLarger = buyCommonEvalsModule.marketCapMicroOrLarger;
         marketCapMicroOrSmaller = buyCommonEvalsModule.marketCapMicroOrSmaller;
         marketCapNano = buyCommonEvalsModule.marketCapNano;
+    });
+
+    afterAll(async () => {
+        wtf.dump();
+        whyRunNodelog();
+        console.log('process._getActiveHandles()', process._getActiveHandles());
     });
 
     test('marketCapMega() only accepts securities with a MEGA-sized market cap', async () => {

@@ -1,5 +1,8 @@
 'use strict';
 
+import wtf from 'wtfnode';
+import whyRunNodelog from 'why-is-node-running';
+
 import { jest } from '@jest/globals';
 
 let alpaca;
@@ -24,6 +27,12 @@ describe('Alpaca Provider', () => {
     afterEach(() => {
         jest.resetModules();
         process.env = oldEnv;
+    });
+
+    afterAll(async () => {
+        wtf.dump();
+        whyRunNodelog();
+        console.log('process._getActiveHandles()', process._getActiveHandles());
     });
 
     test('buy() processes a BuyOrder and returns a BuyResult', async () => {

@@ -1,9 +1,17 @@
 'use strict';
 
+import wtf from 'wtfnode';
+import whyRunNodelog from 'why-is-node-running';
 import tradeConfig from '../../../../server/src/trade/trade.config.json';
 import CONSTANTS from '../../../../server/src/constants.json';
 
 describe('Trade Config', () => {
+    afterAll(async () => {
+        wtf.dump();
+        whyRunNodelog();
+        console.log('process._getActiveHandles()', process._getActiveHandles());
+    });
+
     describe('Type Checking', () => {
         test('broker is a string', () => {
             expect(typeof tradeConfig.broker).toBe('string');

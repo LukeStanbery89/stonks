@@ -26,11 +26,14 @@
         "express": "^4.17.1",
         "got": "^11.8.3",
         "jsdom": "^19.0.0",
-        "mysql": "^2.18.1"
+        "mysql": "^2.18.1",
+        "why-is-node-running": "^2.2.0",
+        "wtfnode": "^0.9.1"
     },
     "devDependencies": {
         "@babel/preset-env": "^7.16.8",
         "@jest/types": "^27.4.2",
+        "eslint": "^8.7.0",
         "jest": "^27.3.1",
         "node-notifier": "^10.0.0",
         "webpack": "^5.64.4",
