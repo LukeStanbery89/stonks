@@ -15,6 +15,7 @@
         "scrape": "node dist/scraper.bundle.js",
         "start": "node ./dist/server.bundle.js",
         "test-unit": "node --experimental-vm-modules ./node_modules/.bin/jest --collectCoverage ./test/unit --verbose",
+        "test-unit-ci": "node --experimental-vm-modules ./node_modules/.bin/jest ./test/unit --verbose",
         "watch": "ENV=development webpack --watch"
     },
     "author": "Luke Stanbery",
