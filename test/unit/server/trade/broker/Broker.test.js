@@ -1,8 +1,5 @@
 'use strict';
 
-import wtf from 'wtfnode';
-import whyRunNodelog from 'why-is-node-running';
-
 import { jest } from '@jest/globals';
 
 const mockTradeConfig = {
@@ -39,12 +36,6 @@ describe('Broker interface', () => {
 
     beforeEach(() => {
         jest.clearAllMocks();
-    });
-
-    afterAll(async () => {
-        wtf.dump();
-        whyRunNodelog();
-        console.log('process._getActiveHandles()', process._getActiveHandles());
     });
 
     test('buy() command calls the provider implementation', async () => {

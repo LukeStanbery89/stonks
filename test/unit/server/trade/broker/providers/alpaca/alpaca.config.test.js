@@ -1,17 +1,8 @@
 'use strict';
 
-import wtf from 'wtfnode';
-import whyRunNodelog from 'why-is-node-running';
-
 import alpacaConfig from '../../../../../../../server/src/trade/broker/providers/alpaca/alpaca.config.json';
 
 describe("Alpaca Provider Config", () => {
-    afterAll(async () => {
-        wtf.dump();
-        whyRunNodelog();
-        console.log('process._getActiveHandles()', process._getActiveHandles());
-    });
-
     test("Live API endpoint domain is valid URL", () => {
         expect(isValidHttpUrl(alpacaConfig.liveApiBaseUrl)).toBe(true);
     });
