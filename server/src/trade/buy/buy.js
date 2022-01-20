@@ -2,6 +2,8 @@
 
 import filterSeries from 'async/filterSeries';
 import detectSeries from 'async/detectSeries';
+import moment from 'moment';
+import chalk from 'chalk';
 import Broker from "../broker/Broker.js";
 const broker = new Broker();
 import tradeConfig from '../trade.config.json';
@@ -19,7 +21,7 @@ async function run() {
 async function getBuyList() {
     const buyStrategy = (await import("../strategies/buy/" + buyConfig.strategy + ".js")).default;
     const buyCandidateSymbols = await getBuyCandidates();
-    console.log('========== Begin Buy Candidate Evaluation ==========');
+    console.log(chalk.cyan(`\n========== Begin Buy Candidate Evaluation - ${moment().format('MMMM Do YYYY, h:mm:ss a')} ==========`));
     return await filterSeries(buyCandidateSymbols, async (symbol) => {
         const securityData = await getSecurityData(symbol);
         const evalFunctions = [
@@ -29,7 +31,7 @@ async function getBuyList() {
         ];
         const failures = await detectSeries(evalFunctions, async (evalFunc) => {
             const result = await evalFunc(securityData);
-            console.log(`${securityData.symbol} - ${evalFunc.name} evaluated as ${result}`);
+            console.log(`${securityData.symbol} - ${evalFunc.name} evaluated as ${result ? chalk.green(result) : chalk.red(result)}`);
             return result === false;
         });
         return failures ? failures.length === 0 : true;
