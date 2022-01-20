@@ -30,7 +30,7 @@ import {
 
 describe('Broker interface', () => {
     beforeAll(async () => {
-        Broker = (await import('../../../../../server/src/trade/broker/Broker.js')).default.default;
+        Broker = (await import('../../../../../server/src/trade/broker/Broker.js')).default;
         broker = new Broker();
     });
 

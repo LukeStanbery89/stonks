@@ -2,20 +2,20 @@
 
 import CONSTANTS from '../../../../../../../server/src/constants.json';
 import {
+    marketCapMega,
     marketCapLarge,
     marketCapLargeOrLarger,
     marketCapLargeOrSmaller,
-    marketCapMega,
     marketCapMicro,
     marketCapMicroOrLarger,
     marketCapMicroOrSmaller,
     marketCapMid,
     marketCapMidOrLarger,
     marketCapMidOrSmaller,
-    marketCapNano,
     marketCapSmall,
     marketCapSmallOrLarger,
     marketCapSmallOrSmaller,
+    marketCapNano,
 } from '../../../../../../../server/src/trade/strategies/buy/common/common-evals.js';
 
 describe('Common Evaluator Functions', () => {

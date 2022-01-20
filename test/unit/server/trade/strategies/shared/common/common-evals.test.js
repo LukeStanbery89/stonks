@@ -11,7 +11,7 @@ let omitBlacklistedSecurities;
 
 describe('Common Evaluator Functions', () => {
     beforeAll(async () => {
-        const sharedCommonEvalsModule = (await import('../../../../../../../server/src/trade/strategies/shared/common/common-evals.js')).default;
+        const sharedCommonEvalsModule = (await import('../../../../../../../server/src/trade/strategies/shared/common/common-evals.js'));
         omitBlacklistedSecurities = sharedCommonEvalsModule.omitBlacklistedSecurities;
     });
 
