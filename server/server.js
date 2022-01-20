@@ -16,10 +16,10 @@ app.get('/', (req, res) => {
 app.listen(port, () => {
     console.log(`Web app listening at http://localhost:${port}`);
     console.log(`env: ${process.env.ENV}`);
-    cron.schedule('*/2 * * * *', () => {
+    cron.schedule('*/2 9-13 * * 1-5', () => {
         sell.run();
     });
-    cron.schedule(`${oddMinutes()} * * * *`, () => {
+    cron.schedule(`${oddMinutes()} 9-13 * * 1-5`, () => {
         buy.run();
     });
 });
