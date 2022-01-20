@@ -30,7 +30,7 @@ import {
 
 describe('Broker interface', () => {
     beforeAll(async () => {
-        Broker = (await import('../../../../../server/src/trade/broker/Broker.js')).default.default;
+        Broker = (await import('../../../../../server/src/trade/broker/Broker.js')).default;
         broker = new Broker();
     });
 
@@ -70,30 +70,38 @@ describe('Broker interface', () => {
     });
 
     test('_assignBrokerProvider() throws an error on invalid broker provider', () => {
-        expect(async () => {
+        return expect(async () => {
             await broker._assignBrokerProvider('NOT_REAL');
         }).rejects.toThrow('Cannot find module');
     });
 
-    test('_invoke() calls the provided function from the provider', async () => {
+    test('_invoke(buy) calls the provided buy() function from the provider', async () => {
         await broker._invoke('buy', {
             symbol: 'AAPL',
             qty: 1,
         });
         expect(mockBuy).toHaveBeenCalled();
+    });
 
+    test('_invoke(sell) calls the provided sell() function from the provider', async () => {
         await broker._invoke('sell', {
             symbol: 'AAPL',
             qty: 1,
         });
         expect(mockSell).toHaveBeenCalled();
+    });
 
+    test('_invoke(getPositions) calls the provided getPositions() function from the provider', async () => {
         await broker._invoke('getPositions');
         expect(mockGetPositions).toHaveBeenCalled();
+    });
 
+    test('_invoke(getPosition) calls the provided getPosition() function from the provider', async () => {
         await broker._invoke('getPosition');
         expect(mockGetPosition).toHaveBeenCalled();
+    });
 
+    test('_invoke(getAccountInfo) calls the provided getAccountInfo() function from the provider', async () => {
         await broker._invoke('getAccountInfo');
         expect(mockGetAccountInfo).toHaveBeenCalled();
     });

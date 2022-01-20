@@ -8,7 +8,7 @@ process.env.ALPACA_API_SECRET = 'fake-api-secret';
 const oldEnv = process.env;
 
 describe('Alpaca Provider', () => {
-    beforeAll(() => {
+    beforeEach(() => {
         jest.doMock('../../../../../../../server/src/trade/broker/providers/alpaca/alpaca.config.json', () => {
             return {
                 liveApiBaseUrl: 'https://live.example.com',
@@ -23,6 +23,7 @@ describe('Alpaca Provider', () => {
 
     afterEach(() => {
         jest.resetModules();
+        jest.resetAllMocks();
         process.env = oldEnv;
     });
 

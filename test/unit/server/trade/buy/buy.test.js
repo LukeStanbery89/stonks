@@ -1,4 +1,4 @@
-import { buySymbols } from '../../../../../server/src/trade/buy/buy';
+import { run } from '../../../../../server/src/trade/buy/buy';
 
 describe('Buy module', () => {
     describe('buySymbols()', () => {

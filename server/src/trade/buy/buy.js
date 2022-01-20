@@ -1,21 +1,23 @@
 'use strict';
 
-import filterSeries from "async/filterSeries";
-import detectSeries from "async/detectSeries";
+import filterSeries from 'async/filterSeries';
+import detectSeries from 'async/detectSeries';
 import Broker from "../broker/Broker.js";
 const broker = new Broker();
 import tradeConfig from '../trade.config.json';
 import buyConfig from './buy.config.json';
-import { omitBlacklistedSecurities, securityIsNotAlreadyOwned } from './strategies/common/common-evals.js';
+import { getSecurityData } from '../utils.js';
+import { securityIsNotAlreadyOwned } from '../strategies/buy/common/common-evals.js';
+import { omitBlacklistedSecurities } from '../strategies/shared/common/common-evals.js';
 
 async function run() {
-    const buyList = await getBuyableSymbols();
+    const buyList = await getBuyList();
     // FIXME: This isn't working
-    // return buyableSymbols.map(buy);
-};
+    // return buyList.map(buy);
+}
 
-async function getBuyableSymbols() {
-    const buyStrategy = (await import("./strategies/" + buyConfig.strategy + ".js")).default;
+async function getBuyList() {
+    const buyStrategy = (await import("../strategies/buy/" + buyConfig.strategy + ".js")).default;
     const buyCandidateSymbols = await getBuyCandidates();
     console.log('========== Begin Buy Candidate Evaluation ==========');
     return await filterSeries(buyCandidateSymbols, async (symbol) => {
@@ -32,7 +34,7 @@ async function getBuyableSymbols() {
         });
         return failures ? failures.length === 0 : true;
     });
-};
+}
 
 async function getBuyCandidates() {
     // TODO
@@ -41,21 +43,10 @@ async function getBuyCandidates() {
         'MSFT',
         'PYPL',
         'GOOG',
+        'USB',
+        'BAC',
+        'CAP',
     ];
-}
-
-async function getSecurityData(symbol) {
-    return new Promise(resolve => {
-        // TODO
-        return resolve({
-            symbol,
-            name: 'Company Name, LLC',
-            price: 123.45,
-            closePrice: 100.00,
-            marketCap: 500000000000.00,
-            marketCapSize: "MEGA",
-        });
-    });
 }
 
 async function buy(symbol) {
@@ -63,7 +54,7 @@ async function buy(symbol) {
         symbol,
         qty: tradeConfig.tradeQty,
     });
-};
+}
 
 export {
     run,

@@ -14,7 +14,7 @@
         "first-time": "git config core.hooksPath .githooks",
         "scrape": "node dist/scraper.bundle.js",
         "start": "node ./dist/server.bundle.js",
-        "test-unit": "node --experimental-vm-modules ./node_modules/.bin/jest --collectCoverage ./test/unit --verbose",
+        "test-unit": "node --experimental-vm-modules ./node_modules/.bin/jest --coverage=true ./test/unit --verbose --runInBand",
         "watch": "ENV=development webpack --watch"
     },
     "author": "Luke Stanbery",
@@ -29,8 +29,9 @@
         "mysql": "^2.18.1"
     },
     "devDependencies": {
-        "@babel/preset-env": "^7.16.8",
+        "@babel/preset-env": "^7.16.10",
         "@jest/types": "^27.4.2",
+        "eslint": "^8.7.0",
         "jest": "^27.3.1",
         "node-notifier": "^10.0.0",
         "webpack": "^5.64.4",
