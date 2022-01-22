@@ -1,47 +1,79 @@
-#!/bin/sh
-red="\033[0;31m"
-yellow="\033[1;33m"
-green="\033[1;32m"
-reset="\033[0m"
+#!/usr/bin/sh
 
-read -a changed_files <<< $(git diff --cached --name-only --raw)
+# An example hook script to verify that each commit that is about to be pushed
+# pass the `./run_tests` suite. Called by "git push" after it has checked the
+# remote status, but before anything has been pushed.
+# If the test suite (and so the script) exits with a non-zero status, nothing
+# will be pushed.
+#
+# In any case, we revert to the pre `$ git push` state.
 
-# check if there're any JS related files in commit
-runTests=false
-for file in "${changed_files[@]}"
+
+# Retrieve arguments
+remote="$1"
+url="$2"
+
+z40=0000000000000000000000000000000000000000 # SHA of a non existing commit
+
+
+# Save current "git state"
+current_branch=$(git rev-parse --abbrev-ref HEAD)
+
+STASH_NAME="pre-push-$(date +%s)"
+git stash save -q --keep-index $STASH_NAME
+
+
+# Do wonders
+while read local_ref local_sha remote_ref remote_sha
 do
-    extension="${file##*.}"
-    case $extension in js | jsx | json | jsonc | coffee | ts | tsx | es6) runTests=true; break;;
-    esac
+        if [ "$local_sha" = $z40 ]
+        then
+                # Handle delete
+                continue # to the next branch
+        elif [ "$remote_sha" = $z40 ]
+        then
+                # New branch, examine all commits
+                range="$local_sha"
+        else
+                # Update to existing branch, examine new commits
+                range="$remote_sha..$local_sha"
+        fi
+
+        # Retrieve list of commit in "chronological" order
+        commits=$(git rev-list --reverse $range)
+
+        # Loop over each commit
+        for commit in $commits
+        do
+            git checkout $commit
+
+            # Run the tests
+            npm run test-unit
+
+            # Retrieve exit code
+            is_test_passed=$?
+
+            # Stop iterating if error
+            if [ $is_test_passed -ne 0 ]
+            then
+                echo -e "Aborting push: Test failed for commit $commit,"\
+                  "with following error trace:\n"
+                # something like: tail test/run_tests.log
+                break 2
+            fi
+        done
 done
 
-[[ $runTests == false ]] && exit 0;
 
+# Revert to pre-push state
+git checkout $current_branch
 
-# now if your "package.json" isn't in the root directory
-# just "cd" there
-# eg.
-# cd folder/with/my-package
-printf "${yellow}Starting Unit Tests for JS Files:${reset}\n"
-# now lets run tests
-# eg.
-# karma start --single-run --browsers PhantomJS --reporters dots
-# or
-# eslint .
-# or
-# mocha --colors --bail
-# but we'll do more general
-npm run test-unit
-
-
-# now if tests failed let's abort commit by "exit 1"
-# if not, congratulations, commit is now in Git
-testResults=$?
-if [ $testResults -eq 1 ]
+STASH_NUM=$(git stash list | grep $STASH_NAME | sed -re 's/stash@\{(.*)\}.*/\1/')
+if [ -n "$STASH_NUM" ]
 then
-    echo -e "${red}\n Tests FAILED\n\n commit ABORTED${reset}"
-    exit 1
-else
-    echo -e "${green}\nOK\n${reset}"
+    git stash pop -q stash@{$STASH_NUM}
 fi
-exit 0
+#removed fi
+
+# Return exit code
+exit $is_test_passed
