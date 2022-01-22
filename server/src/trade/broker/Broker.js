@@ -32,7 +32,7 @@ export default class Broker {
         !this._broker ? await this._assignBrokerProvider(tradeConfig.broker) : '';
 
         if (this._broker[command]) {
-            return await this._broker[command](args);
+            return await this._broker[command](...args);
         } else {
             throw new Error(`Invalid broker command: ${command}`);
         }

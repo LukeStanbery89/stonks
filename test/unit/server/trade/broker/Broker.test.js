@@ -39,19 +39,23 @@ describe('Broker interface', () => {
     });
 
     test('buy() command calls the provider implementation', async () => {
-        await broker.buy({
+        const result = await broker.buy({
             symbol: 'AAPL',
             qty: 1,
         });
         expect(mockBuy).toHaveBeenCalled();
+        expect(result.symbol).toBe('AAPL');
+        expect(result.qty).toBe(1);
     });
 
     test('sell() command calls the provider implementation', async () => {
-        await broker.sell({
+        const result = await broker.sell({
             symbol: 'AAPL',
             qty: 1,
         });
         expect(mockSell).toHaveBeenCalled();
+        expect(result.symbol).toBe('AAPL');
+        expect(result.qty).toBe(1);
     });
 
     test('getPositions() command calls the provider implementation', async () => {
@@ -60,8 +64,9 @@ describe('Broker interface', () => {
     });
 
     test('getPosition() command calls the provider implementation', async () => {
-        await broker.getPosition('AAPL');
+        const result = await broker.getPosition('AAPL');
         expect(mockGetPosition).toHaveBeenCalled();
+        expect(result).toBe('AAPL');
     });
 
     test('getAccountInfo() command fetches brokerage account information', async () => {
@@ -76,19 +81,23 @@ describe('Broker interface', () => {
     });
 
     test('_invoke(buy) calls the provided buy() function from the provider', async () => {
-        await broker._invoke('buy', {
+        const result = await broker._invoke('buy', {
             symbol: 'AAPL',
             qty: 1,
         });
         expect(mockBuy).toHaveBeenCalled();
+        expect(result.symbol).toBe('AAPL');
+        expect(result.qty).toBe(1);
     });
 
     test('_invoke(sell) calls the provided sell() function from the provider', async () => {
-        await broker._invoke('sell', {
+        const result = await broker._invoke('sell', {
             symbol: 'AAPL',
             qty: 1,
         });
         expect(mockSell).toHaveBeenCalled();
+        expect(result.symbol).toBe('AAPL');
+        expect(result.qty).toBe(1);
     });
 
     test('_invoke(getPositions) calls the provided getPositions() function from the provider', async () => {
@@ -97,8 +106,9 @@ describe('Broker interface', () => {
     });
 
     test('_invoke(getPosition) calls the provided getPosition() function from the provider', async () => {
-        await broker._invoke('getPosition');
+        const result = await broker._invoke('getPosition', 'AAPL');
         expect(mockGetPosition).toHaveBeenCalled();
+        expect(result).toBe('AAPL');
     });
 
     test('_invoke(getAccountInfo) calls the provided getAccountInfo() function from the provider', async () => {
