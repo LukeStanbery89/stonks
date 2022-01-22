@@ -4,20 +4,11 @@ import {
     marketDaysOfWeek,
     marketHours,
     oddMinutes,
-    scheduleCronJobs,
 } from "../../../../server/src/cron/utils";
-import cron from 'node-cron';
-
-jest.mock('node-cron');
 
 const oldEnv = process.env;
-const schedule = jest.fn();
 
 describe('Cron Utils', () => {
-    beforeAll(() => {
-        cron.schedule.mockImplementation(schedule);
-    });
-
     beforeEach(() => {
         process.env = { ...oldEnv };
     });
@@ -26,11 +17,6 @@ describe('Cron Utils', () => {
         jest.resetModules();
         jest.resetAllMocks();
         process.env = oldEnv;
-    });
-
-    test('scheduleCronJobs() initializes node-cron jobs', () => {
-        scheduleCronJobs();
-        expect(schedule).toHaveBeenCalledTimes(2);
     });
 
     test('getBuyCronTabSchedule() returns the correctly formatted crontab string in production', () => {
