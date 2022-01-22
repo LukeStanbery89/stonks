@@ -40,8 +40,19 @@ do
 			range="$remote_oid..$local_oid"
 		fi
 
-		# Check for WIP commit
+		# Run unit tests
 		npm run test-unit
+
+        # now if tests failed let's abort commit by "exit 1"
+        # if not, congratulations, commit is now in Git
+        testResults=$?
+        if [ $testResults -eq 1 ]
+        then
+            echo -e "${red}\n Tests FAILED\n\n commit ABORTED${reset}"
+            exit 1
+        else
+            echo -e "${green}\nOK\n${reset}"
+        fi
 	fi
 done
 
