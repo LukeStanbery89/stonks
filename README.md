@@ -1,7 +1,7 @@
 [![CodeQL](https://github.com/LukeStanbery89/stonks/actions/workflows/codeql-analysis.yml/badge.svg?branch=master)](https://github.com/LukeStanbery89/stonks/actions/workflows/codeql-analysis.yml)
 [![Unit Tests CI](https://github.com/LukeStanbery89/stonks/actions/workflows/unit-tests.yml/badge.svg?branch=master)](https://github.com/LukeStanbery89/stonks/actions/workflows/unit-tests.yml)
 
-# Node Boilerplate
+# Stonks
 
 A Node.js boilerplate app.
 
