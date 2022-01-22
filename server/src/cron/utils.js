@@ -31,7 +31,7 @@ export function oddMinutes() {
 }
 
 export function marketHours() {
-    return process.env.ENV === 'development' ? '*' : '9-3';
+    return process.env.ENV === 'development' ? '*' : '9-15';
 }
 
 export function marketDaysOfWeek() {
