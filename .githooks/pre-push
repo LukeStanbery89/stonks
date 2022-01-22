@@ -11,7 +11,7 @@ runTests=false
 for file in "${changed_files[@]}"
 do
     extension="${file##*.}"
-    case $extension in js | json | coffee | jsx | ts | es6) runTests=true; break;;
+    case $extension in js | jsx | json | jsonc | coffee | ts | tsx | es6) runTests=true; break;;
     esac
 done
 
