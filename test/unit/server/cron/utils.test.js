@@ -20,6 +20,7 @@ describe('Cron Utils', () => {
     });
 
     test('getBuyCronTabSchedule() returns the correctly formatted crontab string in production', () => {
+        expect(true).toBe(false);
         process.env.ENV = 'production';
         expect(getBuyCronTabSchedule()).toBe('*/2 9-15 * * 1-5');
     });
