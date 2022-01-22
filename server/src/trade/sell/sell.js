@@ -4,16 +4,26 @@ import filterSeries from 'async/filterSeries';
 import detectSeries from 'async/detectSeries';
 import moment from 'moment';
 import chalk from 'chalk';
+import notifier from 'node-notifier';
+import asyncMap from 'async/map';
 import Broker from '../broker/Broker.js';
-const broker = new Broker();
 import tradeConfig from '../trade.config.json';
 import sellConfig from './sell.config.json';
 import { omitBlacklistedSecurities } from '../strategies/shared/common/common-evals.js';
 import { getSecurityData } from '../utils.js';
 
+const broker = new Broker();
+
 async function run() {
     const sellList = await getSellList();
-    // return sellList.map(sell);
+    return asyncMap(sellList, async symbol => {
+        notifier.notify({
+            title: 'Stonks',
+            message: `New SELL order: ${symbol}`,
+            sound: 'Breeze',
+        });
+        return await sell(symbol);
+    });
 }
 
 async function getSellList() {
@@ -43,7 +53,7 @@ async function getPositions() {
 }
 
 async function sell(symbol) {
-    return await broker.buy({
+    return await broker.sell({
         symbol,
         qty: tradeConfig.tradeQty,
     });
