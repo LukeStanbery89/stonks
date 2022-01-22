@@ -5,7 +5,7 @@ import tradeConfig from '../../../trade.config.json';
 import alpacaConfig from './alpaca.config.json';
 const BROKER = 'ALPACA';
 
-const buy = async (buyOrder) => {
+const buy = (buyOrder) => {
     return new Promise((resolve, reject) => {
         axios({
             method: 'POST',
@@ -43,7 +43,7 @@ const buy = async (buyOrder) => {
     });
 };
 
-const sell = async (sellOrder) => {
+const sell = (sellOrder) => {
     return new Promise((resolve, reject) => {
         axios({
             method: 'POST',
@@ -79,7 +79,7 @@ const sell = async (sellOrder) => {
     });
 };
 
-const getPositions = async () => {
+const getPositions = () => {
     return new Promise((resolve, reject) => {
         axios({
             method: 'GET',
@@ -108,7 +108,7 @@ const getPositions = async () => {
     });
 };
 
-const getPosition = async (symbol) => {
+const getPosition = (symbol) => {
     return new Promise((resolve, reject) => {
         axios({
             method: 'GET',
@@ -138,7 +138,7 @@ const getPosition = async (symbol) => {
     });
 };
 
-const getAccountInfo = async () => {
+const getAccountInfo = () => {
     return new Promise((resolve, reject) => {
         axios({
             method: 'GET',

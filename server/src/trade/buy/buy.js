@@ -4,18 +4,27 @@ import filterSeries from 'async/filterSeries';
 import detectSeries from 'async/detectSeries';
 import moment from 'moment';
 import chalk from 'chalk';
+import notifier from 'node-notifier';
+import asyncMap from 'async/map';
 import Broker from "../broker/Broker.js";
-const broker = new Broker();
 import tradeConfig from '../trade.config.json';
 import buyConfig from './buy.config.json';
 import { getSecurityData } from '../utils.js';
 import { securityIsNotAlreadyOwned } from '../strategies/buy/common/common-evals.js';
 import { omitBlacklistedSecurities } from '../strategies/shared/common/common-evals.js';
 
+const broker = new Broker();
+
 async function run() {
     const buyList = await getBuyList();
-    // FIXME: This isn't working
-    // return buyList.map(buy);
+    return asyncMap(buyList, async symbol => {
+        notifier.notify({
+            title: 'Stonks',
+            message: `New BUY order: ${symbol}`,
+            sound: 'Breeze',
+        });
+        return await buy(symbol);
+    });
 }
 
 async function getBuyList() {
