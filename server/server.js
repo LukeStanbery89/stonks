@@ -13,6 +13,7 @@ app.get('/', (req, res) => {
 
 app.listen(port, () => {
     console.log(`Web app listening at http://localhost:${port}`);
-    console.log(`env: ${process.env.ENV}`);
+    console.log(`ENV: ${process.env.ENV}`);
+    console.log(`PWD: ${process.env.PWD}`);
     scheduleCronJobs();
 });
