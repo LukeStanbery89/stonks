@@ -3,46 +3,41 @@
 
 # Stonks
 
-A Node.js boilerplate app.
+A day trading/swing trading Node.js application.
 
 ## Getting Started
 
-After checking out this repo locally for the first time, in addition to running `npm install`, run:
+After checking out this repo locally for the first time, run:
+```console
+npm install
+```
+
+The first time you run this code, you will need to run the following command to initialize git pre-push hooks:
 ```console
 npm run first-time
 ```
-
-This will configure git's pre-commit hooks.
 
 ## Scripts
 
 ### Development
 
-The first time you run this code, you will need to run the following command to initialize git pre-commit hooks:
+Build webpack bundle:
 ```console
-npm run first-time
-```
-
-Start development server:
-```console
-npm run dev
+npm run build-dev
 ```
 
 Start server without hot reloading:
 ```console
-npm run start
+npm run start-dev
 ```
 
-Start watching for changes to Typescript files:
-```console
-npm run ts-watch
-```
+**Note:** There is no hot reloading option at this point, but [contributions are welcome](https://github.com/LukeStanbery89/stonks/issues/50). :)
 
 ### Docker
 
 Build Docker image:
 ```console
-npm run docker-build
+npm run docker-build-dev
 ```
 
 Start Docker container:
@@ -50,7 +45,7 @@ Start Docker container:
 npm run docker-compose
 ```
 
-### Testing
+### Unit Testing
 Run Jest unit tests:
 ```console
 npm run test-unit
@@ -58,7 +53,17 @@ npm run test-unit
 
 ### Production
 
-Compile Typescript files:
+Compile JS files:
 ```console
 npm run build
+```
+
+Build Docker image:
+```console
+npm run docker-build
+```
+
+Start web server:
+```console
+npm run start
 ```
