@@ -12,14 +12,23 @@ export function securityIsNotAlreadyOwned(securityData) {
     });
 }
 
-// MEGA = >$200 billion
+/**
+ * MARKET CAP CLASSIFICATIONS
+ * 
+ * MEGA = >$200 billion
+ * LARGE = $10 billion - $200 billion
+ * MID = $2 billion - $10 billion
+ * SMALL = $300 million - $2 billion
+ * MICRO = $50 million - $300 million
+ * NANO = <$50 million
+ */
+
 export function marketCapMega(securityData) {
     return new Promise(resolve => {
         return resolve(securityData.marketCapSize === CONSTANTS.MARKET_CAP_SIZES.MEGA);
     });
 }
 
-// LARGE = $10 billion - $200 billion
 export function marketCapLarge(securityData) {
     return new Promise(resolve => {
         return resolve(securityData.marketCapSize === CONSTANTS.MARKET_CAP_SIZES.LARGE);
@@ -47,7 +56,6 @@ export function marketCapLargeOrSmaller(securityData) {
     });
 }
 
-// MID = $2 billion - $10 billion
 export function marketCapMid(securityData) {
     return new Promise(resolve => {
         return resolve(securityData.marketCapSize === CONSTANTS.MARKET_CAP_SIZES.MID);
@@ -75,7 +83,6 @@ export function marketCapMidOrSmaller(securityData) {
     });
 }
 
-// SMALL = $300 million - $2 billion
 export function marketCapSmall(securityData) {
     return new Promise(resolve => {
         return resolve(securityData.marketCapSize === CONSTANTS.MARKET_CAP_SIZES.SMALL);
@@ -103,7 +110,6 @@ export function marketCapSmallOrSmaller(securityData) {
     });
 }
 
-// MICRO = $50 million - $300 million
 export function marketCapMicro(securityData) {
     return new Promise(resolve => {
         return resolve(securityData.marketCapSize === CONSTANTS.MARKET_CAP_SIZES.MICRO);
@@ -131,7 +137,6 @@ export function marketCapMicroOrSmaller(securityData) {
     });
 }
 
-// NANO = <$50 million
 export function marketCapNano(securityData) {
     return new Promise(resolve => {
         return resolve(securityData.marketCapSize === CONSTANTS.MARKET_CAP_SIZES.NANO);

@@ -1,7 +1,7 @@
 import cron from 'node-cron';
 import * as buy from '../trade/buy/buy.js';
 import * as sell from '../trade/sell/sell.js';
-import { getBuyCronTabSchedule, getSellCronTabSchedule } from './utils.js';
+import { getBuyCronTabSchedule, getSellCronTabSchedule } from './cron-utils.js';
 
 export default function scheduleCronJobs() {
     console.log('Scheduling cron jobs...');
