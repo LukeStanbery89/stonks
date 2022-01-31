@@ -16,13 +16,10 @@ describe('Trade Utils', () => {
     });
 
     test('composeEvalFunctions() returns an array of functions', () => {
-        const testEvalFunc1 = jest.fn(() => true);
-        const testEvalFunc2 = jest.fn(() => true);
-        const testEvalFunc3 = jest.fn(() => true);
         const evalFunctions = [
-            testEvalFunc1,
-            testEvalFunc2,
-            testEvalFunc3,
+            jest.fn(() => true),
+            jest.fn(() => true),
+            jest.fn(() => true),
         ];
         const result = composeEvalFunctions(evalFunctions);
 
@@ -30,6 +27,5 @@ describe('Trade Utils', () => {
         result.forEach(evalFunc => {
             expect(typeof evalFunc).toBe('function');
         });
-        expect(testEvalFunc1).toHaveBeenCalled();
     });
 });
