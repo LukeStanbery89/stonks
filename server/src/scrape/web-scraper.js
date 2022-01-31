@@ -19,6 +19,7 @@ const scrape = async (sourceConfig) => {
                 break;
             case sourceConfig.constants.BEARISH:
                 rating = sourceConfig.constants.BEARISH;
+                break;
             default:
                 break;
         }

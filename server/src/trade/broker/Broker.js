@@ -9,7 +9,7 @@ export default class Broker {
     }
 
     async buy(buyOrder) {
-        return this._invoke(brokerConfig.commands.BUY, buyOrder);
+        return await this._invoke(brokerConfig.commands.BUY, buyOrder);
     }
 
     async sell(sellOrder) {
@@ -40,7 +40,7 @@ export default class Broker {
 
     _assignBrokerProvider(providerName) {
         return new Promise((resolve, reject) => {
-            import("./providers/" + tradeConfig.brokerProviders[providerName] + "/" + tradeConfig.brokerProviders[providerName]).then(module => {
+            import('./providers/' + tradeConfig.brokerProviders[providerName] + '/' + tradeConfig.brokerProviders[providerName]).then(module => {
                 this._broker = module;
                 return resolve();
             }).catch(e => reject(e));

@@ -10,7 +10,7 @@ import Broker from '../broker/Broker.js';
 import tradeConfig from '../trade.config.json';
 import sellConfig from './sell.config.json';
 import { omitBlacklistedSecurities } from '../strategies/shared/common/common-evals.js';
-import { getSecurityData } from '../utils.js';
+import { composeEvalFunctions, getSecurityData } from '../trade-utils.js';
 
 const broker = new Broker();
 
@@ -27,18 +27,17 @@ async function run() {
 }
 
 async function getSellList() {
-    const sellStrategy = (await import("../strategies/sell/" + sellConfig.strategy + ".js")).default;
+    const sellStrategy = (await import('../strategies/sell/' + sellConfig.strategy + '.js')).default;
     const positions = await getPositions();
     console.log(chalk.cyan(`\n========== Begin Sell Candidate Evaluation - ${moment().format('MMMM Do YYYY, h:mm:ss a')} ==========`));
     return await filterSeries(positions, async (symbol) => {
         const securityData = await getSecurityData(symbol);
-        const evalFunctions = [
+        const evalFunctions = composeEvalFunctions([
             omitBlacklistedSecurities,
             ...sellStrategy,
-        ];
+        ]);
         const failures = await detectSeries(evalFunctions, async (evalFunc) => {
             const result = await evalFunc(securityData);
-            console.log(`${securityData.symbol} - ${evalFunc.name} evaluated as ${result ? chalk.green(result) : chalk.red(result)}`);
             return result === false;
         });
         return failures ? failures.length === 0 : true;

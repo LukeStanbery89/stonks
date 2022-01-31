@@ -4,7 +4,7 @@ import {
     marketDaysOfWeek,
     marketHours,
     oddMinutes,
-} from "../../../../server/src/cron/cron-utils";
+} from '../../../../server/src/cron/cron-utils';
 
 const oldEnv = process.env;
 
