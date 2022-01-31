@@ -6,13 +6,13 @@ export const omitThreeCharacterSymbols = function (securityData) {
     });
 };
 
-export const stockPriceRose10PercentOrMore = function (securityData) {
+export const stockPriceRose10PercentOrMore = function () {
     return new Promise(resolve => {
         return resolve(false);
     });
 };
 
-export const stockPriceDropped2PercentOrMore = function (securityData) {
+export const stockPriceDropped2PercentOrMore = function () {
     return new Promise(resolve => {
         return resolve(true);
     });
