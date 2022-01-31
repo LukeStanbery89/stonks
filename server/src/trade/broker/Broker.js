@@ -9,7 +9,7 @@ export default class Broker {
     }
 
     async buy(buyOrder) {
-        return this._invoke(brokerConfig.commands.BUY, buyOrder);
+        return await this._invoke(brokerConfig.commands.BUY, buyOrder);
     }
 
     async sell(sellOrder) {
