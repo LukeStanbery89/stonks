@@ -6,7 +6,7 @@ import moment from 'moment';
 import chalk from 'chalk';
 import notifier from 'node-notifier';
 import asyncMap from 'async/map';
-import Broker from "../broker/Broker.js";
+import Broker from '../broker/Broker.js';
 import tradeConfig from '../trade.config.json';
 import buyConfig from './buy.config.json';
 import { getSecurityData } from '../utils.js';
@@ -28,7 +28,7 @@ async function run() {
 }
 
 async function getBuyList() {
-    const buyStrategy = (await import("../strategies/buy/" + buyConfig.strategy + ".js")).default;
+    const buyStrategy = (await import('../strategies/buy/' + buyConfig.strategy + '.js')).default;
     const buyCandidateSymbols = await getBuyCandidates();
     console.log(chalk.cyan(`\n========== Begin Buy Candidate Evaluation - ${moment().format('MMMM Do YYYY, h:mm:ss a')} ==========`));
     return await filterSeries(buyCandidateSymbols, async (symbol) => {

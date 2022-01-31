@@ -27,7 +27,7 @@ async function run() {
 }
 
 async function getSellList() {
-    const sellStrategy = (await import("../strategies/sell/" + sellConfig.strategy + ".js")).default;
+    const sellStrategy = (await import('../strategies/sell/' + sellConfig.strategy + '.js')).default;
     const positions = await getPositions();
     console.log(chalk.cyan(`\n========== Begin Sell Candidate Evaluation - ${moment().format('MMMM Do YYYY, h:mm:ss a')} ==========`));
     return await filterSeries(positions, async (symbol) => {
