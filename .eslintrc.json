@@ -10,6 +10,7 @@
         "sourceType": "module"
     },
     "rules": {
-        "quotes": ["error", "single"]
+        "quotes": ["error", "single"],
+        "quote-props": ["error", "as-needed"]
     }
 }

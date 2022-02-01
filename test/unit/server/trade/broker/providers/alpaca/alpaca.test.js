@@ -316,8 +316,8 @@ describe('Alpaca Provider', () => {
         alpaca = (await import('../../../../../../../server/src/trade/broker/providers/alpaca/alpaca'));
         const result = await alpaca.buy(buyOrder);
         expect(result.response.headers).toEqual({
-            "APCA-API-KEY-ID": 'fake-api-key',
-            "APCA-API-SECRET-KEY": 'fake-api-secret',
+            'APCA-API-KEY-ID': 'fake-api-key',
+            'APCA-API-SECRET-KEY': 'fake-api-secret',
         });
     });
 
