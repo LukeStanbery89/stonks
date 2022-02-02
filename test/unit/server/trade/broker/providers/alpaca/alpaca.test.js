@@ -9,7 +9,7 @@ const oldEnv = process.env;
 
 describe('Alpaca Provider', () => {
     beforeEach(() => {
-        jest.doMock('../../../../../../../server/src/trade/broker/providers/alpaca/alpaca.config.json', () => {
+        jest.doMock('../../../../../../../server/src/trade/broker/providers/alpaca/alpaca.config.js', () => {
             return {
                 liveApiBaseUrl: 'https://live.example.com',
                 testApiBaseUrl: 'https://test.example.com',

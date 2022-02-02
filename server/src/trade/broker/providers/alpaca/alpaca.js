@@ -2,7 +2,7 @@
 
 import axios from 'axios';
 import tradeConfig from '../../../trade.config.json';
-import alpacaConfig from './alpaca.config.json';
+import alpacaConfig from './alpaca.config.js';
 const BROKER = 'ALPACA';
 
 const buy = (buyOrder) => {
