@@ -1,6 +1,6 @@
 'use strict';
 
-import alpacaConfig from '../../../../../../../server/src/trade/broker/providers/alpaca/alpaca.config.json';
+import alpacaConfig from '../../../../../../../server/src/trade/broker/providers/alpaca/alpaca.config.js';
 
 describe('Alpaca Provider Config', () => {
     test('Live API endpoint domain is valid URL', () => {
