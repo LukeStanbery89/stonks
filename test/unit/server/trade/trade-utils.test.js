@@ -24,6 +24,7 @@ describe('Trade Utils', () => {
         const result = composeEvalFunctions(evalFunctions);
 
         expect(result.constructor.name).toBe('Array');
+        expect(result.length).toBe(3);
         result.forEach(evalFunc => {
             expect(typeof evalFunc).toBe('function');
         });
