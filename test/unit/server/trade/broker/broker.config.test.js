@@ -1,6 +1,6 @@
 'use strict';
 
-import brokerConfig from '../../../../../server/src/trade/broker/broker.config.json';
+import brokerConfig from '../../../../../server/src/trade/broker/broker.config.js';
 
 describe('Broker Config', () => {
     test('commands is an object consisting entirely of strings', () => {
