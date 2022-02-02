@@ -1,7 +1,7 @@
 'use strict';
 
 import * as webScraper from './web-scraper';
-import scraperConfig from './scraper.config.json';
+import scraperConfig from './scraper.config.js';
 
 const beginScraping = async () => {
     scraperConfig.sources.forEach(async (source) => {
