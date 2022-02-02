@@ -5,7 +5,7 @@ const mockTradeConfig = {
         'BAD',
     ],
 };
-jest.doMock('../../../../../../../server/src/trade/trade.config.json', () => mockTradeConfig);
+jest.doMock('../../../../../../../server/src/trade/trade.config.js', () => mockTradeConfig);
 
 let omitBlacklistedSecurities;
 

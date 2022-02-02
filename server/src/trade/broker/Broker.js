@@ -1,6 +1,6 @@
 'use strict';
 
-import tradeConfig from '../trade.config.json';
+import tradeConfig from '../trade.config.js';
 import brokerConfig from './broker.config.js';
 
 export default class Broker {

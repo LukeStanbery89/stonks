@@ -3,19 +3,19 @@
 import { jest } from '@jest/globals';
 
 const mockTradeConfig = {
-    "broker": "FAKE_BROKER",
-    "brokerProviders": {
-        "FAKE_BROKER": "fake-provider",
+    broker: 'FAKE_BROKER',
+    brokerProviders: {
+        FAKE_BROKER: 'fake-provider',
     },
-    "commands": {
-        "BUY": "buy",
-        "SELL": "sell",
-        "GET_POSITIONS": "getPositions",
-        "GET_POSITION": "getPosition",
-        "GET_ACCOUNT_INFO": "getAccountInfo"
+    commands: {
+        BUY: 'buy',
+        SELL: 'sell',
+        GET_POSITIONS: 'getPositions',
+        GET_POSITION: 'getPosition',
+        GET_ACCOUNT_INFO: 'getAccountInfo'
     },
 };
-jest.doMock('../../../../../server/src/trade/trade.config.json', () => mockTradeConfig);
+jest.doMock('../../../../../server/src/trade/trade.config.js', () => mockTradeConfig);
 
 let Broker;
 let broker;

@@ -7,7 +7,7 @@ import chalk from 'chalk';
 import notifier from 'node-notifier';
 import asyncMap from 'async/map';
 import Broker from '../broker/Broker.js';
-import tradeConfig from '../trade.config.json';
+import tradeConfig from '../trade.config.js';
 import buyConfig from './buy.config.js';
 import { composeEvalFunctions, getSecurityData } from '../trade-utils.js';
 import { securityIsNotAlreadyOwned } from '../strategies/buy/common/common-evals.js';

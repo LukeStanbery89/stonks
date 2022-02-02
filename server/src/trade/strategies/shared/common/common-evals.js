@@ -1,4 +1,4 @@
-import tradeConfig from '../../../trade.config.json';
+import tradeConfig from '../../../trade.config.js';
 
 export function omitBlacklistedSecurities(securityData) {
     return new Promise(resolve => {
