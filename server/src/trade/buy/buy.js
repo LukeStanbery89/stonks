@@ -8,7 +8,7 @@ import notifier from 'node-notifier';
 import asyncMap from 'async/map';
 import Broker from '../broker/Broker.js';
 import tradeConfig from '../trade.config.json';
-import buyConfig from './buy.config.json';
+import buyConfig from './buy.config.js';
 import { composeEvalFunctions, getSecurityData } from '../trade-utils.js';
 import { securityIsNotAlreadyOwned } from '../strategies/buy/common/common-evals.js';
 import { omitBlacklistedSecurities } from '../strategies/shared/common/common-evals.js';
@@ -28,7 +28,6 @@ async function run() {
 }
 
 async function getBuyList() {
-    const buyStrategy = (await import('../strategies/buy/' + buyConfig.strategy + '.js')).default;
     const buyCandidateSymbols = await getBuyCandidates();
     console.log(chalk.cyan(`\n========== Begin Buy Candidate Evaluation - ${moment().format('MMMM Do YYYY, h:mm:ss a')} ==========`));
     return await filterSeries(buyCandidateSymbols, async (symbol) => {
@@ -36,7 +35,7 @@ async function getBuyList() {
         const evalFunctions = composeEvalFunctions([
             omitBlacklistedSecurities,
             securityIsNotAlreadyOwned,
-            ...buyStrategy,
+            ...buyConfig.buyStrategy,
         ]);
         const failures = await detectSeries(evalFunctions, async (evalFunc) => {
             const result = await evalFunc(securityData);
