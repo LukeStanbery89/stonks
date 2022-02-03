@@ -9,7 +9,7 @@ module.exports = [
         entry: {
             server: './server/server.js',
         },
-        devtool: 'inline-source-map',
+        devtool: 'eval',
         module: {
             rules: [
                 {
