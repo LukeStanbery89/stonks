@@ -17,7 +17,7 @@ const broker = new Broker();
 
 async function run() {
     const buyList = await getBuyList();
-    return asyncMap(buyList, async symbol => {
+    return await asyncMap(buyList, async symbol => {
         notifier.notify({
             title: 'Stonks',
             message: `New BUY order: ${symbol}`,
@@ -28,14 +28,14 @@ async function run() {
 }
 
 async function getBuyList() {
-    const buyCandidateSymbols = await getBuyCandidates();
     console.log(chalk.cyan(`\n========== Begin Buy Candidate Evaluation - ${moment().format('MMMM Do YYYY, h:mm:ss a')} ==========`));
+    const buyCandidateSymbols = await getBuyCandidates();
     return await filterSeries(buyCandidateSymbols, async (symbol) => {
         const securityData = await getSecurityData(symbol);
-        const evalFunctions = composeEvalFunctions([
+        const evalFunctions = await composeEvalFunctions([
             omitBlacklistedSecurities,
             securityIsNotAlreadyOwned,
-            ...buyConfig.buyStrategy,
+            ...buyConfig.strategy,
         ]);
         const failures = await detectSeries(evalFunctions, async (evalFunc) => {
             const result = await evalFunc(securityData);

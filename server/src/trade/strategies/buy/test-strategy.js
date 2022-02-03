@@ -1,6 +1,6 @@
 'use strict';
 
-import { marketCapSmallOrLarger } from './common/common-evals.js';
+import { marketCapSmallOrLarger, noOpenOrder } from './common/common-evals.js';
 
 export const first = function () {
     return new Promise(resolve => {
@@ -25,5 +25,6 @@ export default [
     first,
     omitApple,
     third,
+    noOpenOrder,
     marketCapSmallOrLarger,
 ];

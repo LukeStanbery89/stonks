@@ -162,6 +162,39 @@ const getAccountInfo = () => {
     });
 };
 
+const getOrders = (params) => {
+    return new Promise((resolve, reject) => {
+        axios({
+            method: 'GET',
+            baseURL: getAlpacaBaseUrl(),
+            url: '/v2/orders',
+            headers: getAlpacaHeaders(),
+            data: {
+                status: params.status || '', // default = "open"
+                symbols: params.symbol ? params.symbol.join(',') : '',
+            },
+        }).then((response) => {
+            if (response.status === 200) {
+                return resolve(response.data.map(order => {
+                    return {
+                        broker: BROKER,
+                        order_id: order.id,
+                        submitted_at: order.submitted_at,
+                        symbol: order.symbol,
+                        notional: order.notional,
+                        qty: order.qty,
+                        type: order.type,
+                        side: order.side,
+                    };
+                }));
+            }
+            throw new Error(`Failed to retrieve orders with error: ${response.status} - ${response.statusText}`);
+        }).catch((error) => {
+            return reject(error);
+        });
+    });
+};
+
 const getSecurities = () => {
     return new Promise((resolve, reject) => {
         axios({
@@ -202,5 +235,6 @@ export {
     getAccountInfo,
     getPositions,
     getPosition,
+    getOrders,
     getSecurities,
 };
