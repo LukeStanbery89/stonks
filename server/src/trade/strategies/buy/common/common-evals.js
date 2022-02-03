@@ -12,6 +12,14 @@ export function securityIsNotAlreadyOwned(securityData) {
     });
 }
 
+export function noOpenOrder(securityData, aggregate) {
+    return new Promise(resolve => {
+        return resolve(aggregate?.orders?.filter(order => {
+            return order.symbol === securityData.symbol;
+        }).length === 0);
+    });
+}
+
 /**
  * MARKET CAP CLASSIFICATIONS
  * 

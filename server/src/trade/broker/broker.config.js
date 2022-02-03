@@ -4,6 +4,7 @@ export default {
         SELL: 'sell',
         GET_POSITIONS: 'getPositions',
         GET_POSITION: 'getPosition',
-        GET_ACCOUNT_INFO: 'getAccountInfo'
+        GET_ACCOUNT_INFO: 'getAccountInfo',
+        GET_ORDERS: 'getOrders',
     }
 };
