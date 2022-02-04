@@ -1,6 +1,7 @@
 'use strict';
 
-import { marketCapSmallOrLarger, noOpenOrder } from './common/common-evals.js';
+import { noOpenOrder } from '../shared/common/common-evals.js';
+import { marketCapSmallOrLarger } from './common/common-evals.js';
 
 export const first = function () {
     return new Promise(resolve => {
