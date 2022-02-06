@@ -1,5 +1,3 @@
-'use strict';
-
 import { noOpenBuyOrder, noOpenOrder, noOpenSellOrder } from '../../../../../../../server/src/trade/strategies/shared/common/common-evals.js';
 
 jest.mock('../../../../../../../server/src/trade/trade.config.js', () => ({

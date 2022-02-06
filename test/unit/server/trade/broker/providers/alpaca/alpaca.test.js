@@ -1,5 +1,3 @@
-'use strict';
-
 import { jest } from '@jest/globals';
 
 let alpaca;

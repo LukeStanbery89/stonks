@@ -1,5 +1,3 @@
-'use strict';
-
 import CONSTANTS from '../../../server/src/constants.json';
 
 describe('constants.json', () => {

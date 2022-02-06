@@ -1,5 +1,3 @@
-'use strict';
-
 import tradeConfig from '../../../../server/src/trade/trade.config.js';
 import CONSTANTS from '../../../../server/src/constants.json';
 

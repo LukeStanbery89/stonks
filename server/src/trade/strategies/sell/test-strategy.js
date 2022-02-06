@@ -1,5 +1,3 @@
-'use strict';
-
 export const omitThreeCharacterSymbols = function (securityData) {
     return new Promise(resolve => {
         return resolve(securityData.symbol.length !== 3);
