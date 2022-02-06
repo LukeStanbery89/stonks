@@ -1,5 +1,3 @@
-'use strict';
-
 import brokerConfig from '../../../../../server/src/trade/broker/broker.config.js';
 
 describe('Broker Config', () => {

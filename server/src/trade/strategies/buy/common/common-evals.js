@@ -1,5 +1,3 @@
-'use strict';
-
 import CONSTANTS from '../../../../constants.json';
 import Broker from '../../../broker/Broker.js';
 const broker = new Broker();

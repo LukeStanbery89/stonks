@@ -1,5 +1,3 @@
-'use strict';
-
 import axios from 'axios';
 import tradeConfig from '../../../trade.config.js';
 import alpacaConfig from './alpaca.config.js';

@@ -1,5 +1,3 @@
-'use strict';
-
 import alpacaConfig from '../../../../../../../server/src/trade/broker/providers/alpaca/alpaca.config.js';
 
 describe('Alpaca Provider Config', () => {

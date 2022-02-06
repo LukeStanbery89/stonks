@@ -1,5 +1,3 @@
-'use strict';
-
 import { jest } from '@jest/globals';
 
 const buy = jest.fn(async (args) => args);

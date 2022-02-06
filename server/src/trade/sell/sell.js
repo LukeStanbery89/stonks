@@ -1,5 +1,3 @@
-'use strict';
-
 import filterSeries from 'async/filterSeries';
 import detectSeries from 'async/detectSeries';
 import moment from 'moment';

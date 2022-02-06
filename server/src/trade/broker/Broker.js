@@ -1,5 +1,3 @@
-'use strict';
-
 import tradeConfig from '../trade.config.js';
 import brokerConfig from './broker.config.js';
 

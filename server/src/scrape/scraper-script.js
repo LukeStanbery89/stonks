@@ -1,5 +1,3 @@
-'use strict';
-
 import * as webScraper from './web-scraper';
 import scraperConfig from './scraper.config.js';
 
