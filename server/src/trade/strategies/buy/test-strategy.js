@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 import { noOpenOrder } from '../shared/common/common-evals.js';
 import { marketCapSmallOrLarger } from './common/common-evals.js';
 
