@@ -23,7 +23,7 @@ let scheduleCronJobs;
 
 describe('Cron Scheduler', () => {
     beforeAll(async () => {
-        console.log = jest.fn().mockImplementation();
+        console.log = jest.fn();
         jest.doMock('../../../../server/src/trade/buy/buy.js', () => mockBuyModule);
         jest.doMock('../../../../server/src/trade/sell/sell.js', () => mockSellModule);
         jest.doMock('../../../../server/src/cron/cron-utils.js', () => mockCronUtils);

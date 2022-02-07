@@ -1,4 +1,5 @@
 import { composeEvalFunctions, getSecurityData } from '../../../../server/src/trade/trade-utils';
+import { getAxios200Response } from '../../fixtures/axios.js';
 
 describe('Trade Utils', () => {
     beforeAll(() => {
@@ -17,13 +18,7 @@ describe('Trade Utils', () => {
         };
         jest.doMock('../../../../server/src/trade/trade.config.js', () => mockTradeConfig);
 
-        const axiosResponse = {
-            data: [{}],
-            status: 200,
-            statusText: 'OK',
-            headers: {},
-            config: {},
-        };
+        const axiosResponse = getAxios200Response({ data: [{}] });
         jest.doMock('axios', () => {
             return () => new Promise(resolve => resolve(axiosResponse));
         });

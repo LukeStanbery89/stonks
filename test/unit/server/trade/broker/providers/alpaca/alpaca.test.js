@@ -1,4 +1,5 @@
 import { jest } from '@jest/globals';
+import { getAxios200Response, getAxios400Response, getAxios404Error } from '../../../../../fixtures/axios';
 
 let alpaca;
 process.env.ALPACA_API_KEY = 'fake-api-key';
@@ -26,7 +27,7 @@ describe('Alpaca Provider', () => {
     });
 
     test('buy() processes a BuyOrder and returns a BuyResult', async () => {
-        const axiosResponse = {
+        const axiosResponse = getAxios200Response({
             data: {
                 id: 'abc123',
                 symbol: 'AAPL',
@@ -34,12 +35,8 @@ describe('Alpaca Provider', () => {
                 qty: 1,
                 status: 'filled',
                 filled_at: '2021-03-16T18:38:01.937734Z',
-            },
-            status: 200,
-            statusText: 'OK',
-            headers: {},
-            config: {},
-        };
+            }
+        });
         jest.doMock('axios', () => {
             return () => new Promise(resolve => resolve(axiosResponse));
         });
@@ -53,13 +50,7 @@ describe('Alpaca Provider', () => {
     });
 
     test('buy() rejects the promise on error', async () => {
-        const axiosResponse = {
-            data: {},
-            status: 400,
-            statusText: 'Bad Input',
-            headers: {},
-            config: {},
-        };
+        const axiosResponse = getAxios400Response();
         jest.doMock('axios', () => {
             return () => new Promise(resolve => resolve(axiosResponse));
         });
@@ -75,7 +66,7 @@ describe('Alpaca Provider', () => {
     });
 
     test('sell() processes a SellOrder and returns a SellResult', async () => {
-        const axiosResponse = {
+        const axiosResponse = getAxios200Response({
             data: {
                 id: 'abc123',
                 symbol: 'AAPL',
@@ -83,12 +74,8 @@ describe('Alpaca Provider', () => {
                 qty: 1,
                 status: 'filled',
                 filled_at: '2021-03-16T18:38:01.937734Z',
-            },
-            status: 200,
-            statusText: 'OK',
-            headers: {},
-            config: {},
-        };
+            }
+        });
         jest.doMock('axios', () => {
             return () => new Promise(resolve => resolve(axiosResponse));
         });
@@ -102,13 +89,7 @@ describe('Alpaca Provider', () => {
     });
 
     test('sell() rejects the promise on error', async () => {
-        const axiosResponse = {
-            data: {},
-            status: 400,
-            statusText: 'Bad Input',
-            headers: {},
-            config: {},
-        };
+        const axiosResponse = getAxios400Response();
         jest.doMock('axios', () => {
             return () => new Promise(resolve => resolve(axiosResponse));
         });
@@ -124,7 +105,7 @@ describe('Alpaca Provider', () => {
     });
 
     test('getPositions() returns an array of all held securities', async () => {
-        const axiosResponse = {
+        const axiosResponse = getAxios200Response({
             data: [
                 {
                     asset_id: 'abc123',
@@ -150,12 +131,8 @@ describe('Alpaca Provider', () => {
                     current_price: 300.00,
                     lastday_price: 300.00,
                 },
-            ],
-            status: 200,
-            statusText: 'OK',
-            headers: {},
-            config: {},
-        };
+            ]
+        });
         jest.doMock('axios', () => {
             return () => new Promise(resolve => resolve(axiosResponse));
         });
@@ -166,13 +143,7 @@ describe('Alpaca Provider', () => {
     });
 
     test('getPositions() rejects the promise on error', async () => {
-        const axiosResponse = {
-            data: {},
-            status: 400,
-            statusText: 'Bad Input',
-            headers: {},
-            config: {},
-        };
+        const axiosResponse = getAxios400Response();
         jest.doMock('axios', () => {
             return () => new Promise(resolve => resolve(axiosResponse));
         });
@@ -184,7 +155,7 @@ describe('Alpaca Provider', () => {
     });
 
     test('getPosition() returns the held position for a given symbol', async () => {
-        const axiosResponse = {
+        const axiosResponse = getAxios200Response({
             data: {
                 asset_id: 'abc123',
                 symbol: 'AAPL',
@@ -192,12 +163,8 @@ describe('Alpaca Provider', () => {
                 market_value: 100.00,
                 current_price: 100.00,
                 lastday_price: 100.00,
-            },
-            status: 200,
-            statusText: 'OK',
-            headers: {},
-            config: {},
-        };
+            }
+        });
         jest.doMock('axios', () => {
             return () => new Promise(resolve => resolve(axiosResponse));
         });
@@ -207,15 +174,7 @@ describe('Alpaca Provider', () => {
     });
 
     test('getPosition() resolves the promise and returns null on 404, meaning no matching position found', async () => {
-        const axiosError = {
-            response: {
-                data: {},
-                status: 404,
-                statusText: 'Not Found',
-                headers: {},
-                config: {},
-            }
-        };
+        const axiosError = getAxios404Error();
         jest.doMock('axios', () => {
             return () => new Promise((resolve, reject) => reject(axiosError));
         });
@@ -227,13 +186,7 @@ describe('Alpaca Provider', () => {
     });
 
     test('getPosition() rejects the promise on error', async () => {
-        const axiosResponse = {
-            data: {},
-            status: 400,
-            statusText: 'Bad Input',
-            headers: {},
-            config: {},
-        };
+        const axiosResponse = getAxios400Response();
         jest.doMock('axios', () => {
             return () => new Promise(resolve => resolve(axiosResponse));
         });
@@ -245,17 +198,13 @@ describe('Alpaca Provider', () => {
     });
 
     test('getAccountInfo() returns the user\'s account info', async () => {
-        const axiosResponse = {
+        const axiosResponse = getAxios200Response({
             data: {
                 account_number: 1234567890,
                 equity: 100000.00,
                 pattern_day_trader: false,
-            },
-            status: 200,
-            statusText: 'OK',
-            headers: {},
-            config: {},
-        };
+            }
+        });
         jest.doMock('axios', () => {
             return () => new Promise(resolve => resolve(axiosResponse));
         });
@@ -265,13 +214,7 @@ describe('Alpaca Provider', () => {
     });
 
     test('getAccountInfo() rejects the promise on error', async () => {
-        const axiosResponse = {
-            data: {},
-            status: 400,
-            statusText: 'Bad Input',
-            headers: {},
-            config: {},
-        };
+        const axiosResponse = getAxios400Response();
         jest.doMock('axios', () => {
             return () => new Promise(resolve => resolve(axiosResponse));
         });
@@ -283,7 +226,7 @@ describe('Alpaca Provider', () => {
     });
 
     test('getAlpacaHeaders() correctly populates the headers', async () => {
-        const axiosResponse = {
+        const axiosResponse = getAxios200Response({
             data: {
                 id: 'abc123',
                 symbol: 'AAPL',
@@ -291,12 +234,8 @@ describe('Alpaca Provider', () => {
                 qty: 1,
                 status: 'filled',
                 filled_at: '2021-03-16T18:38:01.937734Z',
-            },
-            status: 200,
-            statusText: 'OK',
-            headers: {},
-            config: {},
-        };
+            }
+        });
         jest.doMock('axios', () => {
             return (params) => {
                 return new Promise(resolve => resolve({
@@ -322,7 +261,7 @@ describe('Alpaca Provider', () => {
     test('getAlpacaBaseUrl() correctly populates the live API base URL', async () => {
         process.env.ENV = 'production';
 
-        const axiosResponse = {
+        const axiosResponse = getAxios200Response({
             data: {
                 id: 'abc123',
                 symbol: 'AAPL',
@@ -330,12 +269,8 @@ describe('Alpaca Provider', () => {
                 qty: 1,
                 status: 'filled',
                 filled_at: '2021-03-16T18:38:01.937734Z',
-            },
-            status: 200,
-            statusText: 'OK',
-            headers: {},
-            config: {},
-        };
+            }
+        });
         jest.doMock('axios', () => {
             return (params) => {
                 return new Promise(resolve => resolve({
@@ -358,7 +293,7 @@ describe('Alpaca Provider', () => {
     test('getAlpacaBaseUrl() correctly populates the test API base URL', async () => {
         process.env.ENV = 'development';
 
-        const axiosResponse = {
+        const axiosResponse = getAxios200Response({
             data: {
                 id: 'abc123',
                 symbol: 'AAPL',
@@ -366,12 +301,8 @@ describe('Alpaca Provider', () => {
                 qty: 1,
                 status: 'filled',
                 filled_at: '2021-03-16T18:38:01.937734Z',
-            },
-            status: 200,
-            statusText: 'OK',
-            headers: {},
-            config: {},
-        };
+            }
+        });
         jest.doMock('axios', () => {
             return (params) => {
                 return new Promise(resolve => resolve({
