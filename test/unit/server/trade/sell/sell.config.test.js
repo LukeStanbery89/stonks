@@ -1,6 +1,6 @@
 import sellConfig from '../../../../../server/src/trade/sell/sell.config.js';
 
-describe('Buy Module Config', () => {
+describe('Sell Module Config', () => {
     describe('Type Checking', () => {
         test('strategy is a an array of functions', () => {
             expect(sellConfig.strategy.constructor.name).toBe('Array');
