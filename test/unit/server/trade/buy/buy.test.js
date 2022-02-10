@@ -1,3 +1,5 @@
+import constants from '../../../../../server/src/constants.json';
+
 let buyModule;
 
 /*****************/
@@ -12,15 +14,40 @@ jest.mock('axios');
 
 const mockBuy = jest.fn(symbol => new Promise(resolve => resolve(symbol)));
 const mockComposeEvalFunctions = jest.fn(evalFuncs => new Promise(resolve => resolve(evalFuncs)));
-const mockGetSecurityData = jest.fn(symbol => new Promise(resolve => resolve({ symbol })));
+const mockGetSecurityData = jest.fn(symbol => new Promise(resolve => {
+    resolve({
+        symbol,
+        name: 'Name',
+        price: 123.45,
+        closePrice: 123.45,
+        marketCap: 100000000000,
+        marketCapSize: 'LARGE',
+    });
+}));
 
 jest.mock('../../../../../server/src/trade/buy/buy.config.js', () => {
     return {
         strategy: [
-            // TODO: Write tests for use cases where symbols are not purchased.        
-            () => new Promise(resolve => resolve(true)),
-            () => new Promise(resolve => resolve(true)),
-            () => new Promise(resolve => resolve(true)),
+            // TODO: Write tests for use cases where symbols are not purchased.
+            (securityData, processingContext) => new Promise(resolve => {
+                expect(securityData).toEqual(
+                    expect.objectContaining({
+                        symbol: expect.any(String),
+                        name: expect.any(String),
+                        price: expect.any(Number),
+                        closePrice: expect.any(Number),
+                        marketCap: expect.any(Number),
+                        marketCapSize: expect.stringMatching(/^(MEGA|LARGE|MID|SMALL|MICRO|NANO)$/),
+                    })
+                );
+                expect(processingContext).toEqual(
+                    expect.objectContaining({
+                        history: expect.any(Array),
+                        orders: expect.any(Array),
+                    })
+                );
+                resolve(true);
+            }),
         ],
     };
 });

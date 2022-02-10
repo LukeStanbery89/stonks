@@ -60,6 +60,15 @@ describe('Common Evaluator Functions', () => {
         expect(result).toBe(true);
     });
 
+    test('noOpenOrder() rejects the security when the `processingContext.orders` array is undefined', async () => {
+        const securityData = {
+            symbol: 'FAKE',
+        };
+        const processingContext = {};
+        const result = await noOpenOrder(securityData, processingContext);
+        expect(result).toBe(false);
+    });
+
     test('noOpenBuyOrder() rejects any security with an open buy order', async () => {
         const securityData = {
             symbol: 'FAKE',
@@ -100,6 +109,15 @@ describe('Common Evaluator Functions', () => {
         expect(result).toBe(true);
     });
 
+    test('noOpenBuyOrder() rejects the security when the `processingContext.orders` array is undefined', async () => {
+        const securityData = {
+            symbol: 'FAKE',
+        };
+        const processingContext = {};
+        const result = await noOpenBuyOrder(securityData, processingContext);
+        expect(result).toBe(false);
+    });
+
     test('noOpenSellOrder() rejects any security with an open sell order', async () => {
         const securityData = {
             symbol: 'FAKE',
@@ -138,5 +156,14 @@ describe('Common Evaluator Functions', () => {
         };
         const result = await noOpenSellOrder(securityData, processingContext);
         expect(result).toBe(true);
+    });
+
+    test('noOpenSellOrder() rejects the security when the `processingContext.orders` array is undefined', async () => {
+        const securityData = {
+            symbol: 'FAKE',
+        };
+        const processingContext = {};
+        const result = await noOpenSellOrder(securityData, processingContext);
+        expect(result).toBe(false);
     });
 });

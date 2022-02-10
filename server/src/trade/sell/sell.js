@@ -27,14 +27,20 @@ async function run() {
 async function getSellList() {
     console.log(chalk.cyan(`\n========== Begin Sell Candidate Evaluation - ${moment().format('MMMM Do YYYY, h:mm:ss a')} ==========`));
     const positions = await getPositions();
+    const processingContext = {
+        history: [],
+        orders: broker.getOrders(),
+    }; // TODO: Make this DRY
     return await filterSeries(positions, async (symbol) => {
+        // Reset history before evaluating each security
+        processingContext.history = [];
         const securityData = await getSecurityData(symbol);
         const evalFunctions = await composeEvalFunctions([
             omitBlacklistedSecurities,
             ...sellConfig.strategy,
         ]);
         const failures = await detectSeries(evalFunctions, async (evalFunc) => {
-            const result = await evalFunc(securityData);
+            const result = await evalFunc(securityData, processingContext);
             return result === false;
         });
         return failures ? failures.length === 0 : true;
