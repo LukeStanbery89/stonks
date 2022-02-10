@@ -35,6 +35,7 @@ describe('Alpaca Provider', () => {
                 qty: 1,
                 status: 'filled',
                 filled_at: '2021-03-16T18:38:01.937734Z',
+                submitted_at: '2021-03-16T18:38:01.937734Z',
             }
         });
         jest.doMock('axios', () => {
@@ -46,7 +47,20 @@ describe('Alpaca Provider', () => {
         };
         alpaca = (await import('../../../../../../../server/src/trade/broker/providers/alpaca/alpaca'));
         const result = await alpaca.buy(buyOrder);
-        expect(result).not.toBeNull();
+        expect(result).toEqual(
+            expect.objectContaining({
+                requestId: expect.any(String),
+                symbol: 'AAPL',
+                notional: NaN,
+                qty: 1,
+                securityPrice: expect.any(Number),
+                broker: 'ALPACA',
+                statusCode: 200,
+                statusText: 'filled',
+                timestamp: expect.any(String),
+                response: expect.anything(),
+            })
+        );
     });
 
     test('buy() rejects the promise on error', async () => {
@@ -85,7 +99,20 @@ describe('Alpaca Provider', () => {
         };
         alpaca = (await import('../../../../../../../server/src/trade/broker/providers/alpaca/alpaca'));
         const result = await alpaca.sell(sellOrder);
-        expect(result).not.toBeNull();
+        expect(result).toEqual(
+            expect.objectContaining({
+                requestId: expect.any(String),
+                symbol: 'AAPL',
+                notional: NaN,
+                qty: 1,
+                securityPrice: expect.any(Number),
+                broker: 'ALPACA',
+                statusCode: 200,
+                statusText: 'filled',
+                timestamp: expect.any(String),
+                response: expect.anything(),
+            })
+        );
     });
 
     test('sell() rejects the promise on error', async () => {
@@ -138,8 +165,21 @@ describe('Alpaca Provider', () => {
         });
         alpaca = (await import('../../../../../../../server/src/trade/broker/providers/alpaca/alpaca'));
         const result = await alpaca.getPositions();
-        expect(result).not.toBeNull();
         expect(result.length).toBe(3);
+        result.forEach(res => {
+            expect(res).toEqual(
+                expect.objectContaining({
+                    id: expect.any(String),
+                    symbol: expect.any(String),
+                    qty: expect.any(Number),
+                    marketValue: expect.any(Number),
+                    currentPrice: expect.any(Number),
+                    lastDayPrice: expect.any(Number),
+                    broker: 'ALPACA',
+                    response: expect.anything(),
+                })
+            );
+        });
     });
 
     test('getPositions() rejects the promise on error', async () => {
@@ -170,7 +210,18 @@ describe('Alpaca Provider', () => {
         });
         alpaca = (await import('../../../../../../../server/src/trade/broker/providers/alpaca/alpaca'));
         const result = await alpaca.getPosition('AAPL');
-        expect(result).not.toBeNull();
+        expect(result).toEqual(
+            expect.objectContaining({
+                id: expect.any(String),
+                symbol: 'AAPL',
+                qty: 1,
+                marketValue: 100.00,
+                currentPrice: 100.00,
+                lastDayPrice: 100.00,
+                broker: 'ALPACA',
+                response: expect.anything(),
+            })
+        );
     });
 
     test('getPosition() resolves the promise and returns null on 404, meaning no matching position found', async () => {
@@ -210,7 +261,15 @@ describe('Alpaca Provider', () => {
         });
         alpaca = (await import('../../../../../../../server/src/trade/broker/providers/alpaca/alpaca'));
         const result = await alpaca.getAccountInfo();
-        expect(result).not.toBeNull();
+        expect(result).toEqual(
+            expect.objectContaining({
+                accountNumber: 1234567890,
+                broker: 'ALPACA',
+                funds: 100000.00,
+                patternDayTrader: false,
+                response: expect.anything(),
+            })
+        );
     });
 
     test('getAccountInfo() rejects the promise on error', async () => {
