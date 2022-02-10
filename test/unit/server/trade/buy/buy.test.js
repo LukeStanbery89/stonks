@@ -1,4 +1,4 @@
-import constants from '../../../../../server/src/constants.json';
+import mockConstants from '../../../fixtures/constants.js'; // Var name needs to be prefixed with "mock"
 
 let buyModule;
 
@@ -40,7 +40,7 @@ jest.mock('../../../../../server/src/trade/buy/buy.config.js', () => {
                         price: expect.any(Number),
                         closePrice: expect.any(Number),
                         marketCap: expect.any(Number),
-                        marketCapSize: expect.stringMatching(/^(MEGA|LARGE|MID|SMALL|MICRO|NANO)$/),
+                        marketCapSize: expect.stringMatching(mockConstants.REGEX.MARKET_CAP_SIZES),
                     })
                 );
                 expect(processingContext).toEqual(
