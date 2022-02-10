@@ -8,8 +8,6 @@ import Broker from '../broker/Broker.js';
 import tradeConfig from '../trade.config.js';
 import buyConfig from './buy.config.js';
 import { composeEvalFunctions, getSecurityData } from '../trade-utils.js';
-import { securityIsNotAlreadyOwned } from '../strategies/buy/common/common-evals.js';
-import { omitBlacklistedSecurities } from '../strategies/shared/common/common-evals.js';
 
 const broker = new Broker();
 
@@ -37,8 +35,7 @@ async function getBuyList() {
         processingContext.history = [];
         const securityData = await getSecurityData(symbol);
         const evalFunctions = await composeEvalFunctions([
-            omitBlacklistedSecurities,
-            securityIsNotAlreadyOwned,
+            ...buyConfig.defaultEvalFunctions,
             ...buyConfig.strategy,
         ]);
         const failures = await detectSeries(evalFunctions, async (evalFunc) => {
