@@ -27,6 +27,9 @@ const mockGetSecurityData = jest.fn(symbol => new Promise(resolve => {
 
 jest.mock('../../../../../server/src/trade/buy/buy.config.js', () => {
     return {
+        defaultEvalFunctions: [
+            () => new Promise(resolve => resolve(true)),
+        ],
         strategy: [
             // TODO: Write tests for use cases where symbols are not purchased.
             (securityData, processingContext) => new Promise(resolve => {
