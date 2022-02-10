@@ -28,7 +28,13 @@ async function run() {
 async function getBuyList() {
     console.log(chalk.cyan(`\n========== Begin Buy Candidate Evaluation - ${moment().format('MMMM Do YYYY, h:mm:ss a')} ==========`));
     const buyCandidateSymbols = await getBuyCandidates();
+    const processingContext = {
+        history: [],
+        orders: await broker.getOrders(),
+    }; // TODO: Make this DRY
     return await filterSeries(buyCandidateSymbols, async (symbol) => {
+        // Reset history before evaluating each security
+        processingContext.history = [];
         const securityData = await getSecurityData(symbol);
         const evalFunctions = await composeEvalFunctions([
             omitBlacklistedSecurities,
@@ -36,7 +42,7 @@ async function getBuyList() {
             ...buyConfig.strategy,
         ]);
         const failures = await detectSeries(evalFunctions, async (evalFunc) => {
-            const result = await evalFunc(securityData);
+            const result = await evalFunc(securityData, processingContext);
             return result === false;
         });
         return failures ? failures.length === 0 : true;
