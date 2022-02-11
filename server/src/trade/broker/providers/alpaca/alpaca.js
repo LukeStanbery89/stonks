@@ -169,8 +169,8 @@ const getOrders = (params) => {
             url: '/v2/orders',
             headers: getAlpacaHeaders(),
             data: {
-                status: params.status || '', // default = "open"
-                symbols: params.symbol ? params.symbol.join(',') : '',
+                status: params?.status || '', // default = "open"
+                symbols: params?.symbol ? params.symbol.join(',') : '',
             },
         }).then((response) => {
             if (response.status === 200) {
@@ -180,7 +180,7 @@ const getOrders = (params) => {
                         orderId: order.id,
                         submittedAt: order.submitted_at,
                         symbol: order.symbol,
-                        notional: order.notional,
+                        notional: parseFloat(order.notional),
                         qty: order.qty,
                         type: order.type,
                         side: order.side,

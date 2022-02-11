@@ -1,5 +1,6 @@
 import { jest } from '@jest/globals';
 import { getAxios200Response, getAxios400Response, getAxios404Error } from '../../../../../fixtures/axios';
+import constants from '../../../../../fixtures/constants.js';
 
 let alpaca;
 process.env.ALPACA_API_KEY = 'fake-api-key';
@@ -273,6 +274,63 @@ describe('Alpaca Provider', () => {
     });
 
     test('getAccountInfo() rejects the promise on error', async () => {
+        const axiosResponse = getAxios400Response();
+        jest.doMock('axios', () => {
+            return () => new Promise(resolve => resolve(axiosResponse));
+        });
+        alpaca = (await import('../../../../../../../server/src/trade/broker/providers/alpaca/alpaca'));
+        return expect(async () => {
+            const result = await alpaca.getAccountInfo();
+            expect(result).not.toBeNull();
+        }).rejects.toThrow('Bad Input');
+    });
+
+    test('getOrders() returns the user\'s orders', async () => {
+        const axiosResponse = getAxios200Response({
+            data: [
+                {
+                    id: 'abc123',
+                    submitted_at: '2021-03-16T18:38:01.937734Z',
+                    symbol: 'ABC',
+                    notional: null,
+                    qty: 1,
+                    type: 'market',
+                    side: 'buy',
+                },
+                {
+                    id: 'def456',
+                    submitted_at: '2021-03-16T18:38:01.937734Z',
+                    symbol: 'DEF',
+                    notional: null,
+                    qty: 2,
+                    type: 'limit',
+                    side: 'sell',
+                },
+            ]
+        });
+        jest.doMock('axios', () => {
+            return () => new Promise(resolve => resolve(axiosResponse));
+        });
+        alpaca = (await import('../../../../../../../server/src/trade/broker/providers/alpaca/alpaca'));
+        const result = await alpaca.getOrders();
+        expect(result.constructor.name).toBe('Array');
+        result.forEach(order => {
+            expect(order).toEqual(
+                expect.objectContaining({
+                    broker: 'ALPACA',
+                    orderId: expect.any(String),
+                    submittedAt: expect.any(String),
+                    symbol: expect.any(String),
+                    notional: NaN,
+                    qty: expect.any(Number),
+                    type: expect.stringMatching(constants.REGEX.ALPACA_ORDER_TYPES),
+                    side: expect.stringMatching(constants.REGEX.ALPACA_ORDER_SIDES),
+                })
+            );
+        });
+    });
+
+    test('getOrders() returns the user\'s orders', async () => {
         const axiosResponse = getAxios400Response();
         jest.doMock('axios', () => {
             return () => new Promise(resolve => resolve(axiosResponse));
