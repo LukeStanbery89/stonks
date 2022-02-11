@@ -7,7 +7,7 @@ import asyncMap from 'async/map';
 import Broker from '../broker/Broker.js';
 import tradeConfig from '../trade.config.js';
 import sellConfig from './sell.config.js';
-import { composeEvalFunctions, getSecurityData } from '../trade-utils.js';
+import { composeEvalFunctions, generateProcessingContext, getSecurityData } from '../trade-utils.js';
 
 const broker = new Broker();
 
@@ -26,10 +26,7 @@ async function run() {
 async function getSellList() {
     console.log(chalk.cyan(`\n========== Begin Sell Candidate Evaluation - ${moment().format('MMMM Do YYYY, h:mm:ss a')} ==========`));
     const positions = await getPositions();
-    const processingContext = {
-        history: [],
-        orders: broker.getOrders(),
-    }; // TODO: Make this DRY
+    const processingContext = await generateProcessingContext();
     return await filterSeries(positions, async (symbol) => {
         // Reset history before evaluating each security
         processingContext.history = [];
