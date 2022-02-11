@@ -1,6 +1,6 @@
 import { jest } from '@jest/globals';
 import { getAxios200Response, getAxios400Response, getAxios404Error } from '../../../../../fixtures/axios';
-import constants from '../../../../../fixtures/constants.js';
+import constants from '../../../../../../../server/src/constants';
 
 let alpaca;
 process.env.ALPACA_API_KEY = 'fake-api-key';

@@ -1,4 +1,4 @@
-import CONSTANTS from '../../../../constants.json';
+import CONSTANTS from '../../../../constants';
 import Broker from '../../../broker/Broker.js';
 const broker = new Broker();
 
