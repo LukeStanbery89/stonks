@@ -1,4 +1,14 @@
 import chalk from 'chalk';
+import Broker from './broker/Broker';
+
+const broker = new Broker();
+
+export async function generateProcessingContext() {
+    return {
+        history: [],
+        orders: await broker.getOrders(),
+    };
+}
 
 export async function getSecurityData(symbol) {
     return new Promise(resolve => {

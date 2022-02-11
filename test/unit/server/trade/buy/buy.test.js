@@ -1,3 +1,4 @@
+import { newProcessingContext } from '../../../fixtures/broker.js';
 import mockConstants from '../../../fixtures/constants.js'; // Var name needs to be prefixed with "mock"
 
 let buyModule;
@@ -12,6 +13,11 @@ jest.mock('node-notifier', () => {
 });
 jest.mock('axios');
 
+const mockGenerateProcessingContext = jest.fn(() => {
+    return new Promise(resolve => {
+        resolve(newProcessingContext);
+    });
+});
 const mockBuy = jest.fn(symbol => new Promise(resolve => resolve(symbol)));
 const mockComposeEvalFunctions = jest.fn(evalFuncs => new Promise(resolve => resolve(evalFuncs)));
 const mockGetSecurityData = jest.fn(symbol => new Promise(resolve => {
@@ -79,6 +85,7 @@ jest.mock('../../../../../server/src/trade/broker/Broker.js', () => {
 
 jest.mock('../../../../../server/src/trade/trade-utils.js', () => {
     return {
+        generateProcessingContext: mockGenerateProcessingContext,
         composeEvalFunctions: mockComposeEvalFunctions,
         getSecurityData: mockGetSecurityData,
     };
