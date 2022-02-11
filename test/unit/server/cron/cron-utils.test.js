@@ -20,24 +20,24 @@ describe('Cron Utils', () => {
         process.env = oldEnv;
     });
 
-    test('getBuyCronTabSchedule() returns the correctly formatted crontab string in production', () => {
-        process.env.ENV = 'production';
-        expect(getBuyCronTabSchedule()).toBe('*/2 9-15 * * 1-5');
-    });
-
-    test('getBuyCronTabSchedule() returns the correctly formatted crontab string in development', () => {
-        process.env.ENV = 'development';
-        expect(getBuyCronTabSchedule()).toBe('*/2 * * * *');
-    });
-
     test('getSellCronTabSchedule() returns the correctly formatted crontab string in production', () => {
         process.env.ENV = 'production';
-        expect(getSellCronTabSchedule()).toBe('1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59 9-15 * * 1-5');
+        expect(getSellCronTabSchedule()).toBe('*/2 9-15 * * 1-5');
     });
 
     test('getSellCronTabSchedule() returns the correctly formatted crontab string in development', () => {
         process.env.ENV = 'development';
-        expect(getSellCronTabSchedule()).toBe('1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59 * * * *');
+        expect(getSellCronTabSchedule()).toBe('*/2 * * * *');
+    });
+
+    test('getBuyCronTabSchedule() returns the correctly formatted crontab string in production', () => {
+        process.env.ENV = 'production';
+        expect(getBuyCronTabSchedule()).toBe('1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59 9-15 * * 1-5');
+    });
+
+    test('getBuyCronTabSchedule() returns the correctly formatted crontab string in development', () => {
+        process.env.ENV = 'development';
+        expect(getBuyCronTabSchedule()).toBe('1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59 * * * *');
     });
 
     test('evenMinutes() returns the crontab formatted string for every even-numbered minute', () => {

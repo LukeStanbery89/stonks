@@ -1,8 +1,8 @@
-export function getBuyCronTabSchedule() {
+export function getSellCronTabSchedule() {
     return `${evenMinutes()} ${marketHours()} * * ${marketDaysOfWeek()}`;
 }
 
-export function getSellCronTabSchedule() {
+export function getBuyCronTabSchedule() {
     return `${oddMinutes()} ${marketHours()} * * ${marketDaysOfWeek()}`;
 }
 
