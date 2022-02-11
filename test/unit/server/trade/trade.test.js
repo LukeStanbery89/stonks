@@ -1,4 +1,4 @@
-import { composeEvalFunctions, getSecurityData } from '../../../../server/src/trade/trade';
+import { composeEvalFunctions, evaluateSecurityCandidates, generateProcessingContext, getSecurityData } from '../../../../server/src/trade/trade';
 import { getAxios200Response } from '../../fixtures/axios.js';
 
 describe('Trade Engine', () => {
@@ -22,6 +22,32 @@ describe('Trade Engine', () => {
         jest.doMock('axios', () => {
             return () => new Promise(resolve => resolve(axiosResponse));
         });
+    });
+
+    test('generateProcessingContext() returns a new processingContext object', async () => {
+        const result = await generateProcessingContext();
+        expect(result).toEqual(
+            expect.objectContaining({
+                history: expect.any(Array),
+                orders: expect.any(Array),
+            })
+        );
+    });
+
+    test('evaluateSecurityCandidates() returns a list of securities to be purchased', async () => {
+        const mockEval = jest.fn(() => new Promise(resolve => resolve(true)));
+        const mockOmitDDD = jest.fn(securityData => new Promise(resolve => resolve(securityData.symbol !== 'DDD')));
+        const symbols = ['AAA', 'BBB', 'CCC', 'DDD'];
+        const evalFunctions = [
+            mockEval,
+            mockOmitDDD,
+            mockEval,
+        ];
+        const result = await evaluateSecurityCandidates(symbols, evalFunctions);
+
+        expect(result).toStrictEqual(['AAA', 'BBB', 'CCC']);
+        expect(mockEval).toHaveBeenCalledTimes(7);
+        expect(mockOmitDDD).toHaveBeenCalledTimes(4);
     });
 
     test('getSecurityData() returns a securityData object', async () => {
