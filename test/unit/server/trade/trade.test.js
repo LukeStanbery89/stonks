@@ -1,7 +1,7 @@
-import { composeEvalFunctions, getSecurityData } from '../../../../server/src/trade/trade-utils';
+import { composeEvalFunctions, getSecurityData } from '../../../../server/src/trade/trade';
 import { getAxios200Response } from '../../fixtures/axios.js';
 
-describe('Trade Utils', () => {
+describe('Trade Engine', () => {
     beforeAll(() => {
         const mockTradeConfig = {
             broker: 'FAKE_BROKER',

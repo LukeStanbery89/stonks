@@ -5,7 +5,7 @@ import asyncMap from 'async/map';
 import Broker from '../broker/Broker.js';
 import tradeConfig from '../trade.config.js';
 import buyConfig from './buy.config.js';
-import { composeEvalFunctions, evaluateSecurityCandidates } from '../trade-utils.js';
+import { composeEvalFunctions, evaluateSecurityCandidates } from '../trade.js';
 
 const broker = new Broker();
 
