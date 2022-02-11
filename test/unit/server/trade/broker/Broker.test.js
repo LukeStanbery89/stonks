@@ -26,7 +26,7 @@ import {
     getAccountInfo as mockGetAccountInfo,
 } from './providers/__mocks__/fake-provider';
 
-describe('Broker interface', () => {
+describe('Broker Interface', () => {
     beforeAll(async () => {
         Broker = (await import('../../../../../server/src/trade/broker/Broker.js')).default;
         broker = new Broker();

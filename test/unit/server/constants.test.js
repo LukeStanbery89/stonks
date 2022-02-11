@@ -1,6 +1,6 @@
 import CONSTANTS from '../../../server/src/constants.json';
 
-describe('constants.json', () => {
+describe('Constants', () => {
     test('MARKET_CAP_SIZES is an object consisting entirely of strings', () => {
         expect(CONSTANTS.MARKET_CAP_SIZES.constructor.name).toBe('Object');
         expect(Object.values(CONSTANTS.MARKET_CAP_SIZES).filter(el => typeof el !== 'string').length).toBe(0);
