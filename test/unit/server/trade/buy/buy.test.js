@@ -1,4 +1,3 @@
-import { newProcessingContext } from '../../../fixtures/broker.js';
 import mockConstants from '../../../fixtures/constants.js'; // Var name needs to be prefixed with "mock"
 
 let buyModule;
@@ -12,24 +11,6 @@ jest.mock('node-notifier', () => {
     };
 });
 jest.mock('axios');
-
-const mockGenerateProcessingContext = jest.fn(() => {
-    return new Promise(resolve => {
-        resolve(newProcessingContext);
-    });
-});
-const mockBuy = jest.fn(symbol => new Promise(resolve => resolve(symbol)));
-const mockComposeEvalFunctions = jest.fn(evalFuncs => new Promise(resolve => resolve(evalFuncs)));
-const mockGetSecurityData = jest.fn(symbol => new Promise(resolve => {
-    resolve({
-        symbol,
-        name: 'Name',
-        price: 123.45,
-        closePrice: 123.45,
-        marketCap: 100000000000,
-        marketCapSize: 'LARGE',
-    });
-}));
 
 jest.mock('../../../../../server/src/trade/buy/buy.config.js', () => {
     return {
@@ -72,6 +53,7 @@ jest.mock('../../../../../server/src/trade/strategies/shared/common/common-evals
     };
 });
 
+const mockBuy = jest.fn(symbol => new Promise(resolve => resolve(symbol)));
 jest.mock('../../../../../server/src/trade/broker/Broker.js', () => {
     return jest.fn().mockImplementation(() => {
         return {
@@ -81,14 +63,6 @@ jest.mock('../../../../../server/src/trade/broker/Broker.js', () => {
             getPosition: jest.fn(() => new Promise(resolve => resolve({}))),
         };
     });
-});
-
-jest.mock('../../../../../server/src/trade/trade-utils.js', () => {
-    return {
-        generateProcessingContext: mockGenerateProcessingContext,
-        composeEvalFunctions: mockComposeEvalFunctions,
-        getSecurityData: mockGetSecurityData,
-    };
 });
 
 /*****************/
@@ -105,8 +79,6 @@ describe('Buy Module', () => {
     test('run() function', async () => {
         const result = await buyModule.run();
 
-        expect(mockGetSecurityData).toHaveBeenCalledTimes(11);
-        expect(mockComposeEvalFunctions).toHaveBeenCalledTimes(11);
         expect(mockBuy).toHaveBeenCalledTimes(11);
         expect(result.constructor.name).toBe('Array');
         expect(result.length).toBe(11);
