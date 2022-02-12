@@ -1,5 +1,5 @@
 import tradeConfig from '../../../../server/src/trade/trade.config.js';
-import CONSTANTS from '../../../../server/src/constants.json';
+import CONSTANTS from '../../../../server/src/constants';
 
 describe('Trade Config', () => {
     describe('Type Checking', () => {

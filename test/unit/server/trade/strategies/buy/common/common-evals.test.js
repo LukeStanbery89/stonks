@@ -1,4 +1,4 @@
-import CONSTANTS from '../../../../../../../server/src/constants.json';
+import CONSTANTS from '../../../../../../../server/src/constants';
 import {
     marketCapMega,
     marketCapLarge,

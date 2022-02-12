@@ -1,4 +1,4 @@
-import mockConstants from '../../../fixtures/constants.js'; // Var name needs to be prefixed with "mock"
+import mockConstants from '../../../../../server/src/constants'; // Var name needs to be prefixed with "mock"
 
 let buyModule;
 
