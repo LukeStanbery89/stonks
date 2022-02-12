@@ -6,28 +6,37 @@ export function omitBlacklistedSecurities(securityData) {
     });
 }
 
-export function noOpenOrder(securityData, aggregate) {
+export function noOpenOrder(securityData, processingContext) {
     return new Promise(resolve => {
-        return resolve(aggregate?.orders?.filter(order => {
+        return resolve(processingContext?.orders?.filter(order => {
             return order.symbol === securityData.symbol;
         }).length === 0);
     });
 }
 
-export function noOpenBuyOrder(securityData, aggregate) {
+export function noOpenBuyOrder(securityData, processingContext) {
     return new Promise(resolve => {
-        return resolve(aggregate?.orders?.filter(order => {
+        return resolve(processingContext?.orders?.filter(order => {
             return order.symbol === securityData.symbol
                 && order.side.toLowerCase() === 'buy';
         }).length === 0);
     });
 }
 
-export function noOpenSellOrder(securityData, aggregate) {
+export function noOpenSellOrder(securityData, processingContext) {
     return new Promise(resolve => {
-        return resolve(aggregate?.orders?.filter(order => {
+        return resolve(processingContext?.orders?.filter(order => {
             return order.symbol === securityData.symbol
                 && order.side.toLowerCase() === 'sell';
         }).length === 0);
+    });
+}
+
+export function securityNotTradedToday(securityData, processingContext) {
+    return new Promise(resolve => {
+        const tradesToday = processingContext.accountActivityToday.filter(activity => {
+            return activity.symbol === securityData.symbol;
+        });
+        return resolve(tradesToday.length === 0);
     });
 }

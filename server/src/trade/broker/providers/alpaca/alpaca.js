@@ -194,6 +194,38 @@ const getOrders = (params) => {
     });
 };
 
+const getAccountActivity = (params) => {
+    return new Promise((resolve, reject) => {
+        axios({
+            method: 'GET',
+            baseURL: getAlpacaBaseUrl(),
+            url: '/v2/account/activities/FILL',
+            headers: getAlpacaHeaders(),
+            params: {
+                date: params?.date || '',
+            },
+        }).then((response) => {
+            if (response.status === 200) {
+                return resolve(response.data.map(activity => {
+                    return {
+                        broker: BROKER,
+                        activityId: activity.id,
+                        orderId: activity.order_id,
+                        symbol: activity.symbol,
+                        side: activity.side,
+                        price: activity.price ? parseFloat(activity.price) : '',
+                        qty: activity.qty ? parseInt(activity.qty) : '',
+                        orderStatus: activity.order_status,
+                    };
+                }));
+            }
+            throw new Error(`Failed to retrieve orders with error: ${response.status} - ${response.statusText}`);
+        }).catch((error) => {
+            return reject(error);
+        });
+    });
+};
+
 const getSecurities = () => {
     return new Promise((resolve, reject) => {
         axios({
@@ -235,5 +267,6 @@ export {
     getPositions,
     getPosition,
     getOrders,
+    getAccountActivity,
     getSecurities,
 };
