@@ -214,7 +214,7 @@ const getAccountActivity = (params) => {
                         symbol: activity.symbol,
                         side: activity.side,
                         price: activity.price ? parseFloat(activity.price) : '',
-                        qty: activity.qty ? parseInt(activity.qty) : '',
+                        qty: activity.qty ? parseFloat(activity.qty) : '',
                         orderStatus: activity.order_status,
                     };
                 }));
