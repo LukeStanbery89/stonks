@@ -1,12 +1,10 @@
 import CONSTANTS from '../../../../constants';
-import Broker from '../../../broker/Broker.js';
-const broker = new Broker();
 
-export function securityIsNotAlreadyOwned(securityData) {
+export function securityIsNotAlreadyOwned(securityData, processingContext) {
     return new Promise(resolve => {
-        broker.getPosition(securityData.symbol).then(position => {
-            return resolve(!(position));
-        });
+        resolve(processingContext.positions.filter(position => {
+            return position.symbol === securityData.symbol;
+        }).length === 0);
     });
 }
 

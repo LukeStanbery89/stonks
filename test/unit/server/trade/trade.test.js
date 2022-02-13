@@ -28,8 +28,10 @@ describe('Trade Engine', () => {
         const result = await generateProcessingContext();
         expect(result).toEqual(
             expect.objectContaining({
+                accountActivityToday: expect.any(Array),
                 history: expect.any(Array),
                 orders: expect.any(Array),
+                positions: expect.any(Array),
             })
         );
     });
