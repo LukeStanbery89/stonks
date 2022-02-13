@@ -1,5 +1,6 @@
 import CONSTANTS from '../../../../../../../server/src/constants';
 import {
+    securityIsNotAlreadyOwned,
     marketCapMega,
     marketCapLarge,
     marketCapLargeOrLarger,
@@ -17,6 +18,48 @@ import {
 } from '../../../../../../../server/src/trade/strategies/buy/common/common-evals.js';
 
 describe('Common Evaluator Functions', () => {
+    test('securityIsNotAlreadyOwned() accepts securities which are not currently owned', async () => {
+        const securityData = {
+            symbol: 'FAKE',
+        };
+        const processingContext = {
+            positions: [
+                {
+                    symbol: 'TEST1',
+                },
+                {
+                    symbol: 'TEST2',
+                },
+                {
+                    symbol: 'TEST3',
+                },
+            ],
+        };
+        const result = await securityIsNotAlreadyOwned(securityData, processingContext);
+        expect(result).toBe(true);
+    });
+
+    test('securityIsNotAlreadyOwned() rejects securities which are currently owned', async () => {
+        const securityData = {
+            symbol: 'FAKE',
+        };
+        const processingContext = {
+            positions: [
+                {
+                    symbol: 'TEST1',
+                },
+                {
+                    symbol: 'FAKE',
+                },
+                {
+                    symbol: 'TEST3',
+                },
+            ],
+        };
+        const result = await securityIsNotAlreadyOwned(securityData, processingContext);
+        expect(result).toBe(false);
+    });
+
     test('marketCapMega() only accepts securities with a MEGA-sized market cap', async () => {
         expect(await marketCapMega({ marketCapSize: CONSTANTS.MARKET_CAP_SIZES.MEGA })).toBe(true);
         expect(await marketCapMega({ marketCapSize: CONSTANTS.MARKET_CAP_SIZES.LARGE })).toBe(false);

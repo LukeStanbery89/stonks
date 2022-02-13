@@ -11,6 +11,7 @@ export async function generateProcessingContext() {
         accountActivityToday: await broker.getAccountActivity({ date: moment().format('YYYY-MM-DD') }),
         history: [],
         orders: await broker.getOrders(),
+        positions: await broker.getPositions(),
     };
 }
 
