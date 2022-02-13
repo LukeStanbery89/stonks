@@ -330,7 +330,7 @@ describe('Alpaca Provider', () => {
         });
     });
 
-    test('getOrders() returns the user\'s orders', async () => {
+    test('getOrders() rejects the promise on error', async () => {
         const axiosResponse = getAxios400Response();
         jest.doMock('axios', () => {
             return () => new Promise(resolve => resolve(axiosResponse));
@@ -338,6 +338,54 @@ describe('Alpaca Provider', () => {
         alpaca = (await import('../../../../../../../server/src/trade/broker/providers/alpaca/alpaca'));
         return expect(async () => {
             const result = await alpaca.getAccountInfo();
+            expect(result).not.toBeNull();
+        }).rejects.toThrow('Bad Input');
+    });
+
+    test('getAccountActivity() returns the user\'s orders', async () => {
+        const axiosResponse = getAxios200Response({
+            data: [
+                {
+                    id: 'abc123',
+                    order_id: 'def456',
+                    symbol: 'ABC',
+                    side: 'buy',
+                    price: null,
+                    qty: 1,
+                    order_status: 'filled',
+                },
+            ]
+        });
+        jest.doMock('axios', () => {
+            return () => new Promise(resolve => resolve(axiosResponse));
+        });
+        alpaca = (await import('../../../../../../../server/src/trade/broker/providers/alpaca/alpaca'));
+        const result = await alpaca.getAccountActivity();
+        expect(result.constructor.name).toBe('Array');
+        result.forEach(order => {
+            expect(order).toEqual(
+                expect.objectContaining({
+                    broker: 'ALPACA',
+                    activityId: 'abc123',
+                    orderId: 'def456',
+                    symbol: 'ABC',
+                    side: 'buy',
+                    price: '',
+                    qty: 1,
+                    orderStatus: 'filled',
+                })
+            );
+        });
+    });
+
+    test('getAccountActivity() rejects the promise on error', async () => {
+        const axiosResponse = getAxios400Response();
+        jest.doMock('axios', () => {
+            return () => new Promise(resolve => resolve(axiosResponse));
+        });
+        alpaca = (await import('../../../../../../../server/src/trade/broker/providers/alpaca/alpaca'));
+        return expect(async () => {
+            const result = await alpaca.getAccountActivity();
             expect(result).not.toBeNull();
         }).rejects.toThrow('Bad Input');
     });

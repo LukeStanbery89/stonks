@@ -30,6 +30,10 @@ export default class Broker {
         return await this._invoke(brokerConfig.commands.GET_ORDERS, params);
     }
 
+    async getAccountActivity(params = {}) {
+        return await this._invoke(brokerConfig.commands.GET_ACCOUNT_ACTIVITY, params);
+    }
+
     async _invoke(command, ...args) {
         !this._broker ? await this._assignBrokerProvider(tradeConfig.broker) : '';
 

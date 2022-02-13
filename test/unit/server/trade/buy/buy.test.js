@@ -61,6 +61,7 @@ jest.mock('../../../../../server/src/trade/broker/Broker.js', () => {
             getOrders: jest.fn(() => new Promise(resolve => resolve([]))),
             getPositions: jest.fn(() => new Promise(resolve => resolve([]))),
             getPosition: jest.fn(() => new Promise(resolve => resolve({}))),
+            getAccountActivity: jest.fn(() => new Promise(resolve => resolve([]))),
         };
     });
 });

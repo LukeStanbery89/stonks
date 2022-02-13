@@ -1,4 +1,4 @@
-import { noOpenBuyOrder, noOpenOrder, noOpenSellOrder } from '../../../../../../../server/src/trade/strategies/shared/common/common-evals.js';
+import { noOpenBuyOrder, noOpenOrder, noOpenSellOrder, securityNotTradedToday } from '../../../../../../../server/src/trade/strategies/shared/common/common-evals.js';
 
 jest.mock('../../../../../../../server/src/trade/trade.config.js', () => ({
     blacklist: [
@@ -164,6 +164,48 @@ describe('Common Evaluator Functions', () => {
         };
         const processingContext = {};
         const result = await noOpenSellOrder(securityData, processingContext);
+        expect(result).toBe(false);
+    });
+
+    test('securityNotTradedToday() accepts any security not traded today', async () => {
+        const securityData = {
+            symbol: 'FAKE',
+        };
+        const processingContext = {
+            accountActivityToday: [
+                {
+                    symbol: 'OTHER1',
+                },
+                {
+                    symbol: 'OTHER2',
+                },
+                {
+                    symbol: 'OTHER3',
+                },
+            ],
+        };
+        const result = await securityNotTradedToday(securityData, processingContext);
+        expect(result).toBe(true);
+    });
+
+    test('securityNotTradedToday() rejects any security traded today', async () => {
+        const securityData = {
+            symbol: 'FAKE',
+        };
+        const processingContext = {
+            accountActivityToday: [
+                {
+                    symbol: 'OTHER1',
+                },
+                {
+                    symbol: 'FAKE',
+                },
+                {
+                    symbol: 'OTHER3',
+                },
+            ],
+        };
+        const result = await securityNotTradedToday(securityData, processingContext);
         expect(result).toBe(false);
     });
 });

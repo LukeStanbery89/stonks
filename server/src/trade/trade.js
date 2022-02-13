@@ -2,11 +2,13 @@ import filterSeries from 'async/filterSeries';
 import detectSeries from 'async/detectSeries';
 import chalk from 'chalk';
 import Broker from './broker/Broker';
+import moment from 'moment';
 
 const broker = new Broker();
 
 export async function generateProcessingContext() {
     return {
+        accountActivityToday: await broker.getAccountActivity({ date: moment().format('YYYY-MM-DD') }),
         history: [],
         orders: await broker.getOrders(),
     };
