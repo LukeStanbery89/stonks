@@ -65,8 +65,9 @@ describe('Common Evaluator Functions', () => {
             symbol: 'FAKE',
         };
         const processingContext = {};
-        const result = await noOpenOrder(securityData, processingContext);
-        expect(result).toBe(false);
+        return expect(async () => {
+            await noOpenOrder(securityData, processingContext);
+        }).rejects.toThrow('Cannot read propert');
     });
 
     test('noOpenBuyOrder() rejects any security with an open buy order', async () => {
