@@ -8,7 +8,7 @@ export function omitBlacklistedSecurities(securityData) {
 
 export function noOpenOrder(securityData, processingContext) {
     return new Promise(resolve => {
-        return resolve(processingContext?.orders?.filter(order => {
+        return resolve(processingContext.orders.filter(order => {
             return order.symbol === securityData.symbol;
         }).length === 0);
     });
