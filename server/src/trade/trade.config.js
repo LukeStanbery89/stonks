@@ -10,7 +10,7 @@ export default {
     tradeAmount: 1.00,
     tradeQty: 1,
     maxSymbolsPerJob: 10,
-    tradeUnit: 'SHARES',
+    tradeUnit: 'DOLLARS',
     orderType: 'market',
-    timeInForce: 'gtc'
+    timeInForce: 'gtc',
 };
