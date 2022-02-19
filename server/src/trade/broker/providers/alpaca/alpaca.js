@@ -1,6 +1,5 @@
 import axios from 'axios';
-import tradeConfig from '../../../trade.config.js';
-import alpacaConfig from './alpaca.config.js';
+import { convertBuySellOrderToAlpacaRequest, getAlpacaBaseUrl, getAlpacaHeaders } from './alpaca-utils.js';
 const BROKER = 'ALPACA';
 
 const buy = (buyOrder) => {
@@ -10,14 +9,7 @@ const buy = (buyOrder) => {
             baseURL: getAlpacaBaseUrl(),
             url: '/v2/orders',
             headers: getAlpacaHeaders(),
-            data: {
-                symbol: buyOrder.symbol,
-                qty: buyOrder.qty,
-                // notional: buyOrder.notional, // TODO: Implement full share/fractional share toggle
-                side: 'buy',
-                type: tradeConfig.orderType,
-                time_in_force: tradeConfig.timeInForce,
-            },
+            data: convertBuySellOrderToAlpacaRequest(buyOrder),
         }).then((response) => {
             if (response.status === 200) {
                 const result = {
@@ -48,14 +40,7 @@ const sell = (sellOrder) => {
             baseURL: getAlpacaBaseUrl(),
             url: '/v2/orders',
             headers: getAlpacaHeaders(),
-            data: {
-                symbol: sellOrder.symbol,
-                qty: sellOrder.qty, // TODO: Implement full share/fractional share toggle
-                // notional: sellOrder.notional,
-                side: 'sell',
-                type: tradeConfig.orderType,
-                time_in_force: tradeConfig.timeInForce,
-            },
+            data: convertBuySellOrderToAlpacaRequest(sellOrder),
         }).then((response) => {
             if (response.status === 200) {
                 return resolve({
@@ -242,22 +227,6 @@ const getSecurities = () => {
             return reject(error);
         });
     });
-};
-
-const getAlpacaHeaders = () => {
-    return {
-        'APCA-API-KEY-ID': process.env.ALPACA_API_KEY,
-        'APCA-API-SECRET-KEY': process.env.ALPACA_API_SECRET,
-    };
-};
-
-const getAlpacaBaseUrl = () => {
-    switch (process.env.ENV) {
-        case 'production':
-            return alpacaConfig.liveApiBaseUrl;
-        default:
-            return alpacaConfig.testApiBaseUrl;
-    }
 };
 
 export {
