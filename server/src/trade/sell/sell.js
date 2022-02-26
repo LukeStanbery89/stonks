@@ -23,12 +23,18 @@ async function run() {
 
 async function getSellList() {
     console.log(chalk.cyan(`\n========== Begin Sell Candidate Evaluation - ${moment().format('MMMM Do YYYY, h:mm:ss a')} ==========`));
+
+    // Retrieve our held securities so we can evaluate which ones to sell
     const positions = await getPositions();
+
     const evalFunctions = await composeEvalFunctions([
         ...sellConfig.defaultEvalFunctions,
         ...sellConfig.strategy,
     ]);
+
+    // Prevent duplicate call to `getPositions()` by manually creating a processingContext
     const processingContext = await generateProcessingContext({ positions });
+
     return await evaluateSecurityCandidates(positions, evalFunctions, processingContext);
 }
 
