@@ -6,17 +6,25 @@ import moment from 'moment';
 
 const broker = new Broker();
 
-export async function generateProcessingContext() {
+export async function generateProcessingContext(overrides = {}) {
     return {
-        accountActivityToday: await broker.getAccountActivity({ date: moment().format('YYYY-MM-DD') }),
+        // A ledger of market transactions made by the user today
+        accountActivityToday: overrides.accountActivityToday || await broker.getAccountActivity({ date: moment().format('YYYY-MM-DD') }),
+
+        // A record of eval functions run during the current routine and their results
         history: [],
-        orders: await broker.getOrders(),
-        positions: await broker.getPositions(),
+
+        // A list of open orders on the user's brokerage account
+        orders: overrides.orders || await broker.getOrders(),
+
+        // A list of the user's currently held securities
+        positions: overrides.positions || await broker.getPositions(),
     };
 }
 
-export async function evaluateSecurityCandidates(symbols, evalFunctions) {
-    const processingContext = await generateProcessingContext();
+export async function evaluateSecurityCandidates(symbols, evalFunctions, processingContextOverride = null) {
+    const processingContext = processingContextOverride || await generateProcessingContext();
+
     return await filterSeries(symbols, async (symbol) => {
         // Clear evaluation history before evaluating a new security
         processingContext.history = [];

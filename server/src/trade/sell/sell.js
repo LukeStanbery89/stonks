@@ -5,7 +5,7 @@ import asyncMap from 'async/map';
 import Broker from '../broker/Broker.js';
 import tradeConfig from '../trade.config.js';
 import sellConfig from './sell.config.js';
-import { composeEvalFunctions, evaluateSecurityCandidates } from '../trade.js';
+import { composeEvalFunctions, evaluateSecurityCandidates, generateProcessingContext } from '../trade.js';
 
 const broker = new Broker();
 
@@ -28,7 +28,8 @@ async function getSellList() {
         ...sellConfig.defaultEvalFunctions,
         ...sellConfig.strategy,
     ]);
-    return await evaluateSecurityCandidates(positions, evalFunctions);
+    const processingContext = await generateProcessingContext({ positions });
+    return await evaluateSecurityCandidates(positions, evalFunctions, processingContext);
 }
 
 async function getPositions() {

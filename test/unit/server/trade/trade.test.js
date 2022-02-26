@@ -29,9 +29,31 @@ describe('Trade Engine', () => {
         expect(result).toEqual(
             expect.objectContaining({
                 accountActivityToday: expect.any(Array),
-                history: expect.any(Array),
+                history: [],
                 orders: expect.any(Array),
                 positions: expect.any(Array),
+            })
+        );
+    });
+
+    test('generateProcessingContext() returns a new processingContext object with any provided overrides', async () => {
+        const accountActivityToday = ['test accountActivityToday'];
+        const history = ['test history'];
+        const orders = ['test orders'];
+        const positions = ['test positions'];
+        const overrides = {
+            accountActivityToday,
+            history,
+            orders,
+            positions,
+        };
+        const result = await generateProcessingContext(overrides);
+        expect(result).toEqual(
+            expect.objectContaining({
+                accountActivityToday,
+                history: [], // History should never be overridden, and should always return an empty array
+                orders,
+                positions,
             })
         );
     });
