@@ -5,7 +5,7 @@ import asyncMap from 'async/map';
 import Broker from '../broker/Broker.js';
 import tradeConfig from '../trade.config.js';
 import sellConfig from './sell.config.js';
-import { composeEvalFunctions, evaluateSecurityCandidates } from '../trade.js';
+import { composeEvalFunctions, evaluateSecurityCandidates, generateProcessingContext } from '../trade.js';
 
 const broker = new Broker();
 
@@ -23,12 +23,19 @@ async function run() {
 
 async function getSellList() {
     console.log(chalk.cyan(`\n========== Begin Sell Candidate Evaluation - ${moment().format('MMMM Do YYYY, h:mm:ss a')} ==========`));
+
+    // Retrieve our held securities so we can evaluate which ones to sell
     const positions = await getPositions();
+
     const evalFunctions = await composeEvalFunctions([
         ...sellConfig.defaultEvalFunctions,
         ...sellConfig.strategy,
     ]);
-    return await evaluateSecurityCandidates(positions, evalFunctions);
+
+    // Prevent duplicate call to `getPositions()` by manually creating a processingContext
+    const processingContext = await generateProcessingContext({ positions });
+
+    return await evaluateSecurityCandidates(positions, evalFunctions, processingContext);
 }
 
 async function getPositions() {
