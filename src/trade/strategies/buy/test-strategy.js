@@ -21,11 +21,13 @@ export const third = function () {
     });
 };
 
-// NOTE: Do not alphabetize!!! Functions will be executed in this order.
-export default [
-    first,
-    omitApple,
-    third,
-    noOpenOrder,
-    marketCapSmallOrLarger,
-];
+export default {
+    orderType: 'market',
+    evalFunctions: [
+        first,
+        omitApple,
+        third,
+        noOpenOrder,
+        marketCapSmallOrLarger,
+    ],
+};

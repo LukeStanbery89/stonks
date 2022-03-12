@@ -27,7 +27,7 @@ async function getBuyList() {
     const buyCandidateSymbols = await getBuyCandidates();
     const evalFunctions = await composeEvalFunctions([
         ...buyConfig.defaultEvalFunctions,
-        ...buyConfig.strategy,
+        ...buyConfig.strategy.evalFunctions,
     ]);
     return await evaluateSecurityCandidates(buyCandidateSymbols, evalFunctions);
 }
@@ -53,6 +53,7 @@ async function buy(symbol) {
     return await broker.buy(new BuyOrder({
         symbol,
         notional: tradeConfig.tradeAmount,
+        type: buyConfig.strategy.orderType,
     }));
 }
 

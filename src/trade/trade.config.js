@@ -11,6 +11,6 @@ export default {
     tradeQty: 1,
     maxSymbolsPerJob: 10,
     tradeUnit: 'DOLLARS',
-    orderType: 'market',
+    defaultOrderType: 'market',
     timeInForce: 'gtc',
 };

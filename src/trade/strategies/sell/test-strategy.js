@@ -23,8 +23,10 @@ export const stockPriceMovedEnoughToSell = async function (securityData) {
         || await stockPriceDropped2PercentOrMore(securityData);
 };
 
-// NOTE: Do not alphabetize!!! Functions will be executed in this order.
-export default [
-    omitThreeCharacterSymbols,
-    stockPriceMovedEnoughToSell,
-];
+export default {
+    orderType: 'market',
+    evalFunctions: [
+        omitThreeCharacterSymbols,
+        stockPriceMovedEnoughToSell,
+    ],
+};

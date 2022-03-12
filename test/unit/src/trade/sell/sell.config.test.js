@@ -1,4 +1,5 @@
 import sellConfig from '../../../../../src/trade/sell/sell.config.js';
+import constants from '../../../../../src/constants';
 
 describe('Sell Module Config', () => {
     describe('Type Checking', () => {
@@ -9,11 +10,21 @@ describe('Sell Module Config', () => {
             });
         });
 
-        test('strategy is a an array of functions', () => {
-            expect(sellConfig.strategy.constructor.name).toBe('Array');
-            sellConfig.strategy.forEach(evalFunc => {
+        test('strategy.orderType is a string', () => {
+            expect(typeof sellConfig.strategy.orderType).toBe('string');
+        });
+
+        test('strategy.evalFunctions is a an array of functions', () => {
+            expect(sellConfig.strategy.evalFunctions.constructor.name).toBe('Array');
+            sellConfig.strategy.evalFunctions.forEach(evalFunc => {
                 expect(typeof evalFunc).toBe('function');
             });
+        });
+    });
+
+    describe('Data Integrity', () => {
+        test('strategy.orderType is a valid order type', () => {
+            expect(sellConfig.strategy.orderType).toMatch(constants.REGEX.ALPACA_ORDER_TYPES);
         });
     });
 });
