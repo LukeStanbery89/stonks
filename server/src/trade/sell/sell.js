@@ -6,6 +6,7 @@ import Broker from '../broker/Broker.js';
 import tradeConfig from '../trade.config.js';
 import sellConfig from './sell.config.js';
 import { composeEvalFunctions, evaluateSecurityCandidates, generateProcessingContext } from '../trade.js';
+import { SellOrder } from '../../classes/SellOrder.js';
 
 const broker = new Broker();
 
@@ -46,10 +47,10 @@ async function getPositions() {
 }
 
 async function sell(symbol) {
-    return await broker.sell({
+    return await broker.sell(new SellOrder({
         symbol,
-        qty: tradeConfig.tradeQty,
-    });
+        notional: tradeConfig.tradeAmount,
+    }));
 }
 
 export {

@@ -53,6 +53,7 @@ jest.mock('../../../../../server/src/trade/strategies/shared/common/common-evals
     };
 });
 
+// TODO: Mock the broker provider instead of the broker interface
 const mockBuy = jest.fn(symbol => new Promise(resolve => resolve(symbol)));
 jest.mock('../../../../../server/src/trade/broker/Broker.js', () => {
     return jest.fn().mockImplementation(() => {
@@ -86,8 +87,13 @@ describe('Buy Module', () => {
         result.forEach(buyResult => {
             expect(buyResult).toEqual(
                 expect.objectContaining({
-                    symbol: expect.any(String),
-                    qty: expect.any(Number),
+                    order: expect.objectContaining({
+                        symbol: expect.any(String),
+                        qty: undefined,
+                        notional: expect.any(Number),
+                        side: 'buy',
+                        type: 'market',
+                    })
                 })
             );
         });
