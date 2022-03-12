@@ -3,11 +3,11 @@ const nodeExternals = require('webpack-node-externals');
 
 module.exports = [
     {
-        name: 'server',
+        name: 'app',
         target: 'node',
         mode: process.env.ENV || 'production',
         entry: {
-            server: './server/server.js',
+            app: './src/app.js',
         },
         devtool: 'eval',
         module: {
