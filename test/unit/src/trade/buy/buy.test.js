@@ -17,28 +17,31 @@ jest.mock('../../../../../src/trade/buy/buy.config.js', () => {
         defaultEvalFunctions: [
             () => new Promise(resolve => resolve(true)),
         ],
-        strategy: [
-            // TODO: Write tests for use cases where symbols are not purchased.
-            (securityData, processingContext) => new Promise(resolve => {
-                expect(securityData).toEqual(
-                    expect.objectContaining({
-                        symbol: expect.any(String),
-                        name: expect.any(String),
-                        price: expect.any(Number),
-                        closePrice: expect.any(Number),
-                        marketCap: expect.any(Number),
-                        marketCapSize: expect.stringMatching(mockConstants.REGEX.MARKET_CAP_SIZES),
-                    })
-                );
-                expect(processingContext).toEqual(
-                    expect.objectContaining({
-                        history: expect.any(Array),
-                        orders: expect.any(Array),
-                    })
-                );
-                resolve(true);
-            }),
-        ],
+        strategy: {
+            orderType: 'market',
+            evalFunctions: [
+                // TODO: Write tests for use cases where symbols are not purchased.
+                (securityData, processingContext) => new Promise(resolve => {
+                    expect(securityData).toEqual(
+                        expect.objectContaining({
+                            symbol: expect.any(String),
+                            name: expect.any(String),
+                            price: expect.any(Number),
+                            closePrice: expect.any(Number),
+                            marketCap: expect.any(Number),
+                            marketCapSize: expect.stringMatching(mockConstants.REGEX.MARKET_CAP_SIZES),
+                        })
+                    );
+                    expect(processingContext).toEqual(
+                        expect.objectContaining({
+                            history: expect.any(Array),
+                            orders: expect.any(Array),
+                        })
+                    );
+                    resolve(true);
+                }),
+            ]
+        },
     };
 });
 

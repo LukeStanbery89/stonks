@@ -30,7 +30,7 @@ async function getSellList() {
 
     const evalFunctions = await composeEvalFunctions([
         ...sellConfig.defaultEvalFunctions,
-        ...sellConfig.strategy,
+        ...sellConfig.strategy.evalFunctions,
     ]);
 
     // Prevent duplicate call to `getPositions()` by manually creating a processingContext
@@ -50,6 +50,7 @@ async function sell(symbol) {
     return await broker.sell(new SellOrder({
         symbol,
         notional: tradeConfig.tradeAmount,
+        type: sellConfig.strategy.orderType,
     }));
 }
 

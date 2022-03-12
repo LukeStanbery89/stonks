@@ -5,7 +5,7 @@ export class Order {
 
     constructor(params) {
         this.order.symbol = params.symbol;
-        this.order.type = params.type || tradeConfig.orderType;
+        this.order.type = params.type || tradeConfig.defaultOrderType;
         this.order.qty = params.qty;
         this.order.notional = params.notional;
     }
