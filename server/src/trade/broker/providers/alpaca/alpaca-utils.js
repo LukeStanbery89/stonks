@@ -19,7 +19,6 @@ export function getAlpacaBaseUrl() {
 }
 
 export function convertBuySellOrderToAlpacaRequest(order) {
-    // TODO: Validate buy/sell orders, thow exeception on invalid input?
     let alpacaOrder = {
         symbol: order.symbol,
         side: order.side,
@@ -27,6 +26,7 @@ export function convertBuySellOrderToAlpacaRequest(order) {
         time_in_force: tradeConfig.timeInForce,
     };
 
+    // TODO: Move this logic into the Order class
     // TODO: For sell orders, we probably want to sell everything we
     // own, rather than reading from the config.
     switch (tradeConfig.tradeUnit) {

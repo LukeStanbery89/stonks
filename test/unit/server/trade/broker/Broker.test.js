@@ -1,4 +1,6 @@
 import { jest } from '@jest/globals';
+import { BuyOrder } from '../../../../../server/src/classes/BuyOrder';
+import { SellOrder } from '../../../../../server/src/classes/SellOrder';
 
 const mockTradeConfig = {
     broker: 'FAKE_BROKER',
@@ -37,20 +39,20 @@ describe('Broker Interface', () => {
     });
 
     test('buy() command calls the provider implementation', async () => {
-        const result = await broker.buy({
+        const result = await broker.buy(new BuyOrder({
             symbol: 'AAPL',
             qty: 1,
-        });
+        }));
         expect(mockBuy).toHaveBeenCalled();
         expect(result.symbol).toBe('AAPL');
         expect(result.qty).toBe(1);
     });
 
     test('sell() command calls the provider implementation', async () => {
-        const result = await broker.sell({
+        const result = await broker.sell(new SellOrder({
             symbol: 'AAPL',
             qty: 1,
-        });
+        }));
         expect(mockSell).toHaveBeenCalled();
         expect(result.symbol).toBe('AAPL');
         expect(result.qty).toBe(1);
