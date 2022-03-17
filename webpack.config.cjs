@@ -1,6 +1,8 @@
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
 
+const isProd = process.env.ENV === 'production';
+
 module.exports = [
     {
         name: 'app',
@@ -9,7 +11,9 @@ module.exports = [
         entry: {
             app: './src/app.js',
         },
-        devtool: 'eval',
+        // eval = smaller bundle size (prod)
+        // eval-source-map = sourcemaps for debugging (local)
+        devtool: isProd ? 'eval' : 'eval-source-map',
         module: {
             rules: [
                 {
