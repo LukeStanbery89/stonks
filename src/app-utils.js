@@ -1,7 +1,7 @@
 import figlet from 'figlet';
 
 export async function showStartupOutput(appUrl) {
-    console.log(figlet.textSync(process.env.npm_package_name.toUpperCase(), {
+    console.log(figlet.textSync('STONKS', {
         font: 'Big Money-nw',
         horizontalLayout: 'default',
         verticalLayout: 'default',
