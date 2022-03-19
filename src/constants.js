@@ -5,7 +5,7 @@ export default {
         MID: 'MID',
         SMALL: 'SMALL',
         MICRO: 'MICRO',
-        NANO: 'NANO'
+        NANO: 'NANO',
     },
     REGEX: {
         ALPACA_ORDER_TYPES: /^(market|limit|stop|stop_limit|trailing_stop)$/,
@@ -17,6 +17,6 @@ export default {
     },
     TRADE_UNIT_TYPES: {
         DOLLARS: 'DOLLARS',
-        SHARES: 'SHARES'
-    }
+        SHARES: 'SHARES',
+    },
 };
