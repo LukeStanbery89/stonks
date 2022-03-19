@@ -10,21 +10,35 @@ describe('Buy Module Config', () => {
             });
         });
 
-        test('strategy.orderType is a string', () => {
-            expect(typeof buyConfig.strategy.orderType).toBe('string');
+        test('strategies is an array', () => {
+            expect(buyConfig.strategies.constructor.name).toBe('Array');
         });
 
-        test('strategy.evalFunctions is an array of functions', () => {
-            expect(buyConfig.strategy.evalFunctions.constructor.name).toBe('Array');
-            buyConfig.strategy.evalFunctions.forEach(evalFunc => {
-                expect(typeof evalFunc).toBe('function');
+        test('strategies is an array of strategy objects', () => {
+            buyConfig.strategies.forEach((strategy) => {
+                expect(strategy).toEqual(
+                    expect.objectContaining({
+                        orderType: expect.any(String),
+                        evalFunctions: expect.any(Array),
+                    })
+                );
+            });
+        });
+
+        test('buyConfig.strategies.evalFunctions is an array of functions', () => {
+            buyConfig.strategies.forEach((strategy) => {
+                strategy.evalFunctions.forEach(evalFunc => {
+                    expect(typeof evalFunc).toBe('function');
+                });
             });
         });
     });
 
     describe('Data Integrity', () => {
         test('strategy.orderType is a valid order type', () => {
-            expect(buyConfig.strategy.orderType).toMatch(constants.REGEX.ALPACA_ORDER_TYPES);
+            buyConfig.strategies.forEach((strategy) => {
+                expect(strategy.orderType).toMatch(constants.REGEX.ALPACA_ORDER_TYPES);
+            });
         });
     });
 });
