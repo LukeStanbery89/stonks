@@ -8,7 +8,7 @@ export async function showStartupOutput(appUrl) {
         width: 80,
         whitespaceBreak: true
     }));
-    console.log(`Web app listening at ${appUrl}`);
+    console.log(`App listening at ${appUrl}`);
     console.log(`ENV: ${process.env.ENV}`);
     console.log(`PWD: ${process.env.PWD}`);
 }

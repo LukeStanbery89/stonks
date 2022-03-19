@@ -1,15 +1,15 @@
 /* istanbul ignore file */
 
-export const test = function () {
+export const test1 = function () {
     return new Promise(resolve => {
-        console.log('===== STRATEGY ONE =====');
-        return resolve(true);
+        console.log('===== STRATEGY TWO =====');
+        resolve(true);
     });
 };
 
 export default {
     orderType: 'market',
     evalFunctions: [
-        test,
+        test1,
     ],
 };

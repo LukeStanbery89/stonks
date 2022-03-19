@@ -1,5 +1,31 @@
 import mockConstants from '../../../../../src/constants'; // Var name needs to be prefixed with "mock"
 
+const mockStrategy = {
+    orderType: 'market',
+    evalFunctions: [
+        // TODO: Write tests for use cases where symbols are not purchased.
+        (securityData, processingContext) => new Promise(resolve => {
+            expect(securityData).toEqual(
+                expect.objectContaining({
+                    symbol: expect.any(String),
+                    name: expect.any(String),
+                    price: expect.any(Number),
+                    closePrice: expect.any(Number),
+                    marketCap: expect.any(Number),
+                    marketCapSize: expect.stringMatching(mockConstants.REGEX.MARKET_CAP_SIZES),
+                })
+            );
+            expect(processingContext).toEqual(
+                expect.objectContaining({
+                    history: expect.any(Array),
+                    orders: expect.any(Array),
+                })
+            );
+            resolve(true);
+        }),
+    ]
+};
+
 let buyModule;
 
 /*****************/
@@ -17,31 +43,10 @@ jest.mock('../../../../../src/trade/buy/buy.config.js', () => {
         defaultEvalFunctions: [
             () => new Promise(resolve => resolve(true)),
         ],
-        strategy: {
-            orderType: 'market',
-            evalFunctions: [
-                // TODO: Write tests for use cases where symbols are not purchased.
-                (securityData, processingContext) => new Promise(resolve => {
-                    expect(securityData).toEqual(
-                        expect.objectContaining({
-                            symbol: expect.any(String),
-                            name: expect.any(String),
-                            price: expect.any(Number),
-                            closePrice: expect.any(Number),
-                            marketCap: expect.any(Number),
-                            marketCapSize: expect.stringMatching(mockConstants.REGEX.MARKET_CAP_SIZES),
-                        })
-                    );
-                    expect(processingContext).toEqual(
-                        expect.objectContaining({
-                            history: expect.any(Array),
-                            orders: expect.any(Array),
-                        })
-                    );
-                    resolve(true);
-                }),
-            ]
-        },
+        strategies: [
+            mockStrategy,
+            mockStrategy,
+        ],
     };
 });
 
@@ -57,7 +62,7 @@ jest.mock('../../../../../src/trade/strategies/eval-functions/shared-eval-functi
 });
 
 // TODO: Mock the broker provider instead of the broker interface
-const mockBuy = jest.fn(symbol => new Promise(resolve => resolve(symbol)));
+const mockBuy = jest.fn(buyOrder => new Promise(resolve => resolve(buyOrder)));
 jest.mock('../../../../../src/trade/broker/Broker.js', () => {
     return jest.fn().mockImplementation(() => {
         return {
@@ -84,21 +89,23 @@ describe('Buy Module', () => {
     test('run() function', async () => {
         const result = await buyModule.run();
 
-        expect(mockBuy).toHaveBeenCalledTimes(11);
+        expect(mockBuy).toHaveBeenCalledTimes(22);
         expect(result.constructor.name).toBe('Array');
-        expect(result.length).toBe(11);
-        result.forEach(buyResult => {
-            expect(buyResult).toEqual(
-                expect.objectContaining({
-                    order: expect.objectContaining({
-                        symbol: expect.any(String),
-                        qty: undefined,
-                        notional: expect.any(Number),
-                        side: 'buy',
-                        type: 'market',
+        expect(result.length).toBe(2);
+        result.forEach(buyResultSet => {
+            buyResultSet.forEach(buyResult => {
+                expect(buyResult).toEqual(
+                    expect.objectContaining({
+                        order: expect.objectContaining({
+                            symbol: expect.any(String),
+                            qty: undefined,
+                            notional: expect.any(Number),
+                            side: 'buy',
+                            type: 'market',
+                        })
                     })
-                })
-            );
+                );
+            });
         });
     });
 });
