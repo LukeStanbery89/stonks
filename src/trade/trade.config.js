@@ -7,7 +7,7 @@ export default {
     blacklist: [
         'PYPL'
     ],
-    tradeAmount: 1.00,
+    tradeAmount: 10.00,
     tradeQty: 1,
     maxSymbolsPerJob: 10,
     tradeUnit: 'DOLLARS',

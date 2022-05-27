@@ -10,6 +10,8 @@ module.exports = [
         mode: process.env.ENV || 'production',
         entry: {
             app: './src/app.js',
+            buy: './src/procs/buy.js',
+            sell: './src/procs/sell.js',
         },
         // eval = smaller bundle size (prod)
         // eval-source-map = sourcemaps for debugging (local)

@@ -7,6 +7,8 @@ import tradeConfig from '../trade.config.js';
 import buyConfig from './buy.config.js';
 import { composeEvalFunctions, evaluateSecurityCandidates } from '../trade.js';
 import { BuyOrder } from '../../classes/BuyOrder.js';
+import constants from '../../constants.js';
+import { logVerbose } from '../../app-utils.js';
 
 const broker = new Broker();
 
@@ -16,17 +18,23 @@ async function run() {
 }
 
 async function executeStrategy(strategy) {
-    const buyCandidates = await getBuyCandidates();
-    const buyList = await getBuyList(strategy, buyCandidates);
-    return await asyncMapSeries(buyList, async symbol => {
+    const buyCandidates = await getBuyCandidates(strategy);
+    const { symbolsToTrade: buyList, processingContext } = await getBuyList(strategy, buyCandidates);
+
+    logVerbose('buyList: ', buyList);
+    logVerbose('processingContext: ', processingContext);
+
+    return await asyncMapSeries(buyList, async security => {
         notifier.notify({
             title: 'Stonks',
-            message: `New BUY order: ${symbol}`,
+            message: `New BUY order: ${security.symbol}`,
             sound: 'Breeze',
         });
         return await buy({
-            symbol,
+            symbol: security.symbol,
             type: strategy.orderType,
+        }).catch(error => {
+            console.error(error);
         });
     });
 }
@@ -39,21 +47,32 @@ async function getBuyList(strategy, buyCandidates) {
     return await evaluateSecurityCandidates(buyCandidates, evalFunctions);
 }
 
-async function getBuyCandidates() {
-    // TODO
-    return [
-        'AAPL',
-        'MSFT',
-        'PYPL',
-        'GOOG',
-        'USB',
-        'BAC',
-        'CAP',
-        'MRNA',
-        'FTNT',
-        'NVDA',
-        'MRVL',
-    ];
+async function getBuyCandidates(strategy) {
+    switch (strategy.marketType) {
+
+        // Crypto
+        case constants.MARKET_TYPES.CRYPTO:
+            return await broker.getCryptoSymbols();
+
+        // Stocks
+        case constants.MARKET_TYPES.STOCK:
+            // TODO: Make this fetch a real list
+            return [
+                'AAPL',
+                'MSFT',
+                'PYPL',
+                'GOOG',
+                'USB',
+                'BAC',
+                'CAP',
+                'MRNA',
+                'FTNT',
+                'NVDA',
+                'MRVL',
+            ];
+        default:
+            throw new Error('strategy.marketType is not valid');
+    }
 }
 
 async function buy(params) {
