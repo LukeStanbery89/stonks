@@ -14,6 +14,10 @@ export default class Broker {
         return await this._invoke(brokerConfig.commands.SELL, sellOrder.read());
     }
 
+    async liquidatePosition(symbol) {
+        return await this._invoke(brokerConfig.commands.LIQUIDATE_POSITION, symbol);
+    }
+
     async getPositions() {
         return await this._invoke(brokerConfig.commands.GET_POSITIONS);
     }
@@ -32,6 +36,14 @@ export default class Broker {
 
     async getAccountActivity(params = {}) {
         return await this._invoke(brokerConfig.commands.GET_ACCOUNT_ACTIVITY, params);
+    }
+
+    async getCryptoSymbols() {
+        return await this._invoke(brokerConfig.commands.GET_CRYPTO_SECURITIES);
+    }
+
+    async getCryptoPositions() {
+        return await this._invoke(brokerConfig.commands.GET_CRYPTO_POSITIONS);
     }
 
     async _invoke(command, ...args) {

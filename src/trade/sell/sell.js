@@ -3,10 +3,10 @@ import chalk from 'chalk';
 import notifier from 'node-notifier';
 import asyncMapSeries from 'async/mapSeries';
 import Broker from '../broker/Broker.js';
-import tradeConfig from '../trade.config.js';
 import sellConfig from './sell.config.js';
 import { composeEvalFunctions, evaluateSecurityCandidates, generateProcessingContext } from '../trade.js';
-import { SellOrder } from '../../classes/SellOrder.js';
+import constants from '../../constants.js';
+import { logVerbose } from '../../app-utils.js';
 
 const broker = new Broker();
 
@@ -17,17 +17,20 @@ async function run() {
 
 async function executeStrategy(strategy) {
     // Retrieve our held securities so we can evaluate which ones to sell
-    const positions = await getPositions();
-    const sellList = await getSellList(strategy, positions);
-    return await asyncMapSeries(sellList, async symbol => {
+    const positions = await getPositions(strategy);
+    const { symbolsToTrade: sellList, processingContext } = await getSellList(strategy, positions);
+
+    logVerbose('sellList: ', sellList);
+    logVerbose('processingContext: ', processingContext);
+
+    return await asyncMapSeries(sellList, async security => {
         notifier.notify({
             title: 'Stonks',
-            message: `New SELL order: ${symbol}`,
+            message: `New SELL order: ${security.symbol}`,
             sound: 'Breeze',
         });
-        return await sell({
-            symbol,
-            type: strategy.orderType,
+        return await sell(security.symbol).catch(error => {
+            console.error(error);
         });
     });
 }
@@ -44,18 +47,19 @@ async function getSellList(strategy, sellCandidates) {
     return await evaluateSecurityCandidates(sellCandidates, evalFunctions, processingContext);
 }
 
-async function getPositions() {
-    const positions = await broker.getPositions();
-    return positions.map(position => {
-        return position.symbol;
-    });
+async function getPositions(strategy) {
+    switch (strategy.marketType) {
+        case constants.MARKET_TYPES.CRYPTO:
+            return await broker.getCryptoPositions();
+        case constants.MARKET_TYPES.STOCK:
+            return await broker.getPositions();
+        default:
+            throw new Error('strategy.marketType is not valid');
+    }
 }
 
-async function sell(params) {
-    return await broker.sell(new SellOrder({
-        notional: tradeConfig.tradeAmount,
-        ...params,
-    }));
+async function sell(symbol) {
+    return await broker.liquidatePosition(symbol);
 }
 
 export {

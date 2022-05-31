@@ -3,6 +3,7 @@ import detectSeries from 'async/detectSeries';
 import chalk from 'chalk';
 import Broker from './broker/Broker';
 import moment from 'moment';
+import { logVerbose } from '../app-utils';
 
 const broker = new Broker();
 
@@ -17,15 +18,18 @@ export async function generateProcessingContext(overrides = {}) {
         // A list of open orders on the user's brokerage account
         orders: overrides.orders || await broker.getOrders(),
 
-        // A list of the user's currently held securities
-        positions: overrides.positions || await broker.getPositions(),
+        // A list of the user's currently held securities/crypto
+        positions: overrides.positions || [
+            ...(await broker.getPositions()),
+            ...(await broker.getCryptoPositions()),
+        ],
     };
 }
 
 export async function evaluateSecurityCandidates(symbols, evalFunctions, processingContextOverride = null) {
     const processingContext = processingContextOverride || await generateProcessingContext();
 
-    return await filterSeries(symbols, async (symbol) => {
+    const symbolsToTrade = await filterSeries(symbols, async (symbol) => {
         // Clear evaluation history before evaluating a new security
         processingContext.history = [];
 
@@ -43,18 +47,24 @@ export async function evaluateSecurityCandidates(symbols, evalFunctions, process
 
         return failures ? failures.length === 0 : true;
     });
+
+    return {
+        symbolsToTrade,
+        processingContext,
+    };
 }
 
-export async function getSecurityData(symbol) {
+export async function getSecurityData(security) {
     return new Promise(resolve => {
         // TODO
         return resolve({
-            symbol,
-            name: 'Company Name, LLC',
-            price: 123.45,
-            closePrice: 100.00,
-            marketCap: 500000000000.00,
-            marketCapSize: 'MEGA',
+            symbol: security.symbol,
+            qty: security.qty,
+            notional: security.marketValue,
+            price: security.currentPrice,
+            closePrice: 100.00, // FIXME
+            marketCap: 500000000000.00, // FIXME
+            marketCapSize: 'MEGA', // FIXME
         });
     });
 }
@@ -62,6 +72,7 @@ export async function getSecurityData(symbol) {
 export async function composeEvalFunctions(evalFunctions) {
     return evalFunctions.map(evalFunc => {
         return async (securityData, processingContext) => {
+            logVerbose('securityData: ', securityData);
             const result = await evalFunc(securityData, processingContext);
             console.log(`${securityData.symbol} - ${evalFunc.name} evaluated as ${result ? chalk.green(result) : chalk.red(result)}`);
 

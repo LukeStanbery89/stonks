@@ -3,6 +3,14 @@ import CONSTANTS from '../../../constants';
 export function securityIsNotAlreadyOwned(securityData, processingContext) {
     return new Promise(resolve => {
         resolve(processingContext.positions.filter(position => {
+            // TODO: Refactor position validation into another file?
+            if (!position.symbol) {
+                throw Error('Invalid position: ', position);
+            }
+            // TODO: Refactor securityData validation into another file?
+            if (!securityData.symbol) {
+                throw Error('Invalid securityData: ', securityData);
+            }
             return position.symbol === securityData.symbol;
         }).length === 0);
     });

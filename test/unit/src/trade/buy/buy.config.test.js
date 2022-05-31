@@ -18,6 +18,7 @@ describe('Buy Module Config', () => {
             buyConfig.strategies.forEach((strategy) => {
                 expect(strategy).toEqual(
                     expect.objectContaining({
+                        marketType: expect.any(String),
                         orderType: expect.any(String),
                         evalFunctions: expect.any(Array),
                     })
@@ -38,6 +39,12 @@ describe('Buy Module Config', () => {
         test('strategy.orderType is a valid order type', () => {
             buyConfig.strategies.forEach((strategy) => {
                 expect(strategy.orderType).toMatch(constants.REGEX.ALPACA_ORDER_TYPES);
+            });
+        });
+
+        test('strategy.marketType is a valid market type', () => {
+            buyConfig.strategies.forEach((strategy) => {
+                expect(strategy.marketType).toMatch(constants.REGEX.MARKET_TYPES);
             });
         });
     });
