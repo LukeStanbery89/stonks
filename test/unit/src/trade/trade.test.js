@@ -8,13 +8,6 @@ describe('Trade Engine', () => {
             brokerProviders: {
                 FAKE_BROKER: 'fake-provider',
             },
-            commands: {
-                BUY: 'buy',
-                SELL: 'sell',
-                GET_POSITIONS: 'getPositions',
-                GET_POSITION: 'getPosition',
-                GET_ACCOUNT_INFO: 'getAccountInfo'
-            },
         };
         jest.doMock('../../../../src/trade/trade.config.js', () => mockTradeConfig);
 
@@ -61,25 +54,35 @@ describe('Trade Engine', () => {
     test('evaluateSecurityCandidates() returns a list of securities to be purchased', async () => {
         const mockEval = jest.fn(() => new Promise(resolve => resolve(true)));
         const mockOmitDDD = jest.fn(securityData => new Promise(resolve => resolve(securityData.symbol !== 'DDD')));
-        const symbols = ['AAA', 'BBB', 'CCC', 'DDD'];
+        const securities = [
+            { symbol: 'AAA' },
+            { symbol: 'BBB' },
+            { symbol: 'CCC' },
+            { symbol: 'DDD' },
+        ];
         const evalFunctions = [
             mockEval,
             mockOmitDDD,
             mockEval,
         ];
-        const result = await evaluateSecurityCandidates(symbols, evalFunctions);
+        const result = await evaluateSecurityCandidates(securities, evalFunctions);
 
-        expect(result).toStrictEqual(['AAA', 'BBB', 'CCC']);
+        expect(result.symbolsToTrade).toStrictEqual([{ symbol: 'AAA' }, { symbol: 'BBB' }, { symbol: 'CCC' }]);
         expect(mockEval).toHaveBeenCalledTimes(7);
         expect(mockOmitDDD).toHaveBeenCalledTimes(4);
     });
 
     test('getSecurityData() returns a securityData object', async () => {
-        const result = await getSecurityData('AAPL');
+        const result = await getSecurityData({
+            symbol: 'AAPL',
+            qty: 1,
+            marketValue: 10.00,
+            currentPrice: 100.00,
+        });
         expect(result).toEqual(
             expect.objectContaining({
                 symbol: expect.any(String),
-                name: expect.any(String),
+                notional: expect.any(Number),
                 price: expect.any(Number),
                 closePrice: expect.any(Number),
                 marketCap: expect.any(Number),

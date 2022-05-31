@@ -1,6 +1,7 @@
 import mockConstants from '../../../../../src/constants'; // Var name needs to be prefixed with "mock"
 
 const mockStrategy = {
+    marketType: 'CRYPTO',
     orderType: 'market',
     evalFunctions: [
         // TODO: Write tests for use cases where symbols are not purchased.
@@ -8,8 +9,8 @@ const mockStrategy = {
             expect(securityData).toEqual(
                 expect.objectContaining({
                     symbol: expect.any(String),
-                    name: expect.any(String),
                     price: expect.any(Number),
+                    notional: expect.any(Number),
                     closePrice: expect.any(Number),
                     marketCap: expect.any(Number),
                     marketCapSize: expect.stringMatching(mockConstants.REGEX.MARKET_CAP_SIZES),
@@ -31,6 +32,8 @@ let buyModule;
 /*****************/
 
 console.log = jest.fn();
+console.error = jest.fn();
+
 jest.mock('node-notifier', () => {
     return {
         notify: jest.fn(),
@@ -64,6 +67,7 @@ jest.mock('../../../../../src/trade/strategies/eval-functions/shared-eval-functi
 // TODO: Mock the broker provider instead of the broker interface
 const mockBuy = jest.fn(buyOrder => new Promise(resolve => resolve(buyOrder)));
 jest.mock('../../../../../src/trade/broker/Broker.js', () => {
+    const cryptoSymbols = [{ symbol: 'BTCUSD', qty: 1, marketValue: 10.00, currentPrice: 12.00 }];
     return jest.fn().mockImplementation(() => {
         return {
             buy: mockBuy,
@@ -71,6 +75,8 @@ jest.mock('../../../../../src/trade/broker/Broker.js', () => {
             getPositions: jest.fn(() => new Promise(resolve => resolve([]))),
             getPosition: jest.fn(() => new Promise(resolve => resolve({}))),
             getAccountActivity: jest.fn(() => new Promise(resolve => resolve([]))),
+            getCryptoSymbols: jest.fn(() => new Promise(resolve => resolve(cryptoSymbols))),
+            getCryptoPositions: jest.fn(() => new Promise(resolve => resolve([]))),
         };
     });
 });
@@ -89,7 +95,7 @@ describe('Buy Module', () => {
     test('run() function', async () => {
         const result = await buyModule.run();
 
-        expect(mockBuy).toHaveBeenCalledTimes(22);
+        expect(mockBuy).toHaveBeenCalledTimes(2);
         expect(result.constructor.name).toBe('Array');
         expect(result.length).toBe(2);
         result.forEach(buyResultSet => {

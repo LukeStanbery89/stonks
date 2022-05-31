@@ -7,13 +7,6 @@ const mockTradeConfig = {
     brokerProviders: {
         FAKE_BROKER: 'fake-provider',
     },
-    commands: {
-        BUY: 'buy',
-        SELL: 'sell',
-        GET_POSITIONS: 'getPositions',
-        GET_POSITION: 'getPosition',
-        GET_ACCOUNT_INFO: 'getAccountInfo'
-    },
 };
 jest.doMock('../../../../../src/trade/trade.config.js', () => mockTradeConfig);
 
@@ -122,7 +115,6 @@ describe('Broker Interface', () => {
                 symbol: 'AAPL',
                 qty: 1,
             });
-            console.debug('result: ', result);
         }).rejects.toThrow('Invalid broker command');
     });
 });
